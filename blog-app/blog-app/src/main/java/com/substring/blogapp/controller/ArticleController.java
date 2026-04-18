@@ -7,6 +7,8 @@ import com.substring.blogapp.dto.ArticleDto;
 import com.substring.blogapp.service.ArticleService;
 import com.substring.blogapp.service.impl.ArticleServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,8 +67,8 @@ public class ArticleController {
     }
 
     @GetMapping
-    public List<ArticleDto> getAll() {
-        return articleService.getAll();
+    public Page<ArticleDto> getAll( Pageable pageable) {
+        return articleService.getAll(pageable);
     }
 
     @DeleteMapping("/{articleId}")

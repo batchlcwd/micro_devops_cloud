@@ -24,3 +24,6 @@ spring:
 #Dialect
 #driver classname
 
+logging:
+  level:
+    org.springframework.security: DEBUG

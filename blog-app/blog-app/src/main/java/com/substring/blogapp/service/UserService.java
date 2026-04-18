@@ -1,4 +1,9 @@
 package com.substring.blogapp.service;
 
-public class UserService {
+import com.substring.blogapp.dto.UserDto;
+
+public interface UserService {
+
+    UserDto registerUser(UserDto userDto);
+
 }

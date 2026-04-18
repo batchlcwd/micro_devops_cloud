@@ -10,6 +10,8 @@ import com.substring.blogapp.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,11 +28,14 @@ public class ArticleServicedbImpl implements ArticleService {
     private final UserRepository userRepository;
 
     @Override
-    public List<ArticleDto> getAll() {
-        List<Article> articles = articleRepository.findAll();
-        return articles.stream()
-                .map(article -> modelMapper.map(article, ArticleDto.class))
-                .toList();
+    public Page<ArticleDto> getAll(Pageable pageable) {
+        Page<Article> articlePage = articleRepository.findAll(pageable);
+        return  articlePage.map(article -> modelMapper.map(article, ArticleDto.class));
+
+//        List<Article> articles = articleRepository.findAll();
+//        return articles.stream()
+//                .map(article -> modelMapper.map(article, ArticleDto.class))
+//                .toList();
 
     }
 

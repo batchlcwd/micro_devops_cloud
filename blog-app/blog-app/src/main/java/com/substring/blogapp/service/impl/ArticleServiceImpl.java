@@ -2,6 +2,8 @@ package com.substring.blogapp.service.impl;
 
 import com.substring.blogapp.dto.ArticleDto;
 import com.substring.blogapp.service.ArticleService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,6 +52,11 @@ public class ArticleServiceImpl  implements ArticleService {
         return articles;
     }
 
+
+    @Override
+    public Page<ArticleDto> getAll(Pageable pageable) {
+        return null;
+    }
 
     public ArticleDto getArticle(Long articleId) {
         return articles.stream()
