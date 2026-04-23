@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService
         return modelMapper.map(savedUser,UserDto.class);
     }
 
+    @Override
+    public UserDto delete(Long userId) {
+        return null;
+    }
+
     private void validateUser(User user) {
         User user1 = userRepository.findByEmail(user.getEmail()).orElse(null);
         if (user1 != null) {

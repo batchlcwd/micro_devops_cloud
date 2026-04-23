@@ -71,11 +71,7 @@ public class ArticleController {
         return articleService.getAll(pageable);
     }
 
-    @DeleteMapping("/{articleId}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable Long articleId) {
-        articleService.deleteArticle(articleId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
 
     //create api to get articles of specific category
     @GetMapping("/category/{categoryId}")
