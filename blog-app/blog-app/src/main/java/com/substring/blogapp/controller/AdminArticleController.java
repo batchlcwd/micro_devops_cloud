@@ -21,4 +21,8 @@ public class AdminArticleController {
         articleService.deleteArticle(articleId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    //write method to get articles
+
+
 }
