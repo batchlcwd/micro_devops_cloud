@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ai-service/ai-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cart-order-service/cart-order-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-service/common-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inventory-service/inventory-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notifications-service/notifications-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-service/payment-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/products-service/products-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/users-service/users-service/src/main/java" charset="UTF-8" />
+  </component>
+</project>
