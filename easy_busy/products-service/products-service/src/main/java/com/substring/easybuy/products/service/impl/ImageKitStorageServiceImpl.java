@@ -1,6 +1,6 @@
 package com.substring.easybuy.products.service.impl;
 
-import com.substring.easybuy.products.service.ImageKitStorageService;
+import com.substring.easybuy.products.service.ImageStorageService;
 import com.substring.easybuy.products.exception.InvalidRequestException;
 import io.imagekit.client.ImageKitClient;
 import io.imagekit.client.okhttp.ImageKitOkHttpClient;
@@ -14,17 +14,22 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service
-public class ImageKitStorageServiceImpl implements ImageKitStorageService {
+public class ImageKitStorageServiceImpl implements ImageStorageService {
 
     private final String privateKey;
     private final String folder;
-
+    private  final String publickey;
+    private final String endPoint;
     public ImageKitStorageServiceImpl(
             @Value("${imagekit.private-key:}") String privateKey,
-            @Value("${imagekit.folder:/products}") String folder
+            @Value("${imagekit.folder:/products}") String folder,
+            @Value("${imagekit.public-key}") String publicKey,
+            @Value("${imagekit.url-endpoint}") String endPoint
     ) {
         this.privateKey = privateKey;
         this.folder = folder;
+        this.publickey = publicKey;
+        this.endPoint = endPoint;
     }
 
     @Override

@@ -1,0 +1,457 @@
+{
+  "info": {
+    "_postman_id": "80275764-1fa2-4568-879b-6fbfd71ec79e",
+    "name": "micro_batch",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47874335"
+  },
+  "item": [
+    {
+      "name": "blog_app",
+      "item": [
+        {
+          "name": "articles",
+          "item": [
+            {
+              "name": "add article",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "abc",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "nikhil@gmail.com",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": " {\r\n        \r\n        \"title\": \"Introduction to gen AI\",\r\n        \"shortDesc\": \"This article is all about introduction to ai\",\r\n        \"content\": \"This is main content of article\",\r\n        \"paid\": true,\r\n        \"price\": 500.0,\r\n        \"readingMinutes\": 50,\r\n        \"rating\":\"4\",\r\n        \"status\":\"DRAFT\"\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/articles",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "articles"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3MmY3N2VmYy0xMTk3LTRmZTEtYjYzOC01NzRkYjBmMWM0YTIiLCJzdWIiOiIxIiwiaXNzIjoic3Vic3RyaW5nLWJsb2ctYXBwIiwiaWF0IjoxNzc2OTY2NjY5LCJleHAiOjE3NzY5NzAyNjksInR5IjoicmVmcmVzaCJ9.6QZrWMxRjx-AACIRfJRnvCwmiOSW9k82hdkz9OuJsUCdCRNXHmgF82bPwxB3dP2mW-qZJs0LMruEGeMHzFpzDA",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": " {\r\n        \r\n        \"title\": \"Introduction to gen AI\",\r\n        \"shortDescription\": \"This article is all about introduction to ai\",\r\n        \"content\": \"This is main content of article\",\r\n        \"paid\": true,\r\n        \"price\": 500.0,\r\n        \"readingMinutes\": 50\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/articles?page=0&size=1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "articles"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get single",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "4f79638e-36c3-4f80-bfb1-0af328487d58",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "user",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": " {\r\n        \r\n        \"title\": \"Introduction to gen AI\",\r\n        \"shortDescription\": \"This article is all about introduction to ai\",\r\n        \"content\": \"This is main content of article\",\r\n        \"paid\": true,\r\n        \"price\": 500.0,\r\n        \"readingMinutes\": 50\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/articles/50",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "articles",
+                    "50"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3NDVjNTEyYS1hMzU0LTQ4MjgtYmVhNi03YzI1Y2QwMWQzOTciLCJzdWIiOiIxIiwiaXNzIjoic3Vic3RyaW5nLWJsb2ctYXBwIiwiaWF0IjoxNzc2OTY2NjY5LCJleHAiOjE3NzY5NjcyNjksInR5IjoiYWNjZXNzIiwiZW1haWwiOiJoYXJzaEBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl19.lM3rjbXzAZ60Gb4LGHPheITmUw4LdRIJrnNZKyrZV6j4YJ8aOBd3jnf7hAVfs_W8JuaMbsR7N6a9R3dnA7-dLw",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": " {\r\n        \r\n        \"title\": \"Introduction to gen AI\",\r\n        \"shortDescription\": \"This article is all about introduction to ai\",\r\n        \"content\": \"This is main content of article\",\r\n        \"paid\": true,\r\n        \"price\": 500.0,\r\n        \"readingMinutes\": 50\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/admin/api/v1/articles/1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "articles",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update article",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": " {\r\n        \r\n        \"title\": \"Introduction to gen AI\",\r\n        \"shortDesc\": \"This article is all about introduction to ai\",\r\n        \"content\": \"This is main content of article\",\r\n        \"paid\": true,\r\n        \"price\": 500.0,\r\n        \"rating\": 4.0,\r\n        \"status\": \"PUBLISHED\",\r\n        \"readingMinutes\": 60\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/articles/6",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "articles",
+                    "6"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "register user",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\"name\":\"Nikhil\",\r\n\"email\":\"nikhil@gmail.com\",\r\n\"password\":\"abc\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/auth/register",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "generate token",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": " {\r\n        \r\n       \"email\":\"harsh@gmail.com\",\r\n       \"password\":\"abc\"\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/auth/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "easy_buy",
+      "item": [
+        {
+          "name": "product-services",
+          "item": [
+            {
+              "name": "get products",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "upload product image",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "files",
+                      "type": "file",
+                      "uuid": "68ff3b01-c995-4f39-bf70-7624ad26a13f",
+                      "src": [
+                        "/C:/Users/DurgeshLap/Downloads/durgesh_tiwari-1.webp",
+                        "/C:/Users/DurgeshLap/Downloads/woman.png"
+                      ]
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/products/0018cf9b-a95f-4c6a-af2a-45530a76a99f/images",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "0018cf9b-a95f-4c6a-af2a-45530a76a99f",
+                    "images"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete product",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/6e777cab-1b6b-4fe5-993e-68c62a03598f",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "6e777cab-1b6b-4fe5-993e-68c62a03598f"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get categories",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get reviews",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/reviews",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reviews"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create product",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\":\"Iphone 13\",\r\n    \"shortDesc\":\"This is phone launched in 2023\",\r\n    \"longDesc\":\"Iphone  13 ,This is phone launched in 2023 \",\r\n    \"price\":80000.0,\r\n    \"discount\":20,\r\n    \"live\":false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

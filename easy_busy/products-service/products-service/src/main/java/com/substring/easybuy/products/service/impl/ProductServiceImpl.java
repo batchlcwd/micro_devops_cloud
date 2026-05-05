@@ -10,7 +10,7 @@ import com.substring.easybuy.products.entity.Review;
 import com.substring.easybuy.products.repository.CategoryRepo;
 import com.substring.easybuy.products.repository.ProductRepo;
 import com.substring.easybuy.products.repository.ReviewRepo;
-import com.substring.easybuy.products.service.ImageKitStorageService;
+import com.substring.easybuy.products.service.ImageStorageService;
 import com.substring.easybuy.products.service.ProductService;
 import com.substring.easybuy.products.exception.InvalidRequestException;
 import com.substring.easybuy.products.exception.ResourceNotFoundException;
@@ -33,19 +33,30 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepo productRepo;
     private final CategoryRepo categoryRepo;
     private final ReviewRepo reviewRepo;
-    private final ImageKitStorageService imageKitStorageService;
 
-    public ProductServiceImpl(ProductRepo productRepo, CategoryRepo categoryRepo, ReviewRepo reviewRepo, ImageKitStorageService imageKitStorageService) {
+
+    private final ImageStorageService imageStorageService;
+
+    public ProductServiceImpl(ProductRepo productRepo, CategoryRepo categoryRepo, ReviewRepo reviewRepo, ImageStorageService imageStorageService) {
         this.productRepo = productRepo;
         this.categoryRepo = categoryRepo;
         this.reviewRepo = reviewRepo;
-        this.imageKitStorageService = imageKitStorageService;
+        this.imageStorageService = imageStorageService;
     }
 
     @Override
     public PagedResponse<ProductDto> getAllProducts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> productPage = productRepo.findAll(pageable);
+
+        //method reference from java8 feature
+
+//        Page<Product>
+
+//       productPage.map(this::toDto)-- Page<ProductDTO>
+
+//       toPagedResponse---> PagedResponse
+
         return toPagedResponse(productPage.map(this::toDto));
     }
 
@@ -58,16 +69,22 @@ public class ProductServiceImpl implements ProductService {
     public PagedResponse<ProductDto> getProductsByCategoryId(Long categoryId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> productPage = productRepo.findByCategories_Id(categoryId, pageable);
+
+        //conversations
         return toPagedResponse(productPage.map(this::toDto));
     }
 
     @Override
     public ProductDto createProduct(ProductDto productDto) {
         Product product = new Product();
+        //copy--> product dto ki values --> product [Mapper]
+        //custom logics
+        //modelMapper.map(productDto,Product.class)
         applyBasicFields(product, productDto);
         List<Category> categories = resolveCategories(productDto.getCategories());
         product.setCategories(categories);
         Product savedProduct = productRepo.save(product);
+        //just to teach everyone : This type of logics also need some time in projects
         syncCategoryLinks(savedProduct, categories);
         return toDto(savedProduct);
     }
@@ -79,8 +96,11 @@ public class ProductServiceImpl implements ProductService {
         if (productDto.getCategories() != null) {
             List<Category> categories = resolveCategories(productDto.getCategories());
             product.setCategories(categories);
+            //update product with category
             Product savedProduct = productRepo.save(product);
+            //syncing..
             syncCategoryLinks(savedProduct, categories);
+            //product --> product dto
             return toDto(savedProduct);
         }
         return toDto(productRepo.save(product));
@@ -110,8 +130,12 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto removeCategoryFromProduct(UUID productId, Long categoryId) {
         Product product = findProduct(productId);
         Category category = findCategory(categoryId);
+
+        //1step
         product.getCategories().remove(category);
+        //2step
         category.getProducts().remove(product);
+
         categoryRepo.save(category);
         return toDto(productRepo.save(product));
     }
@@ -129,8 +153,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto addProductImages(UUID productId, List<MultipartFile> files) {
+//        fetch product
         Product product = findProduct(productId);
+
+        //will upload the images:
         List<String> uploadedUrls = uploadImages(files);
+
+
         if (product.getProductImages() == null) {
             product.setProductImages(new ArrayList<>());
         }
@@ -144,6 +173,8 @@ public class ProductServiceImpl implements ProductService {
         return product.getProductImages() == null ? new ArrayList<>() : new ArrayList<>(product.getProductImages());
     }
 
+
+    //reuse:
     private Product findProduct(UUID productId) {
         return productRepo.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + productId));
@@ -155,6 +186,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void applyBasicFields(Product product, ProductDto productDto) {
+        //custom logic
         product.setTitle(productDto.getTitle());
         product.setShortDesc(productDto.getShortDesc());
         product.setLongDesc(productDto.getLongDesc());
@@ -200,7 +232,7 @@ public class ProductServiceImpl implements ProductService {
         }
         List<String> uploadedUrls = new ArrayList<>();
         for (MultipartFile file : files) {
-            uploadedUrls.add(imageKitStorageService.upload(file));
+            uploadedUrls.add(imageStorageService.upload(file));
         }
         return uploadedUrls;
     }
