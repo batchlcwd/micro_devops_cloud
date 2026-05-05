@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryDto {
     private Long id;
+
+    @NotBlank(message = "title is required")
     private String title;
     private List<ProductDto> products;
 }
