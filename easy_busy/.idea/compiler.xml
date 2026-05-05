@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="common-service" />
       </profile>
-      <profile name="Annotation profile for users-service" enabled="true">
+      <profile name="Annotation profile for cart-order-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
