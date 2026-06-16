@@ -26,6 +26,7 @@ import com.substring.easybuy.cart_order.entity.CartStatus;
 import com.substring.easybuy.cart_order.entity.Order;
 import com.substring.easybuy.cart_order.entity.OrderItem;
 import com.substring.easybuy.cart_order.entity.OrderStatus;
+import com.substring.easybuy.cart_order.entity.PaymentStatus;
 import com.substring.easybuy.cart_order.exception.BusinessRuleException;
 import com.substring.easybuy.cart_order.exception.ExternalServiceException;
 import com.substring.easybuy.cart_order.exception.ResourceNotFoundException;
@@ -51,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductClient productClient;
 
     private  final OrderEventPublisher orderEventPublisher;
+
 
 
     //get the single product
@@ -161,6 +163,10 @@ public class OrderServiceImpl implements OrderService {
 
             Order saved = orderRepository.save(order);
 
+
+            //saving order
+            saved = orderRepository.save(saved);
+
             cart.setStatus(CartStatus.CHECKED_OUT);
             cart.setCheckedOutAt(Instant.now());
             cart.getItems().clear();
@@ -253,6 +259,7 @@ public class OrderServiceImpl implements OrderService {
         order.setExtraInformation(request.extraInformation().trim());
         order.setShippingAddress(request.shippingAddress().trim());
         order.setPaymentMethod(request.paymentMethod());
+        order.setPaymentStatus(PaymentStatus.PENDING);
         order.setStatus(OrderStatus.CONFIRMED);
         order.setItems(new ArrayList<>());
 
@@ -313,5 +320,15 @@ public class OrderServiceImpl implements OrderService {
             throw new BusinessRuleException("userId is required");
         }
         return userId.trim();
+    }
+
+    @Override
+    public void updatePaymentStatus(Long orderId, String paymentStatus) {
+        log.info("Updating payment status for Order ID: {} to {}", orderId, paymentStatus);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found for id: " + orderId));
+        order.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
+        orderRepository.save(order);
+        log.info("Payment status successfully updated for Order ID: {}", orderId);
     }
 }

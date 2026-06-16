@@ -15,6 +15,7 @@ public class OrderEventPublisher {
 
     private final String ORDER_TOPIC = "order-topic";
 
+    //constructor injection
     public OrderEventPublisher(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }

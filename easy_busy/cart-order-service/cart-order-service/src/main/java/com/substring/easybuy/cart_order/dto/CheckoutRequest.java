@@ -8,6 +8,8 @@ public record CheckoutRequest(
 		@NotBlank String billingPhone,
 		@NotBlank String shippingAddress,
 		PaymentMethod paymentMethod,
-		String extraInformation
+		String extraInformation,
+		String paymentDetails
 		) {
 }
+

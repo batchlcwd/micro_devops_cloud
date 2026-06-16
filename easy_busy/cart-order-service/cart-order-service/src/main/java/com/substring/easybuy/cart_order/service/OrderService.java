@@ -27,4 +27,6 @@ public interface OrderService {
 	OrderResponse cancelOrder(Long orderId);
 
 	void releaseReservedStock(UUID productId, Integer quantity);
+
+	void updatePaymentStatus(Long orderId, String paymentStatus);
 }
