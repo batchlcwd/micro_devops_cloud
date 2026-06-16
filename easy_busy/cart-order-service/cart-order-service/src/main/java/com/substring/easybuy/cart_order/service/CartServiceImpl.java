@@ -41,7 +41,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional
 	public CartResponse getCart(String userId) {
 
 		//if user cart is there in database it will fetch that cart
