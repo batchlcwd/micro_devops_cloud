@@ -70,7 +70,7 @@ public class RouteConfig {
 
     @Bean
     public KeyResolver keyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getHeaders().getFirst("user"));
+        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress());
     }
 
 

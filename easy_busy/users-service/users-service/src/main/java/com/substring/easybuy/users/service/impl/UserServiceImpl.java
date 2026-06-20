@@ -5,13 +5,16 @@ import com.substring.easybuy.users.dto.LoginResponse;
 import com.substring.easybuy.users.dto.TokenRefreshRequest;
 import com.substring.easybuy.users.dto.TokenRefreshResponse;
 import com.substring.easybuy.users.dto.UserDto;
+import com.substring.easybuy.users.entity.RefreshToken;
 import com.substring.easybuy.users.entity.Role;
 import com.substring.easybuy.users.entity.User;
 import com.substring.easybuy.users.exception.InvalidRequestException;
 import com.substring.easybuy.users.exception.ResourceNotFoundException;
+import com.substring.easybuy.users.repository.RefreshTokenRepo;
 import com.substring.easybuy.users.repository.UserRepository;
 import com.substring.easybuy.users.service.JwtService;
 import com.substring.easybuy.users.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,17 +25,15 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-    }
+    private final RefreshTokenRepo refreshTokenRepo;
+
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -66,31 +67,26 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserDto getUserById(UUID id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         return toDto(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserDto getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
         return toDto(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
+        return userRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Override
     public UserDto updateUser(UUID id, UserDto userDto) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
         if (userDto.getEmail() != null && !userDto.getEmail().equals(user.getEmail())) {
             if (userRepository.existsByEmail(userDto.getEmail())) {
@@ -121,31 +117,37 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UUID id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         userRepository.delete(user);
     }
 
     @Override
     public void changeUserRole(UUID id, Role role) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         user.setRole(role);
         userRepository.save(user);
     }
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        User user = userRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new InvalidRequestException("Invalid email or password"));
 
+        //get user database : using email
+        User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new InvalidRequestException("Invalid email or password"));
+
+        //match the password
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new InvalidRequestException("Invalid email or password");
         }
 
+        //user authenticate ho chuka hai.
+
         String accessToken = jwtService.generateAccessToken(user.getId(), user.getEmail(), user.getRole().name());
         String refreshToken = jwtService.generateRefreshToken(user.getEmail());
-
+        var refreshTokenOb = new RefreshToken();
+        refreshTokenOb.setRefreshToken(refreshToken);
+        refreshTokenOb.setActive(true);
+        refreshTokenOb.setUser(user);
+        refreshTokenRepo.save(refreshTokenOb);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setAccessToken(accessToken);
         loginResponse.setRefreshToken(refreshToken);
@@ -159,15 +161,42 @@ public class UserServiceImpl implements UserService {
         String refreshToken = refreshRequest.getRefreshToken();
         String email = jwtService.extractUsername(refreshToken);
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found for the given refresh token"));
+//        token aya hai wo refresh token ki nhi hai
+
+        if (!jwtService.getTokenType(refreshToken).equals("refresh_token")) {
+            throw new InvalidRequestException("Invalid refresh token");
+        }
+
+
+        //get the refreshtoken from db
+
+        RefreshToken refreshTokenOb = refreshTokenRepo.findByRefreshToken(refreshToken).orElseThrow(() -> new InvalidRequestException("Invalid refresh token"));
+
+
+        if (!refreshTokenOb.getActive()) {
+            throw new InvalidRequestException("Invalid refresh token");
+        }
+
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found for the given refresh token"));
 
         if (!jwtService.isTokenValid(refreshToken, user.getEmail())) {
             throw new InvalidRequestException("Invalid or expired refresh token");
         }
 
+        //if you are storing refreshtoken state in db update:
+
         String newAccessToken = jwtService.generateAccessToken(user.getId(), user.getEmail(), user.getRole().name());
         String newRefreshToken = jwtService.generateRefreshToken(user.getEmail());
+
+        refreshTokenOb.setActive(false);
+        refreshTokenRepo.save(refreshTokenOb);
+        var refreshTokenOb1 = new RefreshToken();
+        refreshTokenOb1.setRefreshToken(newRefreshToken);
+        refreshTokenOb1.setActive(true);
+        refreshTokenOb1.setUser(user);
+        refreshTokenRepo.save(refreshTokenOb1);
+
 
         TokenRefreshResponse refreshResponse = new TokenRefreshResponse();
         refreshResponse.setAccessToken(newAccessToken);

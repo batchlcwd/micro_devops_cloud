@@ -1,5 +1,6 @@
 package com.substring.easybuy.users.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.substring.easybuy.users.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,6 +28,7 @@ public class UserDto {
     private String email;
 
     @NotBlank(message = "Password is required")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private String phoneNumber;

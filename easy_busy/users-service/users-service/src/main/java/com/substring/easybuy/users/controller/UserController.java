@@ -31,6 +31,10 @@ public class UserController {
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
+
+    //this will actually login
+    //authenticate--> email, password match kar hai hai.
+    //token[accessToken, refreshToken]
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(userService.login(loginRequest));
