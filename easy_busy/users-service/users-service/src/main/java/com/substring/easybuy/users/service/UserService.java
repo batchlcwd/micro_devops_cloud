@@ -1,5 +1,9 @@
 package com.substring.easybuy.users.service;
 
+import com.substring.easybuy.users.dto.LoginRequest;
+import com.substring.easybuy.users.dto.LoginResponse;
+import com.substring.easybuy.users.dto.TokenRefreshRequest;
+import com.substring.easybuy.users.dto.TokenRefreshResponse;
 import com.substring.easybuy.users.dto.UserDto;
 import com.substring.easybuy.users.entity.Role;
 
@@ -21,4 +25,7 @@ public interface UserService {
 
     void changeUserRole(UUID id, Role role);
 
+    LoginResponse login(LoginRequest loginRequest);
+
+    TokenRefreshResponse refreshToken(TokenRefreshRequest refreshRequest);
 }

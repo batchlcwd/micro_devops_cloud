@@ -1,12 +1,18 @@
 package com.substring.easybuy.users.service.impl;
 
+import com.substring.easybuy.users.dto.LoginRequest;
+import com.substring.easybuy.users.dto.LoginResponse;
+import com.substring.easybuy.users.dto.TokenRefreshRequest;
+import com.substring.easybuy.users.dto.TokenRefreshResponse;
 import com.substring.easybuy.users.dto.UserDto;
 import com.substring.easybuy.users.entity.Role;
 import com.substring.easybuy.users.entity.User;
 import com.substring.easybuy.users.exception.InvalidRequestException;
 import com.substring.easybuy.users.exception.ResourceNotFoundException;
 import com.substring.easybuy.users.repository.UserRepository;
+import com.substring.easybuy.users.service.JwtService;
 import com.substring.easybuy.users.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +25,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -33,7 +43,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword()); // In production, this should be encoded/hashed
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAddress(userDto.getAddress());
         user.setRole(Role.GUEST);
@@ -93,7 +103,7 @@ public class UserServiceImpl implements UserService {
             user.setName(userDto.getName());
         }
         if (userDto.getPassword() != null) {
-            user.setPassword(userDto.getPassword());
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
         if (userDto.getPhoneNumber() != null) {
             user.setPhoneNumber(userDto.getPhoneNumber());
@@ -122,6 +132,48 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         user.setRole(role);
         userRepository.save(user);
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest loginRequest) {
+        User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new InvalidRequestException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new InvalidRequestException("Invalid email or password");
+        }
+
+        String accessToken = jwtService.generateAccessToken(user.getId(), user.getEmail(), user.getRole().name());
+        String refreshToken = jwtService.generateRefreshToken(user.getEmail());
+
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setAccessToken(accessToken);
+        loginResponse.setRefreshToken(refreshToken);
+        loginResponse.setUser(toDto(user));
+
+        return loginResponse;
+    }
+
+    @Override
+    public TokenRefreshResponse refreshToken(TokenRefreshRequest refreshRequest) {
+        String refreshToken = refreshRequest.getRefreshToken();
+        String email = jwtService.extractUsername(refreshToken);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for the given refresh token"));
+
+        if (!jwtService.isTokenValid(refreshToken, user.getEmail())) {
+            throw new InvalidRequestException("Invalid or expired refresh token");
+        }
+
+        String newAccessToken = jwtService.generateAccessToken(user.getId(), user.getEmail(), user.getRole().name());
+        String newRefreshToken = jwtService.generateRefreshToken(user.getEmail());
+
+        TokenRefreshResponse refreshResponse = new TokenRefreshResponse();
+        refreshResponse.setAccessToken(newAccessToken);
+        refreshResponse.setRefreshToken(newRefreshToken);
+
+        return refreshResponse;
     }
 
     private UserDto toDto(User user) {

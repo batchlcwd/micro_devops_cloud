@@ -1,5 +1,6 @@
 package com.substring.easybuy.apigateway;
 
+import com.substring.easybuy.apigateway.filter.AuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.RateLimiter;
@@ -22,16 +23,19 @@ public class RouteConfig {
     private final String cartOrderServiceId;
     private final String usersServiceId;
     private final String inventoryServiceId;
+    private final AuthenticationFilter authenticationFilter;
 
     public RouteConfig(
             @Value("${PRODUCT_SERVICE_NAME:PRODUCT-SERVICE}") String productServiceId,
             @Value("${CARD_ORDER_SERVICE_NAME:CART-ORDER-SERVICE}") String cartOrderServiceId,
             @Value("${USERS_SERVICE_NAME:users-service}") String usersServiceId,
-            @Value("${INVENTORY_SERVICE_NAME:INVENTORY-SERVICE}") String inventoryServiceId) {
+            @Value("${INVENTORY_SERVICE_NAME:INVENTORY-SERVICE}") String inventoryServiceId,
+            AuthenticationFilter authenticationFilter) {
         this.productServiceId = productServiceId;
         this.cartOrderServiceId = cartOrderServiceId;
         this.usersServiceId = usersServiceId;
         this.inventoryServiceId = inventoryServiceId;
+        this.authenticationFilter = authenticationFilter;
         System.out.println(this.productServiceId);
         System.out.println(this.cartOrderServiceId);
     }
@@ -41,21 +45,24 @@ public class RouteConfig {
         return builder.routes()
 
                 .route("product-route", route -> route
-                        .path("/products/**").filters(f -> f.addRequestHeader("x-api-gateway", "value from api gateway").requestRateLimiter(rateLimitConfig -> rateLimitConfig
+                        .path("/products/**").filters(f -> f.filter(authenticationFilter.apply(new AuthenticationFilter.Config())).addRequestHeader("x-api-gateway", "value from api gateway").requestRateLimiter(rateLimitConfig -> rateLimitConfig
                                 .setKeyResolver(keyResolver())
                                 .setRateLimiter(redisRateLimiter())
                         ).circuitBreaker(c -> c.setName("productCircuitBreaker").setFallbackUri("forward:/product-fallback")).rewritePath("/products/?(?<remaining>.*)", "/${remaining}")).uri("lb://" + productServiceId))
 
                 .route("cart-order-route", route -> route.path("/cart-orders/**").filters(f ->
-                        f.rewritePath("/cart-orders/?(?<remaining>.*)", "/${remaining}").retry(retryConfig -> retryConfig.setRetries(3).setMethods(HttpMethod.GET, HttpMethod.POST).setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
+                        f.filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
+                                .rewritePath("/cart-orders/?(?<remaining>.*)", "/${remaining}").retry(retryConfig -> retryConfig.setRetries(3).setMethods(HttpMethod.GET, HttpMethod.POST).setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true))
                 ).uri("lb://" + cartOrderServiceId))
 
                 .route("users-route", route -> route.path("/users/**").filters(f ->
-                        f.rewritePath("/users/?(?<remaining>.*)", "/${remaining}")
+                        f.filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
+                                .rewritePath("/users/?(?<remaining>.*)", "/${remaining}")
                 ).uri("lb://" + usersServiceId))
 
                 .route("inventory-route", route -> route.path("/inventories/**").filters(f ->
-                        f.rewritePath("/inventories/?(?<remaining>.*)", "/${remaining}")
+                        f.filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
+                                .rewritePath("/inventories/?(?<remaining>.*)", "/${remaining}")
                 ).uri("lb://" + inventoryServiceId))
 
                 .build();

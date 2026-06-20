@@ -1,6 +1,10 @@
 package com.substring.easybuy.users.controller;
 
 import com.substring.easybuy.users.dto.ChangeRoleRequest;
+import com.substring.easybuy.users.dto.LoginRequest;
+import com.substring.easybuy.users.dto.LoginResponse;
+import com.substring.easybuy.users.dto.TokenRefreshRequest;
+import com.substring.easybuy.users.dto.TokenRefreshResponse;
 import com.substring.easybuy.users.dto.UserDto;
 import com.substring.easybuy.users.entity.Role;
 import com.substring.easybuy.users.service.UserService;
@@ -25,6 +29,16 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.login(loginRequest));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenRefreshResponse> refresh(@Valid @RequestBody TokenRefreshRequest refreshRequest) {
+        return ResponseEntity.ok(userService.refreshToken(refreshRequest));
     }
 
     @GetMapping("/{id}")
