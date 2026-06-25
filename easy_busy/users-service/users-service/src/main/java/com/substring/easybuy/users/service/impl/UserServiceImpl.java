@@ -15,6 +15,7 @@ import com.substring.easybuy.users.repository.UserRepository;
 import com.substring.easybuy.users.service.JwtService;
 import com.substring.easybuy.users.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -131,6 +133,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
 
+        log.info("Login service started:");
+
         //get user database : using email
         User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new InvalidRequestException("Invalid email or password"));
 
@@ -152,6 +156,8 @@ public class UserServiceImpl implements UserService {
         loginResponse.setAccessToken(accessToken);
         loginResponse.setRefreshToken(refreshToken);
         loginResponse.setUser(toDto(user));
+
+        log.info("Login service executed:");
 
         return loginResponse;
     }

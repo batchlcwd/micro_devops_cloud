@@ -1,0 +1,65 @@
+2026-06-25 17:17:55 INFO  [main] c.s.e.p.ProductsServiceApplication : Starting ProductsServiceApplication using Java 25.0.1 with PID 40048 (D:\Live Batches\micro_devops\easy_busy\products-service\products-service\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-06-25 17:17:55 INFO  [main] c.s.e.p.ProductsServiceApplication : The following 1 profile is active: "dev"
+2026-06-25 17:17:55 INFO  [main] o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-06-25 17:17:55 INFO  [main] o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[default], label=null, version=cccd62cc58c61d9698bafe8e89422506ce1dab47, state=
+2026-06-25 17:17:55 INFO  [main] o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-06-25 17:17:55 INFO  [main] o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[dev], label=null, version=cccd62cc58c61d9698bafe8e89422506ce1dab47, state=
+2026-06-25 17:17:56 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-25 17:17:56 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 3 JPA repository interfaces.
+2026-06-25 17:17:56 INFO  [main] o.s.cloud.context.scope.GenericScope : BeanFactory id=9333fabb-bcd3-38e9-957c-efcf7a945f05
+2026-06-25 17:17:56 INFO  [main] o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8081 (http)
+2026-06-25 17:17:56 INFO  [main] o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-06-25 17:17:56 INFO  [main] o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-06-25 17:17:56 INFO  [main] o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1109 ms
+2026-06-25 17:17:57 INFO  [main] org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-25 17:17:57 INFO  [main] org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-06-25 17:17:57 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-25 17:17:57 INFO  [main] com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-06-25 17:17:57 INFO  [main] com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6ddbbfbb
+2026-06-25 17:17:57 INFO  [main] com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-06-25 17:17:57 WARN  [main] org.hibernate.orm.deprecation : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-25 17:17:57 INFO  [main] o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/productdb?currentSchema=public]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.4
+	Default catalog/schema: productdb/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-25 17:17:58 INFO  [main] org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-25 17:17:58 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-25 17:17:58 INFO  [main] o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-25 17:17:58 WARN  [main] o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-25 17:17:59 INFO  [main] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-06-25 17:17:59 WARN  [main] o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-06-25 17:17:59 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver : Exposing 17 endpoints beneath base path '/actuator'
+2026-06-25 17:17:59 INFO  [main] o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-06-25 17:17:59 INFO  [main] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-06-25 17:17:59 INFO  [main] c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1782407879688 with initial instances count: 2
+2026-06-25 17:17:59 INFO  [main] o.s.c.n.e.s.EurekaServiceRegistry : Registering application PRODUCT-SERVICE with eureka with status UP
+2026-06-25 17:17:59 INFO  [main] c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1782407879692, current=UP, previous=STARTING]
+2026-06-25 17:17:59 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081: registering service...
+2026-06-25 17:17:59 INFO  [main] o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 8081 (http) with context path '/'
+2026-06-25 17:17:59 INFO  [main] o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+2026-06-25 17:17:59 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081 - registration status: 204
+2026-06-25 17:17:59 INFO  [main] c.s.e.p.ProductsServiceApplication : Started ProductsServiceApplication in 6.344 seconds (process running for 8.008)
+2026-06-25 17:22:59 INFO  [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-25 17:27:59 INFO  [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-25 17:32:59 INFO  [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-25 17:37:59 INFO  [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-25 17:42:59 INFO  [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration

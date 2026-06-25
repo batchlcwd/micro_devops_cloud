@@ -1,0 +1,37 @@
+local.file_match "spring_logs" {
+  path_targets = [
+    {
+      __path__ = "/workspace/*.log",
+      environment = "dev",
+    },
+  ]
+}
+
+loki.source.file "spring_logs" {
+  targets    = local.file_match.spring_logs.targets
+  forward_to = [loki.process.labels.receiver]
+}
+
+loki.process "labels" {
+
+  stage.regex {
+    source = "filename"
+    expression = ".*/(?P<service>[^/]+)\\.log"
+  }
+
+  stage.labels {
+    values = {
+      service = "service",
+    }
+  }
+
+  forward_to = [loki.write.default.receiver]
+}
+
+
+
+loki.write "default" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
