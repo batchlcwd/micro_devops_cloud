@@ -160,3 +160,4 @@ This generated password is for development use only. Your security configuration
 2026-06-25 23:10:07 INFO  [http-nio-8085-exec-2] c.s.e.u.service.impl.UserServiceImpl : Login service started:
 2026-06-25 23:10:07 INFO  [http-nio-8085-exec-2] c.s.e.u.service.impl.UserServiceImpl : Login service executed:
 2026-06-25 23:12:04 INFO  [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-25 23:17:04 INFO  [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
