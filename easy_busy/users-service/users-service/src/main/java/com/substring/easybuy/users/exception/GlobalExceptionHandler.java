@@ -57,10 +57,10 @@ public class GlobalExceptionHandler {
         return build(status, ex.getReason() != null ? ex.getReason() : ex.getMessage(), request.getRequestURI(), List.of());
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
-        return build(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error: " + ex.getMessage(), request.getRequestURI(), List.of());
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
+//        return build(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error: " + ex.getMessage(), request.getRequestURI(), List.of());
+//    }
 
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String message, String path, List<String> fieldErrors) {
         ErrorResponse response = new ErrorResponse(
