@@ -1,5 +1,28 @@
 services:
 
+  tempo:
+
+    image: grafana/tempo:2.8.2
+
+    container_name: tempo
+
+    command:
+
+      - "-config.file=/etc/tempo/tempo.yaml"
+
+    volumes:
+
+      - ./tempo/tempo.yaml:/etc/tempo/tempo.yaml
+
+    ports:
+
+      - "3200:3200"   # Tempo UI/API
+
+      - "4317:4317"   # OTLP gRPC
+
+      - "4318:4318"
+
+
   prometheus:
     image: prom/prometheus:latest
 
@@ -37,6 +60,7 @@ services:
 
     depends_on:
       - loki
+      - tempo
 
   alloy:
 

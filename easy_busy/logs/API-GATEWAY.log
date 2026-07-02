@@ -1,0 +1,117 @@
+2026-06-30 22:17:25 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : Starting ApiGatewayApplication using Java 25.0.1 with PID 10064 (D:\Live Batches\micro_devops\easy_busy\api-gateway\api-gateway\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-06-30 22:17:25 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : No active profile set, falling back to 1 default profile: "default"
+2026-06-30 22:17:25 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-06-30 22:17:25 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=API-GATEWAY, profiles=[default], label=null, version=e2e92a478b23158758dc6e535ff561300e173aee, state=
+2026-06-30 22:17:27 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-30 22:17:27 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-06-30 22:17:27 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2026-06-30 22:17:27 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=f380ecdb-22ba-30b5-9e59-0bfb4ddcb24f
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [After]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Before]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Between]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Cookie]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Header]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Host]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Method]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Path]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Query]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [ReadBody]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [RemoteAddr]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Version]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Weight]
+2026-06-30 22:17:29 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 32 endpoints beneath base path '/actuator'
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-06-30 22:17:30 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-06-30 22:17:30 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1782838051111 with initial instances count: 2
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application API-GATEWAY with eureka with status UP
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1782838051115, current=UP, previous=STARTING]
+2026-06-30 22:17:31 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080: registering service...
+2026-06-30 22:17:31 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - registration status: 204
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= o.s.b.reactor.netty.NettyWebServer : Netty started on port 8080 (http)
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2026-06-30 22:17:31 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : Started ApiGatewayApplication in 7.382 seconds (process running for 10.266)
+2026-06-30 22:22:30 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-30 22:23:40 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application API-GATEWAY with eureka with status DOWN
+2026-06-30 22:23:40 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1782838420875, current=DOWN, previous=UP]
+2026-06-30 22:23:40 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080: registering service...
+2026-06-30 22:23:40 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - registration status: 204
+2026-06-30 22:23:41 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.b.reactor.netty.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-30 22:23:41 INFO  [netty-shutdown] traceId= spanId= o.s.b.reactor.netty.GracefulShutdown : Graceful shutdown complete
+2026-06-30 22:23:43 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-06-30 22:23:46 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-06-30 22:23:46 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - deregister  status: 200
+2026-06-30 22:23:46 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient
+2026-06-30 22:23:52 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : Starting ApiGatewayApplication using Java 25.0.1 with PID 21200 (D:\Live Batches\micro_devops\easy_busy\api-gateway\api-gateway\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-06-30 22:23:52 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : No active profile set, falling back to 1 default profile: "default"
+2026-06-30 22:23:52 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-06-30 22:23:52 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=API-GATEWAY, profiles=[default], label=null, version=e2e92a478b23158758dc6e535ff561300e173aee, state=
+2026-06-30 22:23:53 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-30 22:23:53 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-06-30 22:23:53 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2026-06-30 22:23:53 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=f380ecdb-22ba-30b5-9e59-0bfb4ddcb24f
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [After]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Before]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Between]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Cookie]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Header]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Host]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Method]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Path]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Query]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [ReadBody]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [RemoteAddr]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Version]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Weight]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 32 endpoints beneath base path '/actuator'
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-06-30 22:23:55 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1782838435952 with initial instances count: 3
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application API-GATEWAY with eureka with status UP
+2026-06-30 22:23:55 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1782838435957, current=UP, previous=STARTING]
+2026-06-30 22:23:55 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080: registering service...
+2026-06-30 22:23:55 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - registration status: 204
+2026-06-30 22:23:56 INFO  [main] traceId= spanId= o.s.b.reactor.netty.NettyWebServer : Netty started on port 8080 (http)
+2026-06-30 22:23:56 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2026-06-30 22:23:56 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : Started ApiGatewayApplication in 5.958 seconds (process running for 8.842)
+2026-06-30 22:24:49 INFO  [reactor-http-nio-3] traceId=98936c1c24674bea771542d83ac4a37e spanId=6e4ace664f584bdb c.s.e.a.filter.AuthenticationFilter : path  /users/api/users/login
+2026-06-30 22:24:49 INFO  [reactor-http-nio-3] traceId=98936c1c24674bea771542d83ac4a37e spanId=6e4ace664f584bdb c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-06-30 22:24:50 WARN  [reactor-http-nio-3] traceId=98936c1c24674bea771542d83ac4a37e spanId=6e4ace664f584bdb o.s.c.l.core.RoundRobinLoadBalancer : No servers available for service: users-service
+2026-06-30 22:28:55 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-30 22:33:42 INFO  [reactor-http-nio-5] traceId=8aada1018202a5d1fa9e0c882d1193b4 spanId=fafa90959623f75c c.s.e.a.filter.AuthenticationFilter : path  /users/api/users/login
+2026-06-30 22:33:42 INFO  [reactor-http-nio-5] traceId=8aada1018202a5d1fa9e0c882d1193b4 spanId=fafa90959623f75c c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-06-30 22:33:55 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-30 22:38:29 INFO  [reactor-http-nio-10] traceId=2e4899fd38e59373ea3b558450be22f3 spanId=6e99428a7605a01e c.s.e.a.filter.AuthenticationFilter : path  /users/api/users/login
+2026-06-30 22:38:29 INFO  [reactor-http-nio-10] traceId=2e4899fd38e59373ea3b558450be22f3 spanId=6e99428a7605a01e c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-06-30 22:38:55 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-30 22:43:55 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-06-30 22:48:55 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
