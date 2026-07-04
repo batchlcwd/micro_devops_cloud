@@ -327,7 +327,16 @@ public class OrderServiceImpl implements OrderService {
         log.info("Updating payment status for Order ID: {} to {}", orderId, paymentStatus);
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found for id: " + orderId));
-        order.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
+        
+        PaymentStatus parsedStatus = PaymentStatus.valueOf(paymentStatus);
+        order.setPaymentStatus(parsedStatus);
+
+        if (parsedStatus == PaymentStatus.FAILED) {
+            log.warn("Payment failed for Order ID: {}. Triggering compensation: cancelling order.", orderId);
+            order.setStatus(OrderStatus.CANCELLED);
+            order.setCancelledAt(Instant.now());
+        }
+
         orderRepository.save(order);
         log.info("Payment status successfully updated for Order ID: {}", orderId);
     }
