@@ -155,7 +155,9 @@ public class OrderServiceImpl implements OrderService {
         try {
 
 //            for all cart items
-            for (CartItem item : cart.getItems()) {
+            for (CartItem item : cart.getItems())
+            {
+                //each item ki inventory reserve
                 reservedSnapshots.add(inventoryClient.reserveByProductId(item.getProductId(), new ReserveStockRequest(item.getQuantity())));
             }
 
