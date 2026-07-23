@@ -1,0 +1,27 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container_new
+
+    ports:
+      - "3309:3306"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: initial_db
+    
+    volumes:
+      - mysql_data_new:/var/lib/mysql
+    
+    networks:
+      - backend-network-new
+
+
+volumes:
+  mysql_data_new:
+    driver: local
+
+
+networks:
+  backend-network-new:
+    driver: bridge

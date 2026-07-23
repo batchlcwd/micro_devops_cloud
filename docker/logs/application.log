@@ -1,0 +1,30 @@
+2026-07-16T16:37:30.946Z  INFO 1 --- [javapp-test] [main] c.s.p.javapptest.JavappTestApplication   : Starting JavappTestApplication v0.0.1-SNAPSHOT using Java 21.0.11 with PID 1 (/app/app.jar started by root in /app)
+2026-07-16T16:37:30.950Z  INFO 1 --- [javapp-test] [main] c.s.p.javapptest.JavappTestApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-07-16T16:37:40.581Z  INFO 1 --- [javapp-test] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-16T16:37:31.589Z  INFO 1 --- [javapp-test] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-16T16:37:31.591Z  INFO 1 --- [javapp-test] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-16T16:37:31.615Z  INFO 1 --- [javapp-test] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 604 ms
+2026-07-16T16:37:31.895Z  INFO 1 --- [javapp-test] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-07-16T16:37:31.909Z  INFO 1 --- [javapp-test] [main] c.s.p.javapptest.JavappTestApplication   : Started JavappTestApplication in 1.41 seconds (process running for 1.982)
+2026-07-16T16:38:28.517Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-16T16:38:28.518Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-16T16:38:28.520Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-16T16:39:50.005Z  INFO 1 --- [javapp-test] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-16T16:39:50.013Z  INFO 1 --- [javapp-test] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-16T16:39:57.529Z  INFO 1 --- [javapp-test] [main] c.s.p.javapptest.JavappTestApplication   : Starting JavappTestApplication v0.0.1-SNAPSHOT using Java 21.0.11 with PID 1 (/app/app.jar started by root in /app)
+2026-07-16T16:39:57.532Z  INFO 1 --- [javapp-test] [main] c.s.p.javapptest.JavappTestApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-07-16T16:39:58.222Z  INFO 1 --- [javapp-test] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-07-16T16:39:58.236Z  INFO 1 --- [javapp-test] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-16T16:39:58.237Z  INFO 1 --- [javapp-test] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-16T16:39:58.264Z  INFO 1 --- [javapp-test] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 680 ms
+2026-07-16T16:39:58.544Z  INFO 1 --- [javapp-test] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-07-16T16:39:58.557Z  INFO 1 --- [javapp-test] [main] c.s.p.javapptest.JavappTestApplication   : Started JavappTestApplication in 1.451 seconds (process running for 1.925)
+2026-07-16T16:40:09.529Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-16T16:40:09.530Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-16T16:40:09.532Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-16T16:40:09.557Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] c.s.p.j.controller.TestController        : testApi
+2026-07-16T16:40:09.558Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-1] c.s.p.j.controller.TestController        : Thu Jul 16 16:40:09 UTC 2026
+2026-07-16T16:40:30.735Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-3] c.s.p.j.controller.TestController        : testApi
+2026-07-16T16:40:30.737Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-3] c.s.p.j.controller.TestController        : Thu Jul 16 16:40:30 UTC 2026
+2026-07-16T16:40:42.861Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-4] c.s.p.j.controller.TestController        : testApi
+2026-07-16T16:40:42.864Z  INFO 1 --- [javapp-test] [http-nio-8080-exec-4] c.s.p.j.controller.TestController        : Thu Jul 16 16:40:42 UTC 2026

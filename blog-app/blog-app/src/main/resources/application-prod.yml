@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: blog-app
+
+  #  db configurations
+  datasource:
+    url: jdbc:mysql://${DB_HOST:mysql_container_new}:${DB_PORT:3306}/${DB_NAME:blog_app}
+    username: ${DB_USER_NAME:root}
+    password: ${DB_USER_PASSWORD:root123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+
+#jwt related configurations
+security:
+  jwt:
+    secret: 24tqfweqhfofjwfjhwfwoijdfqwbdpojfwfbhwfnwjhfdbijoqwhoqfbqifhqagrasgasgafasgadfweatesbsadgsdhbsagshag
+    access-token-expire-time: 600000
+    refresh-token-expire-time: 3600000
+    issuer: substring-blog-app
+
+#Dialect
+#driver classname
