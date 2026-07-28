@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+
+# Template helps to create pod
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+           - containerPort: 80
+          resources:
+            requests:
+            # cores or millicores(m)
+            # 1 core = 1,000m (millicores)
+              cpu: "100m"
+              # The "Mi" Meaning: It represents Mebibytes 
+              #  128Mi is roughly equal to 134.2 Megabytes (MB).
+              memory: "128Mi"
+              
+            limits:
+              cpu: "500m"
+              memory: "256Mi"

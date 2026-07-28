@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service 
+metadata:
+  name: nginx-service
+
+spec:
+  selector:
+    app: nginx
+  
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 80
+
+ # Cluster IP--> within the cluster 
+  type: LoadBalancer
