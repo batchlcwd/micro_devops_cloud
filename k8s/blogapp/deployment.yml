@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blogapp-deployment
+  labels:
+    app: blogapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blogapp
+
+# Template helps to create pod
+  template:
+    metadata:
+      labels:
+        app: blogapp
+    spec:
+      containers:
+        - name: blogapp-container
+          image: batchlcwd/blog-app:1.0
+          ports:
+           - containerPort: 8080
+
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: DB_HOST
+              value: "mysql-service"
+            - name: DB_PORT
+              value: "3306"
+            - name: "DB_NAME"
+              value: "blogdb"
+
+
+
+          resources:
+            requests:
+            # cores or millicores(m)
+            # 1 core = 1,000m (millicores)
+              cpu: "100m"
+              # The "Mi" Meaning: It represents Mebibytes 
+              #  128Mi is roughly equal to 134.2 Megabytes (MB).
+              memory: "128Mi"
+              
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: blogapp-service
+
+spec:
+  selector:
+    app: blogapp
+  
+  ports:
+    - protocol: TCP
+      port: 8086
+      targetPort: 8080
+
+ # Cluster IP--> within the cluster 
+  type: LoadBalancer

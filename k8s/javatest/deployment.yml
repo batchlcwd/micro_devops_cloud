@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javatest-deployment
+  labels:
+    app: javatest
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: javatest
+
+# Template helps to create pod
+  template:
+    metadata:
+      labels:
+        app: javatest
+    spec:
+      containers:
+        - name: javatest-container
+          image: batchlcwd/javaapp_test:1.0
+          ports:
+           - containerPort: 8080
+          resources:
+            requests:
+            # cores or millicores(m)
+            # 1 core = 1,000m (millicores)
+              cpu: "100m"
+              # The "Mi" Meaning: It represents Mebibytes 
+              #  128Mi is roughly equal to 134.2 Megabytes (MB).
+              memory: "128Mi"
+              
+            limits:
+              cpu: "500m"
+              memory: "256Mi"

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+
+# Template helps to create pod
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql-container
+          image:  mysql:8.4
+          ports:
+            - containerPort: 3306
+
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root123
+            - name: MYSQL_DATABASE
+              value: blogdb          
+
+          resources:
+            requests:
+            # cores or millicores(m)
+            # 1 core = 1,000m (millicores)
+              cpu: "250m"
+              # The "Mi" Meaning: It represents Mebibytes 
+              #  128Mi is roughly equal to 134.2 Megabytes (MB).
+              memory: "512Mi"
+              
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: mysql-service
+
+spec:
+  selector:
+    app: mysql
+  
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+ # Cluster IP--> within the cluster 
+  type: ClusterIP
