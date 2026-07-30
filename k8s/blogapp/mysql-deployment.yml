@@ -26,7 +26,11 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: root123
             - name: MYSQL_DATABASE
-              value: blogdb          
+              value: blogdb    
+
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql      
 
           resources:
             requests:
@@ -40,6 +44,20 @@ spec:
             limits:
               cpu: "1"
               memory: "1Gi"
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+
+
+        # - name: mysql-storage
+        #   hostPath:
+        #     path: /data/mysql
+        #     type: DirectoryOrCreate
+
+        # - name : mysql-storage
+        #   emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service 
