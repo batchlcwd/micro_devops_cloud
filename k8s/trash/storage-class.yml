@@ -1,0 +1,15 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gp3-storage
+
+# A provisioner is a plugin that knows how to create storage on a particular storage system.
+provisioner: ebs.csi.aws.com
+# he parameters section tells the provisioner what kind of disk to create.
+parameters:
+# newer version of ssd
+  type: gp3
+
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+reclaimPolicy: Delete

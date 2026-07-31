@@ -24,13 +24,25 @@ spec:
 
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: "prod"
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: SPRING_PROFILES_ACTIVE
             - name: DB_HOST
-              value: "mysql-service"
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_HOST
             - name: DB_PORT
-              value: "3306"
-            - name: "DB_NAME"
-              value: "blogdb"
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_NAME
 
 
 
