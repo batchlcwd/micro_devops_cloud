@@ -50,13 +50,13 @@ spec:
             requests:
             # cores or millicores(m)
             # 1 core = 1,000m (millicores)
-              cpu: "100m"
+              cpu: "500m"
               # The "Mi" Meaning: It represents Mebibytes 
               #  128Mi is roughly equal to 134.2 Megabytes (MB).
               memory: "128Mi"
               
             limits:
-              cpu: "500m"
+              cpu: "1000m"
               memory: "256Mi"
 
 ---
