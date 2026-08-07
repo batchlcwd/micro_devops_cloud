@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blogapp-deployment
+  labels:
+    app: blogapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blogapp
+
+# Template helps to create pod
+  template:
+    metadata:
+      labels:
+        app: blogapp
+    spec:
+      containers:
+        - name: blogapp-container
+          image: batchlcwd/blog-app:1.0
+          ports:
+           - containerPort: 8080
+
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: SPRING_PROFILES_ACTIVE
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_NAME
+
+
+
+          resources:
+            requests:
+            # cores or millicores(m)
+            # 1 core = 1,000m (millicores)
+              cpu: "500m"
+              # The "Mi" Meaning: It represents Mebibytes 
+              #  128Mi is roughly equal to 134.2 Megabytes (MB).
+              memory: "128Mi"
+              
+            limits:
+              cpu: "1000m"
+              memory: "256Mi"
+
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: blogapp-service
+
+spec:
+  selector:
+    app: blogapp
+  
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+ # Cluster IP--> within the cluster 
+  type: ClusterIP

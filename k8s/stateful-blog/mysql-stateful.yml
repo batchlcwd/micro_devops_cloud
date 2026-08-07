@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mysql-deployment
+  name: mysql-stateful
   labels:
     app: mysql
 spec:
+  serviceName: mysql-service
   replicas: 1
   selector:
     matchLabels:
@@ -50,10 +51,20 @@ spec:
             limits:
               cpu: "1"
               memory: "1Gi"
-      volumes:
-        - name: mysql-storage
-          persistentVolumeClaim:
-            claimName: mysql-pvc
+              
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 2Gi
+      # volumes:
+      #   - name: mysql-storage
+      #     persistentVolumeClaim:
+      #       claimName: mysql-pvc
 
 
         # - name: mysql-storage
@@ -71,7 +82,7 @@ metadata:
   name: mysql-service
 
 spec:
-  # ClusterIP: None
+  clusterIP: None
   selector:
     app: mysql
   
@@ -81,4 +92,4 @@ spec:
       targetPort: 3306
 
  # Cluster IP--> within the cluster 
-  type: ClusterIP
+  # type: ClusterIP

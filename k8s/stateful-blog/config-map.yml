@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: blog-config-map
+
+
+data:
+  SPRING_PROFILES_ACTIVE: prod
+  DB_HOST: mysql-service
+  DB_PORT: "3306"
+  DB_NAME: blogdb
