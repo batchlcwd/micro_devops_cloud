@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blogapp-deployment
+  labels: {{- include "stateful-blog.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.blogApp.replicaCount }}
+  selector:
+    matchLabels:
+      app: blogapp
+  template:
+    metadata:
+      labels:
+        app: blogapp
+    spec:
+      containers:
+        - name: blogapp-container
+          image: "{{ .Values.blogApp.image.repository }}:{{ .Values.blogApp.image.tag }}"
+          imagePullPolicy: {{ .Values.blogApp.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.blogApp.service.targetPort }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: SPRING_PROFILES_ACTIVE
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-config-map
+                  key: DB_NAME
+          resources: {{- toYaml .Values.blogApp.resources | nindent 12 }}
