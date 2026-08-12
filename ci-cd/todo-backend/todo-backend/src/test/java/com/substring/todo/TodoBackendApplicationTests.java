@@ -1,5 +1,6 @@
 package com.substring.todo;
 
+import com.substring.todo.controllers.HomeController;
 import com.substring.todo.controllers.TodoController;
 import com.substring.todo.models.Todo;
 import com.substring.todo.services.TodoService;
@@ -11,11 +12,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class TodoBackendApplicationTests {
+
+	@Autowired
+	private HomeController homeController;
 
 	@Autowired
 	private TodoController todoController;
@@ -30,8 +35,27 @@ class TodoBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
+		assertNotNull(homeController);
 		assertNotNull(todoController);
 		assertNotNull(todoService);
+	}
+
+	@Test
+	void testRootEndpoint() {
+		ResponseEntity<Map<String, Object>> response = homeController.rootStatus();
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertNotNull(response.getBody());
+		assertEquals("OK", response.getBody().get("status"));
+		assertEquals("Todo Backend API is running successfully", response.getBody().get("message"));
+		assertEquals("todo-backend", response.getBody().get("service"));
+	}
+
+	@Test
+	void testDummyDataInitialization() {
+		todoService.initDummyData();
+		List<Todo> todos = todoService.getAllTodos();
+		assertFalse(todos.isEmpty());
+		assertEquals(4, todos.size());
 	}
 
 	@Test

@@ -1,6 +1,7 @@
 package com.substring.todo.services;
 
 import com.substring.todo.models.Todo;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,13 +16,58 @@ public class TodoService {
     // Thread-safe in-memory list to manage todos without database
     private final List<Todo> todoList = new CopyOnWriteArrayList<>();
 
+    @PostConstruct
+    public void initDummyData() {
+        if (todoList.isEmpty()) {
+            LocalDateTime now = LocalDateTime.now();
+
+            todoList.add(new Todo(
+                    UUID.randomUUID().toString(),
+                    "Learn Docker & Containerization",
+                    "Understand images, containers, volumes, and multi-stage builds",
+                    true,
+                    now.minusDays(3),
+                    now.minusDays(2)
+            ));
+
+            todoList.add(new Todo(
+                    UUID.randomUUID().toString(),
+                    "Setup CI/CD Pipeline",
+                    "Configure GitHub Actions workflow for automated testing and building",
+                    false,
+                    now.minusDays(2),
+                    now.minusDays(2)
+            ));
+
+            todoList.add(new Todo(
+                    UUID.randomUUID().toString(),
+                    "Deploy to Kubernetes Cluster",
+                    "Create Kubernetes Deployment and Service YAML manifests for microservices",
+                    false,
+                    now.minusDays(1),
+                    now.minusDays(1)
+            ));
+
+            todoList.add(new Todo(
+                    UUID.randomUUID().toString(),
+                    "Implement Observability & Monitoring",
+                    "Configure Prometheus metrics and Grafana dashboards for monitoring",
+                    false,
+                    now,
+                    now
+            ));
+        }
+    }
+
     // Create a new todo
     public Todo createTodo(Todo todo) {
         if (todo.getId() == null || todo.getId().trim().isEmpty()) {
             todo.setId(UUID.randomUUID().toString());
         }
         LocalDateTime now = LocalDateTime.now();
-        todo.setCreatedAt(now);
+        if (todo.getCreatedAt() == null) {
+            todo.setCreatedAt(now);
+        }
         todo.setUpdatedAt(now);
         todoList.add(todo);
         return todo;
