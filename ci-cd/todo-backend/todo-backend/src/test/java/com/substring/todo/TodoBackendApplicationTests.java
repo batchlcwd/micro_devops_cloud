@@ -85,6 +85,31 @@ class TodoBackendApplicationTests {
 	}
 
 	@Test
+	void testSearchTodos() {
+		Todo t1 = new Todo();
+		t1.setTitle("Learn Kubernetes");
+		t1.setDescription("Understand pods and services");
+		todoService.createTodo(t1);
+
+		Todo t2 = new Todo();
+		t2.setTitle("Learn Docker");
+		t2.setDescription("Understand images and containers");
+		todoService.createTodo(t2);
+
+		ResponseEntity<List<Todo>> searchResponse = todoController.searchTodos("Kubernetes");
+		assertEquals(HttpStatus.OK, searchResponse.getStatusCode());
+		assertNotNull(searchResponse.getBody());
+		assertEquals(1, searchResponse.getBody().size());
+		assertEquals("Learn Kubernetes", searchResponse.getBody().get(0).getTitle());
+
+		ResponseEntity<List<Todo>> searchByDesc = todoController.searchTodos("containers");
+		assertEquals(HttpStatus.OK, searchByDesc.getStatusCode());
+		assertNotNull(searchByDesc.getBody());
+		assertEquals(1, searchByDesc.getBody().size());
+		assertEquals("Learn Docker", searchByDesc.getBody().get(0).getTitle());
+	}
+
+	@Test
 	void testUpdateTodo() {
 		Todo todo = new Todo();
 		todo.setTitle("Task 1");

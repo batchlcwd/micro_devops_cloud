@@ -85,6 +85,18 @@ public class TodoService {
                 .findFirst();
     }
 
+    // Search todos by title or description
+    public List<Todo> searchTodos(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return todoList;
+        }
+        String lowerQuery = query.toLowerCase().trim();
+        return todoList.stream()
+                .filter(t -> (t.getTitle() != null && t.getTitle().toLowerCase().contains(lowerQuery)) ||
+                        (t.getDescription() != null && t.getDescription().toLowerCase().contains(lowerQuery)))
+                .toList();
+    }
+
     // Update existing todo
     public Optional<Todo> updateTodo(String id, Todo updatedTodo) {
         return getTodoById(id).map(existingTodo -> {

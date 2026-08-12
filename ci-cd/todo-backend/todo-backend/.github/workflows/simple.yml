@@ -1,0 +1,38 @@
+name: Simple Concept Workflow
+
+on:
+    workflow_dispatch:
+
+env:
+    APP_NAME: "Todo backend"
+    ENVIRONMENT: "Production"
+
+jobs:
+    learn:
+        runs-on: ubuntu-latest
+        steps:
+            - name: step1
+              run: echo "Hello World from $APP_NAME"
+
+            - name: step2
+              run: echo "Hello World 2 from $APP_NAME in $ENVIRONMENT"
+
+            - name: step3
+              run: |
+                echo "Name of the dockerhub user name ${{ vars.DOCKERHUB_USERNAME}}"
+                echo "Name of the ec2 username ${{ vars.EC2_USERNAME}}"
+                echo "Repository name is ${{github.repository}}"
+
+            - name: step4 - git repo checkout
+              uses: actions/checkout@v6
+            
+            - name: step5 - setting up java
+              uses: actions/setup-java@v5
+              with:
+                  java-version: '21'
+                  distribution: 'temurin'
+
+            - name: step6- printing java version
+              run: java -version
+                    
+              

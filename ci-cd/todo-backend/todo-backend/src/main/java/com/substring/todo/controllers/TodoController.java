@@ -33,6 +33,13 @@ public class TodoController {
         return ResponseEntity.ok(todos);
     }
 
+    // Search Todos: GET /api/v1/todos/search?query=xyz
+    @GetMapping("/search")
+    public ResponseEntity<List<Todo>> searchTodos(@RequestParam(value = "query", defaultValue = "") String query) {
+        List<Todo> results = todoService.searchTodos(query);
+        return ResponseEntity.ok(results);
+    }
+
     // Get Todo by ID: GET /api/v1/todos/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Todo> getTodoById(@PathVariable String id) {

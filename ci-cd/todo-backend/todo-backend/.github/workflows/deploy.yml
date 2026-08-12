@@ -1,0 +1,57 @@
+name: Deploy Todo Backend
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+env:
+  APP_NAME: todo-backend
+
+jobs:
+  build:
+    name: Build and push image
+    runs-on: ubuntu-latest
+
+    steps:
+    # source coude checkout
+      - name: Checkout source code
+        uses: actions/checkout@v6
+
+    # setting up java
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven
+
+    # build sprin gboot project
+      - name: Build Application
+        run: |
+            chmod +x mvnw
+            ./mvnw clean package -DskipTests
+
+    # Login to dockerhub
+      - name: Login to docker hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    # image build
+      - name: Build docker image
+        run: |
+          docker build \
+          -t ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:latest \
+          .
+          echo "image build success"
+          docker images
+
+    # image push
+      - name: Push the docker image
+        run: |
+          docker push ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:latest
+          echo "image pushed success"
+
+    # Deploy on ec2:
