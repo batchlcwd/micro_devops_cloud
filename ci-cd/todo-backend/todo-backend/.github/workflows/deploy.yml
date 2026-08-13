@@ -7,6 +7,8 @@ on:
             - main
 env:
   APP_NAME: todo-backend
+  IMAGE_TAG: ${{github.sha}}
+  CONTAINER_NAME: todo-backend-app
 
 jobs:
   build:
@@ -43,7 +45,7 @@ jobs:
       - name: Build docker image
         run: |
           docker build \
-          -t ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:latest \
+          -t ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:${{env.IMAGE_TAG}} \
           .
           echo "image build success"
           docker images
@@ -51,7 +53,27 @@ jobs:
     # image push
       - name: Push the docker image
         run: |
-          docker push ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:latest
+          docker push ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:${{env.IMAGE_TAG}}
           echo "image pushed success"
 
     # Deploy on ec2:
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ vars.EC2_HOST }}
+          username: ${{ vars.EC2_USERNAME }}
+          key: ${{secrets.EC2_PASSWORD}}
+          script: |
+            docker pull ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:${{env.IMAGE_TAG}}
+            docker stop ${{env.CONTAINER_NAME}} || true
+            docker rm ${{env.CONTAINER_NAME}} || true
+            docker run -d \
+              --name ${{env.CONTAINER_NAME}} \
+              -p 8080:8080 \
+              ${{ vars.DOCKERHUB_USERNAME}}/${{env.APP_NAME}}:${{env.IMAGE_TAG}}
+            docker image prune -f
+            echo "deployment successful !!"
+
+
+

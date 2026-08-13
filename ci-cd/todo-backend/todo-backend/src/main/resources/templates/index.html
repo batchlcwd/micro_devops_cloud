@@ -1,0 +1,1132 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow — Minimalistic Todo Manager</title>
+    <!-- Tailwind CSS v4 Browser Build -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style type="text/tailwindcss">
+      @custom-variant dark (&:where(.dark, .dark *));
+    </style>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      /* Custom scrollbar for task list */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      /* Handle smooth transition of colors */
+      .theme-transition {
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease,
+          text-decoration-color 0.3s ease,
+          color 0.3s ease,
+          shadow 0.3s ease;
+      }
+    </style>
+    <script>
+      // Inline script to prevent flash of light theme
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased flex flex-col theme-transition"
+  >
+    <!-- Navbar -->
+    <nav
+      class="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-0 z-30 shadow-xs theme-transition"
+    >
+      <div
+        class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-3">
+          <!-- App Logo/Icon -->
+          <div
+            class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-100 dark:shadow-none"
+          >
+            <svg
+              class="w-5 h-5 text-white"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <h1
+              class="text-xl font-bold tracking-tight text-slate-900 dark:text-white"
+            >
+              Todo Application
+            </h1>
+            <p class="text-xs text-slate-400 dark:text-slate-500">
+              Local Task Manager
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3.5">
+          <!-- Theme Toggle Button -->
+          <button
+            id="theme-toggle"
+            type="button"
+            class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-hidden rounded-xl text-sm p-2.5 cursor-pointer theme-transition"
+          >
+            <!-- Dark SVG Icon -->
+            <svg
+              id="theme-toggle-dark-icon"
+              class="hidden w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+              ></path>
+            </svg>
+            <!-- Light SVG Icon -->
+            <svg
+              id="theme-toggle-light-icon"
+              class="hidden w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 011.414-1.414l.707.707zM16 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1z"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+
+          <span
+            id="connection-badge"
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 theme-transition"
+          >
+            <span
+              class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500 animate-pulse"
+            ></span>
+            Connected
+          </span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main
+      class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-6"
+    >
+      <!-- Stats Dashboard -->
+      <section
+        class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm theme-transition"
+      >
+        <div
+          class="grid grid-cols-3 gap-4 text-center sm:text-left sm:flex sm:items-center sm:justify-between"
+        >
+          <div>
+            <p
+              class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider"
+            >
+              Total Tasks
+            </p>
+            <p
+              id="stat-total"
+              class="text-3xl font-bold text-slate-800 dark:text-slate-200 mt-1"
+            >
+              0
+            </p>
+          </div>
+          <div
+            class="border-l border-slate-100 dark:border-slate-800 pl-4 sm:pl-8"
+          >
+            <p
+              class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider"
+            >
+              Completed
+            </p>
+            <p
+              id="stat-completed"
+              class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mt-1"
+            >
+              0
+            </p>
+          </div>
+          <div
+            class="border-l border-slate-100 dark:border-slate-800 pl-4 sm:pl-8"
+          >
+            <p
+              class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider"
+            >
+              Pending
+            </p>
+            <p
+              id="stat-pending"
+              class="text-3xl font-bold text-amber-600 dark:text-amber-500 mt-1"
+            >
+              0
+            </p>
+          </div>
+          <div class="col-span-3 sm:col-span-1 sm:w-1/3 mt-4 sm:mt-0">
+            <div
+              class="flex justify-between items-center mb-1 text-xs font-medium text-slate-500 dark:text-slate-400"
+            >
+              <span>Progress</span>
+              <span id="stat-percent">0%</span>
+            </div>
+            <div
+              class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 theme-transition"
+            >
+              <div
+                id="stat-progress-bar"
+                class="bg-indigo-600 dark:bg-indigo-500 h-2 rounded-full transition-all duration-500 ease-out"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Task Form (Create) -->
+      <section
+        class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm theme-transition"
+      >
+        <h2
+          class="text-base font-semibold text-slate-900 dark:text-white mb-4 flex items-center"
+        >
+          <svg
+            class="w-5 h-5 mr-2 text-indigo-500 dark:text-indigo-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            ></path>
+          </svg>
+          Create New Task
+        </h2>
+        <form id="todo-form" class="space-y-4">
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label
+                for="task-title"
+                class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5"
+                >Task Title *</label
+              >
+              <input
+                type="text"
+                id="task-title"
+                required
+                placeholder="What needs to be done?"
+                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 focus:bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:focus:bg-slate-900 dark:focus:border-indigo-500 transition-all theme-transition"
+              />
+            </div>
+            <div>
+              <label
+                for="task-desc"
+                class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5"
+                >Description</label
+              >
+              <textarea
+                id="task-desc"
+                rows="2"
+                placeholder="Add some context or details..."
+                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 focus:bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100 dark:focus:bg-slate-900 dark:focus:border-indigo-500 transition-all theme-transition"
+              ></textarea>
+            </div>
+          </div>
+          <div class="flex justify-end pt-2">
+            <button
+              type="submit"
+              class="inline-flex items-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-medium text-sm rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
+            >
+              Add Task
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Toolbar & Filter -->
+      <section
+        class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      >
+        <!-- Left Side: Tabs -->
+        <div
+          class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl w-fit self-start theme-transition"
+        >
+          <button
+            onclick="setFilter('all')"
+            id="tab-all"
+            class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs"
+          >
+            All
+          </button>
+          <button
+            onclick="setFilter('active')"
+            id="tab-active"
+            class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+          >
+            Active
+          </button>
+          <button
+            onclick="setFilter('completed')"
+            id="tab-completed"
+            class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+          >
+            Completed
+          </button>
+        </div>
+
+        <!-- Right Side: Search and Sort -->
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <div class="relative flex-grow md:flex-grow-0 md:w-64">
+            <span
+              class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-slate-400 dark:text-slate-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search tasks..."
+              class="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-xl text-xs focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all theme-transition"
+            />
+          </div>
+
+          <div class="relative">
+            <select
+              id="sort-select"
+              onchange="setSort(this.value)"
+              class="appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 pr-8 text-xs font-medium text-slate-600 dark:text-slate-300 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer theme-transition"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="az">Title A-Z</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400 dark:text-slate-500"
+            >
+              <svg
+                class="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Task List -->
+      <section>
+        <div id="todo-list" class="space-y-3 transition-all duration-300">
+          <!-- Loading State -->
+          <div
+            class="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 theme-transition"
+          >
+            <svg
+              class="animate-spin h-8 w-8 text-indigo-500 mb-3"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            <span class="text-sm">Fetching your tasks...</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 py-6 text-center text-xs text-slate-400 dark:text-slate-500 mt-auto theme-transition"
+    >
+      <p>&copy; 2026 TaskFlow. All rights reserved.</p>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div
+      id="toast-container"
+      class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"
+    ></div>
+
+    <!-- Edit Task Modal -->
+    <div
+      id="edit-modal"
+      class="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden transition-all duration-300 opacity-0"
+    >
+      <div
+        class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden transform scale-95 transition-transform duration-300 theme-transition"
+      >
+        <div
+          class="px-6 py-4 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center theme-transition"
+        >
+          <h3 class="text-base font-semibold text-slate-900 dark:text-white">
+            Edit Task
+          </h3>
+          <button
+            onclick="closeEditModal()"
+            class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-hidden cursor-pointer"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <form id="edit-form" class="p-6 space-y-4">
+          <input type="hidden" id="edit-id" />
+          <div>
+            <label
+              for="edit-title"
+              class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5"
+              >Task Title *</label
+            >
+            <input
+              type="text"
+              id="edit-title"
+              required
+              class="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-100 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-all theme-transition"
+            />
+          </div>
+          <div>
+            <label
+              for="edit-desc"
+              class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5"
+              >Description</label
+            >
+            <textarea
+              id="edit-desc"
+              rows="3"
+              class="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-850 text-slate-800 dark:text-slate-100 rounded-xl text-sm focus:outline-hidden focus:border-indigo-500 transition-all theme-transition"
+            ></textarea>
+          </div>
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="edit-completed"
+              class="h-4.5 w-4.5 rounded-sm border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+            />
+            <label
+              for="edit-completed"
+              class="ml-2 block text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer"
+              >Mark as Completed</label
+            >
+          </div>
+          <div
+            class="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800"
+          >
+            <button
+              type="button"
+              onclick="closeEditModal()"
+              class="px-4 py-2.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-xl transition-all cursor-pointer theme-transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-medium text-sm rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div
+      id="delete-modal"
+      class="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden transition-all duration-300 opacity-0"
+    >
+      <div
+        class="bg-white dark:bg-slate-900 rounded-2xl max-w-sm w-full border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden transform scale-95 transition-transform duration-300 theme-transition"
+      >
+        <div class="p-6 text-center">
+          <div
+            class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 mb-4"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+            Delete Task?
+          </h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+            Are you sure you want to delete this task? This action cannot be
+            undone.
+          </p>
+          <div class="flex justify-center gap-3">
+            <button
+              onclick="closeDeleteModal()"
+              class="px-4 py-2.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-xl transition-all cursor-pointer theme-transition"
+            >
+              Cancel
+            </button>
+            <button
+              id="confirm-delete-btn"
+              class="px-5 py-2.5 bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-500 text-white font-medium text-sm rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+      const API_BASE = "/api/v1/todos";
+
+      let allTodos = [];
+      let filterStatus = "all"; // 'all', 'active', 'completed'
+      let currentSort = "newest"; // 'newest', 'oldest', 'az'
+      let searchTimeout = null;
+      let deleteTargetId = null;
+
+      // Theme Toggle Module Implementation
+      const themeToggleDarkIcon = document.getElementById(
+        "theme-toggle-dark-icon",
+      );
+      const themeToggleLightIcon = document.getElementById(
+        "theme-toggle-light-icon",
+      );
+      const themeToggleBtn = document.getElementById("theme-toggle");
+
+      // Change the icons inside the button based on previous settings
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        themeToggleLightIcon.classList.remove("hidden");
+      } else {
+        themeToggleDarkIcon.classList.remove("hidden");
+      }
+
+      themeToggleBtn.addEventListener("click", function () {
+        // Toggle icons inside button
+        themeToggleDarkIcon.classList.toggle("hidden");
+        themeToggleLightIcon.classList.toggle("hidden");
+
+        // If set via local storage previously
+        if (localStorage.getItem("color-theme")) {
+          if (localStorage.getItem("color-theme") === "light") {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("color-theme", "dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("color-theme", "light");
+          }
+          // If not set previously
+        } else {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("color-theme", "light");
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("color-theme", "dark");
+          }
+        }
+      });
+
+      // On document load
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchTodos();
+
+        // Set up form submission listeners
+        document
+          .getElementById("todo-form")
+          .addEventListener("submit", handleCreateTodo);
+        document
+          .getElementById("edit-form")
+          .addEventListener("submit", handleUpdateTodo);
+
+        // Debounced Search
+        document
+          .getElementById("search-input")
+          .addEventListener("input", (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+              handleSearch(e.target.value);
+            }, 300);
+          });
+      });
+
+      // Show toast helper
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+
+        let bgClass = "bg-emerald-600 dark:bg-emerald-600";
+        let iconSvg = `<svg class="w-4 h-4 text-emerald-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+
+        if (type === "error") {
+          bgClass = "bg-rose-600 dark:bg-rose-600";
+          iconSvg = `<svg class="w-4 h-4 text-rose-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+        } else if (type === "info") {
+          bgClass = "bg-indigo-600 dark:bg-indigo-600";
+          iconSvg = `<svg class="w-4 h-4 text-indigo-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+        }
+
+        toast.className = `flex items-center gap-2.5 px-4.5 py-3 rounded-xl shadow-lg text-white font-medium text-xs transition-all duration-300 transform translate-y-2 opacity-0 ${bgClass}`;
+        toast.innerHTML = `
+                ${iconSvg}
+                <span>${message}</span>
+            `;
+
+        container.appendChild(toast);
+
+        // Trigger animation
+        setTimeout(() => {
+          toast.classList.remove("translate-y-2", "opacity-0");
+        }, 10);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+          toast.classList.add("translate-y-2", "opacity-0");
+          setTimeout(() => {
+            toast.remove();
+          }, 300);
+        }, 3000);
+      }
+
+      // Update connection status UI
+      function updateConnectionStatus(connected) {
+        const badge = document.getElementById("connection-badge");
+        if (connected) {
+          badge.className =
+            "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 theme-transition";
+          badge.innerHTML =
+            '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Connected';
+        } else {
+          badge.className =
+            "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800/50 theme-transition";
+          badge.innerHTML =
+            '<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-rose-500"></span>Server Offline';
+        }
+      }
+
+      // Fetch all Todos
+      async function fetchTodos() {
+        try {
+          const response = await fetch(API_BASE);
+          if (!response.ok) throw new Error("Failed to fetch tasks");
+          allTodos = await response.json();
+          updateConnectionStatus(true);
+          renderTodos();
+        } catch (err) {
+          console.error(err);
+          updateConnectionStatus(false);
+          showToast("Failed to fetch tasks from server.", "error");
+          renderEmptyState(
+            "Could not retrieve tasks from the server. Check your connection.",
+          );
+        }
+      }
+
+      // Search tasks
+      async function handleSearch(query) {
+        if (!query.trim()) {
+          fetchTodos();
+          return;
+        }
+        try {
+          const response = await fetch(
+            `${API_BASE}/search?query=${encodeURIComponent(query)}`,
+          );
+          if (!response.ok) throw new Error("Search failed");
+          allTodos = await response.json();
+          renderTodos();
+        } catch (err) {
+          console.error(err);
+          showToast("Failed to search tasks.", "error");
+        }
+      }
+
+      // Create Todo
+      async function handleCreateTodo(e) {
+        e.preventDefault();
+        const titleInput = document.getElementById("task-title");
+        const descInput = document.getElementById("task-desc");
+
+        const payload = {
+          title: titleInput.value.trim(),
+          description: descInput.value.trim(),
+          completed: false,
+        };
+
+        try {
+          const response = await fetch(API_BASE, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) throw new Error("Create failed");
+
+          const created = await response.json();
+          allTodos.push(created);
+          renderTodos();
+
+          // Reset form
+          titleInput.value = "";
+          descInput.value = "";
+
+          showToast("Task added successfully!");
+        } catch (err) {
+          console.error(err);
+          showToast("Could not add task.", "error");
+        }
+      }
+
+      // Toggle Todo Completion Status
+      async function toggleTodoStatus(id, currentCompletedStatus) {
+        const todo = allTodos.find((t) => t.id === id);
+        if (!todo) return;
+
+        const payload = {
+          title: todo.title,
+          description: todo.description,
+          completed: !currentCompletedStatus,
+        };
+
+        try {
+          const response = await fetch(`${API_BASE}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) throw new Error("Status update failed");
+          const updated = await response.json();
+
+          // Update local model
+          const index = allTodos.findIndex((t) => t.id === id);
+          if (index !== -1) {
+            allTodos[index] = updated;
+          }
+
+          renderTodos();
+          showToast(
+            updated.completed ? "Task completed!" : "Task set to active.",
+            "info",
+          );
+        } catch (err) {
+          console.error(err);
+          showToast("Could not update task status.", "error");
+        }
+      }
+
+      // Edit button click -> Open modal
+      function openEditModal(id) {
+        const todo = allTodos.find((t) => t.id === id);
+        if (!todo) return;
+
+        document.getElementById("edit-id").value = todo.id;
+        document.getElementById("edit-title").value = todo.title;
+        document.getElementById("edit-desc").value = todo.description || "";
+        document.getElementById("edit-completed").checked = todo.completed;
+
+        const modal = document.getElementById("edit-modal");
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.remove("opacity-0");
+          modal.firstElementChild.classList.remove("scale-95");
+        }, 10);
+      }
+
+      function closeEditModal() {
+        const modal = document.getElementById("edit-modal");
+        modal.classList.add("opacity-0");
+        modal.firstElementChild.classList.add("scale-95");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 300);
+      }
+
+      // Save Edit (Submit edit form)
+      async function handleUpdateTodo(e) {
+        e.preventDefault();
+        const id = document.getElementById("edit-id").value;
+        const title = document.getElementById("edit-title").value.trim();
+        const description = document.getElementById("edit-desc").value.trim();
+        const completed = document.getElementById("edit-completed").checked;
+
+        const payload = { title, description, completed };
+
+        try {
+          const response = await fetch(`${API_BASE}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) throw new Error("Update failed");
+          const updated = await response.json();
+
+          const index = allTodos.findIndex((t) => t.id === id);
+          if (index !== -1) {
+            allTodos[index] = updated;
+          }
+
+          renderTodos();
+          closeEditModal();
+          showToast("Task updated successfully!");
+        } catch (err) {
+          console.error(err);
+          showToast("Could not update task.", "error");
+        }
+      }
+
+      // Delete button click -> Open confirm modal
+      function openDeleteModal(id) {
+        deleteTargetId = id;
+        const modal = document.getElementById("delete-modal");
+        modal.classList.remove("hidden");
+
+        // Dynamic delete button callback
+        const confirmBtn = document.getElementById("confirm-delete-btn");
+        confirmBtn.onclick = confirmDelete;
+
+        setTimeout(() => {
+          modal.classList.remove("opacity-0");
+          modal.firstElementChild.classList.remove("scale-95");
+        }, 10);
+      }
+
+      function closeDeleteModal() {
+        const modal = document.getElementById("delete-modal");
+        modal.classList.add("opacity-0");
+        modal.firstElementChild.classList.add("scale-95");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          deleteTargetId = null;
+        }, 300);
+      }
+
+      // Confirm Delete
+      async function confirmDelete() {
+        if (!deleteTargetId) return;
+        try {
+          const response = await fetch(`${API_BASE}/${deleteTargetId}`, {
+            method: "DELETE",
+          });
+
+          if (!response.ok) throw new Error("Delete failed");
+
+          allTodos = allTodos.filter((t) => t.id !== deleteTargetId);
+          renderTodos();
+          closeDeleteModal();
+          showToast("Task deleted.", "info");
+        } catch (err) {
+          console.error(err);
+          showToast("Could not delete task.", "error");
+        }
+      }
+
+      // Set dynamic filters
+      function setFilter(filter) {
+        filterStatus = filter;
+
+        // Update Tab styles
+        ["all", "active", "completed"].forEach((st) => {
+          const tab = document.getElementById(`tab-${st}`);
+          if (st === filter) {
+            tab.className =
+              "px-4 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs";
+          } else {
+            tab.className =
+              "px-4 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200";
+          }
+        });
+
+        renderTodos();
+      }
+
+      // Set Sorting option
+      function setSort(sortType) {
+        currentSort = sortType;
+        renderTodos();
+      }
+
+      // Helper to format date
+      function formatRelativeDate(dateTimeString) {
+        if (!dateTimeString) return "";
+        try {
+          const date = new Date(dateTimeString);
+
+          // Check if date is valid
+          if (isNaN(date.getTime())) return "";
+
+          const now = new Date();
+          const diffMs = now - date;
+          const diffSec = Math.floor(diffMs / 1000);
+          const diffMin = Math.floor(diffSec / 60);
+          const diffHr = Math.floor(diffMin / 60);
+          const diffDays = Math.floor(diffHr / 24);
+
+          if (diffSec < 60) return "just now";
+          if (diffMin < 60) return `${diffMin}m ago`;
+          if (diffHr < 24) return `${diffHr}h ago`;
+          if (diffDays === 1) return "yesterday";
+
+          return date.toLocaleDateString(undefined, {
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+        } catch (e) {
+          return "";
+        }
+      }
+
+      // Render Empty State
+      function renderEmptyState(message = "No tasks found.") {
+        const listContainer = document.getElementById("todo-list");
+        listContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-xs theme-transition">
+                    <svg class="h-12 w-12 text-slate-300 dark:text-slate-700 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-slate-500 dark:text-slate-400">${message}</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 mt-1">Get started by creating a task above.</span>
+                </div>
+            `;
+      }
+
+      // Render function
+      function renderTodos() {
+        const listContainer = document.getElementById("todo-list");
+
+        // 1. Calculate Stats on raw items list
+        const total = allTodos.length;
+        const completed = allTodos.filter((t) => t.completed).length;
+        const pending = total - completed;
+        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        document.getElementById("stat-total").innerText = total;
+        document.getElementById("stat-completed").innerText = completed;
+        document.getElementById("stat-pending").innerText = pending;
+        document.getElementById("stat-percent").innerText = `${percent}%`;
+        document.getElementById("stat-progress-bar").style.width =
+          `${percent}%`;
+
+        // 2. Filter list
+        let filtered = [...allTodos];
+        if (filterStatus === "active") {
+          filtered = filtered.filter((t) => !t.completed);
+        } else if (filterStatus === "completed") {
+          filtered = filtered.filter((t) => t.completed);
+        }
+
+        // 3. Sort list
+        if (currentSort === "newest") {
+          filtered.sort(
+            (a, b) =>
+              new Date(b.createdAt || b.updatedAt) -
+              new Date(a.createdAt || a.updatedAt),
+          );
+        } else if (currentSort === "oldest") {
+          filtered.sort(
+            (a, b) =>
+              new Date(a.createdAt || a.updatedAt) -
+              new Date(b.createdAt || b.updatedAt),
+          );
+        } else if (currentSort === "az") {
+          filtered.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+        }
+
+        // 4. Dom creation
+        if (filtered.length === 0) {
+          if (filterStatus === "active") {
+            renderEmptyState("No active tasks.");
+          } else if (filterStatus === "completed") {
+            renderEmptyState("No completed tasks.");
+          } else {
+            renderEmptyState("No tasks in your queue.");
+          }
+          return;
+        }
+
+        listContainer.innerHTML = "";
+
+        filtered.forEach((todo) => {
+          const itemDiv = document.createElement("div");
+          // Subtle shadow, white background, rounded edges, borders, flex container
+          itemDiv.className = `group bg-white dark:bg-slate-900 rounded-xl border ${todo.completed ? "border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40" : "border-slate-100 dark:border-slate-800"} p-4 flex gap-4 items-start shadow-xs hover:shadow-md dark:shadow-none transition-all duration-200 theme-transition`;
+
+          // Relative Date Format
+          const createdTime = formatRelativeDate(todo.createdAt);
+
+          const checkedState = todo.completed ? "checked" : "";
+
+          itemDiv.innerHTML = `
+                    <!-- Checkbox wrapper -->
+                    <div class="flex items-center h-5 mt-0.5">
+                        <button onclick="toggleTodoStatus('${todo.id}', ${todo.completed})"
+                            class="w-5 h-5 rounded-md border ${todo.completed ? "bg-indigo-600 dark:bg-indigo-500 border-indigo-600 dark:border-indigo-500 text-white" : "border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-400"} flex items-center justify-center cursor-pointer transition-all">
+                            ${
+                              todo.completed
+                                ? `
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            `
+                                : ""
+                            }
+                        </button>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="flex-grow min-w-0">
+                        <div class="flex items-start justify-between gap-2">
+                            <h3 class="text-sm font-semibold tracking-tight ${todo.completed ? "text-slate-400 dark:text-slate-500 line-through" : "text-slate-800 dark:text-slate-200"} break-all">
+                                ${escapeHTML(todo.title)}
+                            </h3>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button onclick="openEditModal('${todo.id}')" title="Edit Task"
+                                    class="p-1.5 text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors theme-transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </button>
+                                <button onclick="openDeleteModal('${todo.id}')" title="Delete Task"
+                                    class="p-1.5 text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors theme-transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <p class="text-xs ${todo.completed ? "text-slate-450 dark:text-slate-500" : "text-slate-500 dark:text-slate-450"} mt-1 break-words">
+                            ${todo.description ? escapeHTML(todo.description) : '<span class="italic text-slate-300 dark:text-slate-700">No description</span>'}
+                        </p>
+                        
+                        <div class="flex items-center gap-2 mt-2.5 text-[10px] font-medium text-slate-400 dark:text-slate-500">
+                            <span class="flex items-center">
+                                <svg class="w-3 h-3 mr-1 text-slate-300 dark:text-slate-750" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Created ${createdTime}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+          listContainer.appendChild(itemDiv);
+        });
+      }
+
+      // HTML escaping utility
+      function escapeHTML(str) {
+        if (!str) return "";
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+    </script>
+  </body>
+</html>

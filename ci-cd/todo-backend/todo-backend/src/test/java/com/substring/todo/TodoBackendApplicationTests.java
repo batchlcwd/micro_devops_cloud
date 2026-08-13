@@ -42,7 +42,10 @@ class TodoBackendApplicationTests {
 
 	@Test
 	void testRootEndpoint() {
-		ResponseEntity<Map<String, Object>> response = homeController.rootStatus();
+		String viewName = homeController.index();
+		assertEquals("index", viewName);
+
+		ResponseEntity<Map<String, Object>> response = homeController.status();
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertNotNull(response.getBody());
 		assertEquals("OK", response.getBody().get("status"));
