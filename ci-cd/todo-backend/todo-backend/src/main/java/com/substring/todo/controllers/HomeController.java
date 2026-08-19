@@ -18,6 +18,16 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
+    @GetMapping("/features")
+    public String features() {
+        return "features";
+    }
+
     @GetMapping("/api/v1/status")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> status() {

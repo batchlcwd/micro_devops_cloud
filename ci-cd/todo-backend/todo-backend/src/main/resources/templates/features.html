@@ -1,0 +1,327 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Features — TaskFlow Todo Manager</title>
+    <!-- Tailwind CSS v4 Browser Build -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style type="text/tailwindcss">
+      @custom-variant dark (&:where(.dark, .dark *));
+    </style>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .theme-transition {
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease,
+          text-decoration-color 0.3s ease,
+          color 0.3s ease,
+          shadow 0.3s ease;
+      }
+    </style>
+    <script>
+      // Inline script to prevent flash of light theme
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased flex flex-col theme-transition"
+  >
+    <!-- Navbar -->
+    <nav
+      class="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-0 z-30 shadow-xs theme-transition"
+    >
+      <div
+        class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-3">
+          <!-- App Logo/Icon -->
+          <div
+            class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-100 dark:shadow-none"
+          >
+            <svg
+              class="w-5 h-5 text-white"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <h1
+              class="text-xl font-bold tracking-tight text-slate-900 dark:text-white"
+            >
+              Todo Application
+            </h1>
+            <p class="text-xs text-slate-400 dark:text-slate-500">
+              Deployed using jenkins
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-6">
+          <a href="/" class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Home</a>
+          <a href="/features" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400">Features</a>
+          <a href="/about" class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About</a>
+        </div>
+
+        <div class="flex items-center space-x-3.5">
+          <!-- Theme Toggle Button -->
+          <button
+            id="theme-toggle"
+            type="button"
+            class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-hidden rounded-xl text-sm p-2.5 cursor-pointer theme-transition"
+          >
+            <!-- Dark SVG Icon -->
+            <svg
+              id="theme-toggle-dark-icon"
+              class="hidden w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+              ></path>
+            </svg>
+            <!-- Light SVG Icon -->
+            <svg
+              id="theme-toggle-light-icon"
+              class="hidden w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486a1 1 0 11-1.414 1.414l-.707-.707a1 1 0 011.414-1.414l.707.707zM16 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1z"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main
+      class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-12 space-y-12"
+    >
+      <!-- Title Section -->
+      <section class="text-center space-y-4">
+        <h2 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+          Designed for <span class="text-indigo-600 dark:text-indigo-400">Efficiency</span>
+        </h2>
+        <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
+          TaskFlow packs premium task management features into a clean, modern, and lightning-fast user experience. Here is everything it offers:
+        </p>
+      </section>
+
+      <!-- Grid Layout for 6 Features -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Feature 1: Complete CRUD Operations -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-xs theme-transition flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <!-- Icon Checklist -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+            </svg>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Seamless Task Creation & Edits</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Add tasks with instant description markdown support. Double-click or click Edit to update any existing task details within our fast and elegant modal dialog.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 2: Real-time Search & Filtering -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-xs theme-transition flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <!-- Icon Search / Filter -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"></path>
+            </svg>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Instant Filtering & Debounced Search</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Find any task in milliseconds. Toggle seamlessly between Active, Completed, or All tasks, and search titles instantly using our optimized client side debouncer.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 3: Smart Theme Adaptability -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-xs theme-transition flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <!-- Icon Sun/Moon -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path>
+            </svg>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Seamless Dark & Light Mode</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Eye-strain free design. Your preference is persisted inside local storage, switching dynamically with fluid CSS Transitions that affect backgrounds, borders, and text.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 4: Interactive Dashboard Stats -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-xs theme-transition flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <!-- Icon Dashboard stats -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path>
+            </svg>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Interactive Progress & Metrics</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Visualize your daily productivity. Features real-time task counters (Total, Completed, Pending) along with a dynamic progress bar that animates upon status toggles.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 5: Server Resiliency Notification -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-xs theme-transition flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <!-- Icon Signal / Resiliency -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.07 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z"></path>
+            </svg>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Active Connection Monitor</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              No guesswork. An active connection badge tracks server heartbeat, flashing green when online and switching to a distinct amber/red warning state if connectivity drops.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 6: Production CI/CD Setup -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-xs theme-transition flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <!-- Icon Cloud / Deployment -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+            </svg>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Fully Integrated CI/CD</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Backed by modern software engineering standards. Includes a complete Docker build setup alongside automated unit testing pipelines powered by Jenkins.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Bottom Call To Action -->
+      <section class="text-center py-6 bg-indigo-600/5 dark:bg-indigo-950/10 rounded-3xl border border-indigo-100/40 dark:border-indigo-900/30 p-8 space-y-4">
+        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Ready to streamline your workflow?</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+          Start organizing your task workflow today and boost your productivity without any boundaries.
+        </p>
+        <div class="pt-2">
+          <a
+            href="/"
+            class="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
+          >
+            Launch Tasks Workspace
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 py-6 mt-auto theme-transition"
+    >
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 dark:text-slate-500">
+        <p>&copy; 2026 TaskFlow. All rights reserved.</p>
+        <div class="flex space-x-4">
+          <a href="/" class="hover:text-slate-600 dark:hover:text-slate-350 transition-colors">Home</a>
+          <a href="/features" class="hover:text-slate-600 dark:hover:text-slate-350 transition-colors">Features</a>
+          <a href="/about" class="hover:text-slate-600 dark:hover:text-slate-350 transition-colors">About</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Logic Script for Theme Toggle -->
+    <script>
+      // Theme Toggle Module Implementation
+      const themeToggleDarkIcon = document.getElementById(
+        "theme-toggle-dark-icon",
+      );
+      const themeToggleLightIcon = document.getElementById(
+        "theme-toggle-light-icon",
+      );
+      const themeToggleBtn = document.getElementById("theme-toggle");
+
+      // Change the icons inside the button based on previous settings
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        themeToggleLightIcon.classList.remove("hidden");
+      } else {
+        themeToggleDarkIcon.classList.remove("hidden");
+      }
+
+      themeToggleBtn.addEventListener("click", function () {
+        // Toggle icons inside button
+        themeToggleDarkIcon.classList.toggle("hidden");
+        themeToggleLightIcon.classList.toggle("hidden");
+
+        // If set via local storage previously
+        if (localStorage.getItem("color-theme")) {
+          if (localStorage.getItem("color-theme") === "light") {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("color-theme", "dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("color-theme", "light");
+          }
+          // If not set previously
+        } else {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("color-theme", "light");
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("color-theme", "dark");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
