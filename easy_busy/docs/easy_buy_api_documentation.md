@@ -12,6 +12,9 @@ This document contains the complete API specifications for the **Easy Buy** E-Co
 2. [Products Service (`products-service`)](#2-products-service)
 3. [Inventory Service (`inventory-service`)](#3-inventory-service)
 4. [Cart & Order Service (`cart-order-service`)](#4-cart--order-service)
+5. [Payment Service (`payment-service`)](#5-payment-service)
+6. [Notifications Service (`notifications-service`)](#6-notifications-service)
+7. [AI Service (`ai-service`)](#7-ai-service)
 
 ---
 
@@ -441,3 +444,136 @@ This document contains the complete API specifications for the **Easy Buy** E-Co
 #### Cancel Order
 * **Method**: `DELETE`
 * **URL**: `/{orderId}`
+
+---
+
+## 5. Payment Service (`payment-service`)
+**Base URL**: `http://localhost:8080/api/payments`
+
+### Process Payment (Simulated / Generic)
+* **Method**: `POST`
+* **URL**: `/`
+* **Request Body**:
+  ```json
+  {
+    "orderId": 10,
+    "amount": 449.95,
+    "paymentMethod": "ONLINE",
+    "paymentDetails": "Credit Card"
+  }
+  ```
+* **Response (201 Created)**:
+  ```json
+  {
+    "id": 1,
+    "transactionId": "d3b07384-d113-4c9f-b76b-9c299a9a3b6f",
+    "orderId": 10,
+    "amount": 449.95,
+    "paymentMethod": "ONLINE",
+    "status": "PAID",
+    "paymentGatewayTxnId": "GATEWAY-PAID-EF31A8B2",
+    "createdAt": "2026-08-21T21:40:00Z",
+    "updatedAt": "2026-08-21T21:40:00Z"
+  }
+  ```
+
+### Create Razorpay Order
+* **Method**: `POST`
+* **URL**: `/razorpay/create-order?orderId={orderId}&amount={amount}`
+* **Response (201 Created)**:
+  ```json
+  {
+    "razorpayOrderId": "order_MOCK_FB123C4D",
+    "transactionId": "e1a5a73e-324f-4d92-9b24-ff4d1b8bc93a",
+    "orderId": 10,
+    "amount": 449.95,
+    "currency": "INR",
+    "keyId": "rzp_test_3c1cR1Y1k1x1z1"
+  }
+  ```
+
+### Verify Razorpay Payment (Signature Verification)
+* **Method**: `POST`
+* **URL**: `/razorpay/verify`
+* **Request Body**:
+  ```json
+  {
+    "razorpayOrderId": "order_MOCK_FB123C4D",
+    "razorpayPaymentId": "pay_29384729384",
+    "razorpaySignature": "sig_abc123xyz"
+  }
+  ```
+* **Response (200 OK)**:
+  ```json
+  {
+    "id": 2,
+    "transactionId": "e1a5a73e-324f-4d92-9b24-ff4d1b8bc93a",
+    "orderId": 10,
+    "amount": 449.95,
+    "paymentMethod": "ONLINE",
+    "status": "PAID",
+    "paymentGatewayTxnId": "pay_29384729384",
+    "createdAt": "2026-08-21T21:42:00Z",
+    "updatedAt": "2026-08-21T21:42:15Z"
+  }
+  ```
+
+### Get Payments by Order ID
+* **Method**: `GET`
+* **URL**: `/order/{orderId}`
+
+### Get Payment by Transaction ID
+* **Method**: `GET`
+* **URL**: `/transaction/{transactionId}`
+
+---
+
+## 6. Notifications Service (`notifications-service`)
+**Base URL**: `http://localhost:8080/api/notifications`
+
+### Send Custom Email
+* **Method**: `POST`
+* **URL**: `/email`
+* **Request Body**:
+  ```json
+  {
+    "toEmail": "customer@example.com",
+    "subject": "Discount offer!",
+    "body": "Hi, check out our latest offers..."
+  }
+  ```
+* **Response (200 OK)**: `Email sent request processed.`
+
+### Send Welcome Email
+* **Method**: `POST`
+* **URL**: `/welcome?email={email}&name={name}`
+* **Response (200 OK)**: `Welcome email sent request processed.`
+
+---
+
+## 7. AI Service (`ai-service`)
+**Base URL**: `http://localhost:8080/api/ai`
+
+### Get Product Recommendations for User
+* **Method**: `GET`
+* **URL**: `/recommendations/{userId}`
+* **Response (200 OK)**:
+  ```json
+  [
+    "Electronics",
+    "Smart Watches",
+    "Fitness Trackers",
+    "Headphones",
+    "Accessories"
+  ]
+  ```
+
+### Generate Product Description
+* **Method**: `POST`
+* **URL**: `/generate-description?title={title}&category={category}`
+* **Response (200 OK)**:
+  ```json
+  {
+    "description": "This is an exceptional Smart Watch. Designed with state-of-the-art materials..."
+  }
+  ```
