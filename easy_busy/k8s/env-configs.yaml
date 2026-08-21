@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: easybuy-config
+  namespace: easybuy
+data:
+  SPRING_PROFILES_ACTIVE: "prod"
+  EUREKA_DEFAULT_ZONE: "http://service-discovery:8761/eureka"
+  CONFIG_SERVER_URL: "http://config-server:8079"
+  SPRING_DATASOURCE_URL_TEMPLATE: "jdbc:mysql://mysql:3306/%s?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true"
+  KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_MAIL_HOST: "mailhog"
+  SPRING_MAIL_PORT: "1025"
+  SPRING_DATA_REDIS_HOST: "redis"
+  GITHUB_URL: "https://github.com/batchlcwd/easy_buy_config"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: easybuy-secrets
+  namespace: easybuy
+type: Opaque
+stringData:
+  SPRING_DATASOURCE_USERNAME: "root"
+  SPRING_DATASOURCE_PASSWORD: "securepassword"
+  RAZORPAY_KEY_ID: "rzp_test_3c1cR1Y1k1x1z1"
+  RAZORPAY_KEY_SECRET: "dummy_secret"
+  OPENAI_API_KEY: "mock-key"
