@@ -45,8 +45,21 @@ services:
     networks:
       - kafka-net
 
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: productdb
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
 networks:
   kafka-net:
 
 volumes:
   kafka-data:
+  postgres-data:

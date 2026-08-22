@@ -27,12 +27,9 @@ public class DbInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (productRepo.count() == 0) {
             // Define specific UUIDs to match inventory database seeding
-            UUID iphoneId = UUID.fromString("550e8400-e29b-41d4-a716-446655440000");
-            UUID headphonesId = UUID.fromString("550e8400-e29b-41d4-a716-446655440001");
-            UUID sneakersId = UUID.fromString("550e8400-e29b-41d4-a716-446655440002");
 
             Product iphone = new Product();
-            iphone.setId(iphoneId);
+
             iphone.setTitle("iPhone 15 Pro");
             iphone.setShortDesc("Titanium design, A17 Pro chip, Action button.");
             iphone.setLongDesc("The iPhone 15 Pro features a strong and light aerospace-grade titanium design. Powered by the A17 Pro chip, it brings next-level graphics performance to gaming.");
@@ -42,7 +39,7 @@ public class DbInitializer implements CommandLineRunner {
             iphone.setProductImages(Arrays.asList("https://example.com/images/iphone15pro.jpg"));
 
             Product headphones = new Product();
-            headphones.setId(headphonesId);
+
             headphones.setTitle("Sony WH-1000XM5");
             headphones.setShortDesc("Industry leading noise canceling headphones.");
             headphones.setLongDesc("Sony WH-1000XM5 headphones rewrite the rules for distraction-free listening. Two processors control 8 microphones for unprecedented noise cancellation.");
@@ -52,7 +49,7 @@ public class DbInitializer implements CommandLineRunner {
             headphones.setProductImages(Arrays.asList("https://example.com/images/sonyXM5.jpg"));
 
             Product sneakers = new Product();
-            sneakers.setId(sneakersId);
+
             sneakers.setTitle("Nike Air Max");
             sneakers.setShortDesc("Classic style with maximum comfort.");
             sneakers.setLongDesc("The Nike Air Max offers lightweight cushioning and classic style. Made from premium materials for long-lasting durability.");

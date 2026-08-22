@@ -275,3 +275,418 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 2026-08-21 20:35:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-08-21 20:40:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-08-21 20:45:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Starting ProductsServiceApplication using Java 25.0.3 with PID 6243 (/Users/durgesh_mac/Documents/Workspace/Live batch/micro_devops_cloud/micro_devops_cloud/easy_busy/products-service/products-service/target/classes started by durgesh_mac in /Users/durgesh_mac/Documents/Workspace/Live batch/micro_devops_cloud/micro_devops_cloud/easy_busy)
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : The following 1 profile is active: "dev"
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[default], label=null, version=10a19d3df60d7eb86fcb0a78072e77c29a929256, state=
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[dev], label=null, version=10a19d3df60d7eb86fcb0a78072e77c29a929256, state=
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-22 07:19:02 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 3 JPA repository interfaces.
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=e784479d-ab9b-3be2-9ad2-0d5f605deddb
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8081 (http)
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 768 ms
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-22 07:19:03 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-08-22 07:19:04 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-08-22 07:19:04 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-08-22 07:19:04 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc : HHH100046: Could not obtain connection to query JDBC database metadata
+org.hibernate.exception.JDBCConnectionException: Unable to obtain isolated JDBC connection [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:80)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:101)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:51)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:366)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironment(JdbcEnvironmentInitiator.java:143)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:120)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:80)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:133)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:260)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:235)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:212)
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:44)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:251)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:203)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:172)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1392)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.populateSessionFactoryBuilder(EntityManagerFactoryBuilderImpl.java:1472)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1454)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:93)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:443)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:436)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:411)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:419)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:977)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at com.substring.easybuy.products.ProductsServiceApplication.main(ProductsServiceApplication.java:23)
+Caused by: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:373)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:576)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:97)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+	at org.hibernate.engine.jdbc.connections.internal.DataSourceConnectionProvider.getConnection(DataSourceConnectionProvider.java:137)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:508)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:48)
+	... 37 common frames omitted
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:261)
+	at org.postgresql.core.PGStream.<init>(PGStream.java:122)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:146)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 51 common frames omitted
+2026-08-22 07:19:04 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-22 07:19:04 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [undefined/unknown]
+	Database driver: undefined/unknown
+	Database dialect: PostgreSQLDialect
+	Database version: 13.0
+	Default catalog/schema: unknown/unknown
+	Autocommit mode: undefined/unknown
+	Isolation level: NONE [default NONE]
+	JDBC fetch size: undefined/unknown
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-22 07:19:05 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-22 07:19:05 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-08-22 07:19:06 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-08-22 07:19:06 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-08-22 07:19:06 ERROR [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+2026-08-22 07:19:06 WARN  [main] traceId= spanId= o.s.b.w.s.s.c.AnnotationConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+2026-08-22 07:19:06 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Stopping service [Tomcat]
+2026-08-22 07:19:06 INFO  [main] traceId= spanId= o.s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-08-22 07:19:06 ERROR [main] traceId= spanId= o.s.boot.SpringApplication : Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1817)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:977)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at com.substring.easybuy.products.ProductsServiceApplication.main(ProductsServiceApplication.java:23)
+Caused by: jakarta.persistence.PersistenceException: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:448)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:411)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:419)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813)
+	... 15 common frames omitted
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:80)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:101)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:71)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:37)
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:61)
+	at org.hibernate.tool.schema.extract.spi.ExtractionContext.getQueryResults(ExtractionContext.java:41)
+	at org.hibernate.tool.schema.extract.internal.SequenceInformationExtractorLegacyImpl.extractMetadata(SequenceInformationExtractorLegacyImpl.java:36)
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.initializeSequences(DatabaseInformationImpl.java:73)
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.<init>(DatabaseInformationImpl.java:63)
+	at org.hibernate.tool.schema.extract.internal.CachingDatabaseInformationImpl.<init>(CachingDatabaseInformationImpl.java:43)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.buildDatabaseInformation(GroupedSchemaMigratorImpl.java:112)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:83)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:269)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$1(SchemaManagementToolCoordinator.java:101)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1430)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:100)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:35)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:33)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:323)
+	at org.hibernate.internal.SessionFactoryRegistry.instantiateSessionFactory(SessionFactoryRegistry.java:64)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:437)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1456)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:93)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:443)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:436)
+	... 19 common frames omitted
+Caused by: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:373)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:576)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:97)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+	at org.hibernate.engine.jdbc.connections.internal.DataSourceConnectionProvider.getConnection(DataSourceConnectionProvider.java:137)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:508)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:44)
+	... 41 common frames omitted
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:261)
+	at org.postgresql.core.PGStream.<init>(PGStream.java:122)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:146)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 55 common frames omitted
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Starting ProductsServiceApplication using Java 25.0.3 with PID 6755 (/Users/durgesh_mac/Documents/Workspace/Live batch/micro_devops_cloud/micro_devops_cloud/easy_busy/products-service/products-service/target/classes started by durgesh_mac in /Users/durgesh_mac/Documents/Workspace/Live batch/micro_devops_cloud/micro_devops_cloud/easy_busy)
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : The following 1 profile is active: "dev"
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[default], label=null, version=10a19d3df60d7eb86fcb0a78072e77c29a929256, state=
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[dev], label=null, version=10a19d3df60d7eb86fcb0a78072e77c29a929256, state=
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 62 ms. Found 3 JPA repository interfaces.
+2026-08-22 07:27:19 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=e784479d-ab9b-3be2-9ad2-0d5f605deddb
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8081 (http)
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 725 ms
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@38a61c81
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-08-22 07:27:20 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-22 07:27:20 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/productdb?currentSchema=public]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: productdb/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-08-22 07:27:21 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-08-22 07:27:21 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 17 endpoints beneath base path '/actuator'
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-08-22 07:27:21 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1787383642082 with initial instances count: 2
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application PRODUCT-SERVICE with eureka with status UP
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1787383642084, current=UP, previous=STARTING]
+2026-08-22 07:27:22 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/durgesh.lan:PRODUCT-SERVICE:8081: registering service...
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 8081 (http) with context path '/'
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Started ProductsServiceApplication in 5.268 seconds (process running for 5.717)
+2026-08-22 07:27:22 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/durgesh.lan:PRODUCT-SERVICE:8081 - registration status: 204
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= o.s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-08-22 07:27:22 ERROR [main] traceId= spanId= o.s.boot.SpringApplication : Application run failed
+org.springframework.orm.ObjectOptimisticLockingFailureException: Row was already updated or deleted by another transaction for entity [com.substring.easybuy.products.entity.Product with id '550e8400-e29b-41d4-a716-446655440000']
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:204)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:131)
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.translateExceptionIfPossible(HibernateExceptionTranslator.java:109)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:223)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:576)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:346)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:157)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:166)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222)
+	at jdk.proxy2/jdk.proxy2.$Proxy184.saveAll(Unknown Source)
+	at com.substring.easybuy.products.config.DbInitializer.run(DbInitializer.java:65)
+	at org.springframework.boot.SpringApplication.lambda$callRunner$1(SpringApplication.java:792)
+	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:82)
+	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
+	at org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:86)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:800)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:791)
+	at org.springframework.boot.SpringApplication.lambda$callRunners$0(SpringApplication.java:776)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:571)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:776)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:328)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at com.substring.easybuy.products.ProductsServiceApplication.main(ProductsServiceApplication.java:23)
+Caused by: org.hibernate.StaleObjectStateException: Row was already updated or deleted by another transaction for entity [com.substring.easybuy.products.entity.Product with id '550e8400-e29b-41d4-a716-446655440000']
+	at org.hibernate.event.internal.DefaultMergeEventListener.entityIsDetached(DefaultMergeEventListener.java:431)
+	at org.hibernate.event.internal.DefaultMergeEventListener.merge(DefaultMergeEventListener.java:192)
+	at org.hibernate.event.internal.DefaultMergeEventListener.doMerge(DefaultMergeEventListener.java:136)
+	at org.hibernate.event.internal.DefaultMergeEventListener.onMerge(DefaultMergeEventListener.java:120)
+	at org.hibernate.event.internal.DefaultMergeEventListener.onMerge(DefaultMergeEventListener.java:77)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:138)
+	at org.hibernate.internal.SessionImpl.fireMerge(SessionImpl.java:800)
+	at org.hibernate.internal.SessionImpl.merge(SessionImpl.java:785)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityHandlerInvocationHandler.invokeMethod(SharedEntityManagerCreator.java:240)
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:386)
+	at jdk.proxy2/jdk.proxy2.$Proxy177.merge(Unknown Source)
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.save(SimpleJpaRepository.java:667)
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.saveAll(SimpleJpaRepository.java:690)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:278)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:545)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:290)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:690)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:171)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135)
+	... 26 common frames omitted
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application PRODUCT-SERVICE with eureka with status DOWN
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1787383642176, current=DOWN, previous=UP]
+2026-08-22 07:27:22 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/durgesh.lan:PRODUCT-SERVICE:8081: registering service...
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= o.s.boot.tomcat.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-08-22 07:27:22 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/durgesh.lan:PRODUCT-SERVICE:8081 - registration status: 204
+2026-08-22 07:27:22 INFO  [tomcat-shutdown] traceId= spanId= o.s.boot.tomcat.GracefulShutdown : Graceful shutdown complete
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown initiated...
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown completed.
+2026-08-22 07:27:22 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-08-22 07:27:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-08-22 07:27:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/durgesh.lan:PRODUCT-SERVICE:8081 - deregister  status: 200
+2026-08-22 07:27:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Starting ProductsServiceApplication using Java 25.0.3 with PID 6812 (/Users/durgesh_mac/Documents/Workspace/Live batch/micro_devops_cloud/micro_devops_cloud/easy_busy/products-service/products-service/target/classes started by durgesh_mac in /Users/durgesh_mac/Documents/Workspace/Live batch/micro_devops_cloud/micro_devops_cloud/easy_busy)
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : The following 1 profile is active: "dev"
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[default], label=null, version=10a19d3df60d7eb86fcb0a78072e77c29a929256, state=
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[dev], label=null, version=10a19d3df60d7eb86fcb0a78072e77c29a929256, state=
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 3 JPA repository interfaces.
+2026-08-22 07:28:12 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=e784479d-ab9b-3be2-9ad2-0d5f605deddb
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8081 (http)
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 764 ms
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@35e7fcf2
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-08-22 07:28:13 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-22 07:28:13 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/productdb?currentSchema=public]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: productdb/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-08-22 07:28:14 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-08-22 07:28:14 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 17 endpoints beneath base path '/actuator'
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-08-22 07:28:14 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1787383695058 with initial instances count: 2
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application PRODUCT-SERVICE with eureka with status UP
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1787383695060, current=UP, previous=STARTING]
+2026-08-22 07:28:15 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/durgesh.lan:PRODUCT-SERVICE:8081: registering service...
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 8081 (http) with context path '/'
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+2026-08-22 07:28:15 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/durgesh.lan:PRODUCT-SERVICE:8081 - registration status: 204
+2026-08-22 07:28:15 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Started ProductsServiceApplication in 4.824 seconds (process running for 5.232)
+2026-08-22 07:28:15 INFO  [RMI TCP Connection(1)-192.168.31.40] traceId= spanId= o.a.c.c.C.[Tomcat].[localhost].[/] : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-08-22 07:28:15 INFO  [RMI TCP Connection(1)-192.168.31.40] traceId= spanId= o.s.web.servlet.DispatcherServlet : Initializing Servlet 'dispatcherServlet'
+2026-08-22 07:28:15 INFO  [RMI TCP Connection(1)-192.168.31.40] traceId= spanId= o.s.web.servlet.DispatcherServlet : Completed initialization in 1 ms
+2026-08-22 07:33:14 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-22 07:38:14 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-22 07:43:14 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-22 07:48:14 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-22 07:53:14 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration

@@ -22,6 +22,7 @@
         <module name="cart-order-service" />
         <module name="payment-service" />
         <module name="inventory-service" />
+        <module name="ai-service" />
         <module name="notifications-service" />
       </profile>
       <profile name="Annotation profile for users-service" enabled="true">
@@ -34,7 +35,6 @@
         </processorPath>
         <module name="users-service" />
         <module name="products-service" />
-        <module name="ai-service" />
       </profile>
     </annotationProcessing>
   </component>

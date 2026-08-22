@@ -25,4 +25,4 @@ stringData:
   SPRING_DATASOURCE_PASSWORD: "securepassword"
   RAZORPAY_KEY_ID: "rzp_test_3c1cR1Y1k1x1z1"
   RAZORPAY_KEY_SECRET: "dummy_secret"
-  OPENAI_API_KEY: "mock-key"
+
