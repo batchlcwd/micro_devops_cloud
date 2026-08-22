@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +25,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product extends BaseEntity {
+
+    static {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 
     @Id
     @GeneratedValue
