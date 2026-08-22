@@ -1,0 +1,25 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: easybuy-cluster
+  region: ap-south-1
+  version: "1.36"
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: easybuy-nodes
+    instanceType: t3.large
+    minSize: 2
+    maxSize: 4
+    desiredCapacity: 3
+    volumeSize: 30
+    volumeType: gp3
+    privateNetworking: false
+    iam:
+      withAddonPolicies:
+        ebs: true
+        albIngress: true
+        cloudWatch: true

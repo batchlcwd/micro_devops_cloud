@@ -69,6 +69,7 @@ metadata:
   namespace: easybuy
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 spec:
   type: LoadBalancer
   ports:
@@ -167,7 +168,7 @@ spec:
           image: batchlcwd/products-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -194,14 +195,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8081
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8081
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -213,7 +214,8 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8081
+      targetPort: 8081
   selector:
     app: products-service
 ---
@@ -307,7 +309,7 @@ spec:
           image: batchlcwd/cart-order-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -339,14 +341,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8082
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8082
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -358,7 +360,8 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8082
+      targetPort: 8082
   selector:
     app: cart-order-service
 ---
@@ -382,7 +385,7 @@ spec:
           image: batchlcwd/payment-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8086
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -424,14 +427,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8086
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8086
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -443,7 +446,8 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8086
+      targetPort: 8086
   selector:
     app: payment-service
 ---
@@ -467,7 +471,7 @@ spec:
           image: batchlcwd/notifications-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8087
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -509,14 +513,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8087
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8087
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -528,7 +532,8 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8087
+      targetPort: 8087
   selector:
     app: notifications-service
 ---
@@ -552,7 +557,7 @@ spec:
           image: batchlcwd/ai-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8088
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -584,14 +589,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8088
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8088
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -603,7 +608,8 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8088
+      targetPort: 8088
   selector:
     app: ai-service
 
