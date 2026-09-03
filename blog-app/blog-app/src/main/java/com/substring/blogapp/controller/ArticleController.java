@@ -5,6 +5,7 @@ package com.substring.blogapp.controller;
 
 import com.substring.blogapp.dto.ArticleDto;
 import com.substring.blogapp.service.ArticleService;
+import com.substring.blogapp.service.ImageUploadService;
 import com.substring.blogapp.service.impl.ArticleServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /*
@@ -32,6 +35,26 @@ public class ArticleController {
 
 
     private final ArticleService articleService;
+
+    private final ImageUploadService imageUploadService;
+
+
+    @PostMapping("/cover-images")
+    public ResponseEntity<String> uploadArticleCoverImage(
+            @RequestParam("images") List<MultipartFile> files
+    ) throws IOException {
+
+
+        //validate: files
+        //bahut chunks
+
+        for (MultipartFile file : files) {
+            imageUploadService.uploadImage(file);
+        }
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("File uploaded successfully");
+    }
 
 
     //we can not write logics directly in class
@@ -67,10 +90,9 @@ public class ArticleController {
     }
 
     @GetMapping
-    public Page<ArticleDto> getAll( Pageable pageable) {
+    public Page<ArticleDto> getAll(Pageable pageable) {
         return articleService.getAll(pageable);
     }
-
 
 
     //create api to get articles of specific category
