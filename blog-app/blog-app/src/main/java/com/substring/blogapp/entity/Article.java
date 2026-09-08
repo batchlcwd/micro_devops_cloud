@@ -27,7 +27,7 @@ public class Article {
     private Boolean paid;
 
     @Enumerated(EnumType.STRING)
-    private Status status=Status.DRAFT;
+    private Status status = Status.DRAFT;
 
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;
@@ -38,11 +38,14 @@ public class Article {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private  Category category;
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private  User user;
+    private User user;
+
+    @Column(nullable = true, length = 2000)
+    private String coverImageObjectKey;
 
 
 }

@@ -14,7 +14,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/blog_app
     username: root
-    password: root123
+    password: root1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -48,3 +48,4 @@ aws:
   secret-key: ${AWS_SECRET_KEY}
   region: ap-south-1
   bucket: blog-app-micro-devops
+  cdnComain: https://d2l4x4t80dl784.cloudfront.net

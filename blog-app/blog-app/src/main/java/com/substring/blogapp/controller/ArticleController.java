@@ -8,6 +8,8 @@ import com.substring.blogapp.service.ArticleService;
 import com.substring.blogapp.service.ImageUploadService;
 import com.substring.blogapp.service.impl.ArticleServiceImpl;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,9 @@ public class ArticleController {
 
     private final ImageUploadService imageUploadService;
 
+    @Value("${aws.cdnComain}")
+    private  String cdnDomain;
+
 
     @PostMapping("/cover-images")
     public ResponseEntity<String> uploadArticleCoverImage(
@@ -56,6 +61,21 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.CREATED).body("File uploaded successfully");
     }
 
+
+//    server images using presigned url and objectkey
+    @GetMapping("/cover-images")
+    public ResponseEntity<String> serveUsingPresignedUrl(@RequestParam("key") String objectKey) {
+        String presignedUrl = imageUploadService.generatePresignedUrl(objectKey);
+        return ResponseEntity.ok(presignedUrl);
+    }
+
+
+//        serve images using cdn and object key
+    @GetMapping("/cover-images/cdn")
+    public ResponseEntity<String> serveUsingCdn(@RequestParam("key") String objectKey) {
+        String cdnUrl= cdnDomain +"/"+objectKey;
+        return ResponseEntity.ok(cdnUrl);
+    }
 
     //we can not write logics directly in class
 
