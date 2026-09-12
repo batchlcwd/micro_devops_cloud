@@ -6,6 +6,7 @@ import com.substring.blogapp.dto.UserDto;
 import com.substring.blogapp.entity.User;
 import com.substring.blogapp.repository.UserRepository;
 import com.substring.blogapp.security.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ public class AuthController {
 
     private  final JwtService jwtService;
 
+    @Operation(
+            summary = "This is login api",
+            description = "This is login api, provide username and password to login"
+    )
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> generateToken(@RequestBody LoginRequest loginRequest) {
 

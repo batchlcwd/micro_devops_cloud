@@ -29,5 +29,11 @@ security:
     refresh-token-expire-time: 3600000
     issuer: substring-blog-app
 
-#Dialect
-#driver classname
+
+
+aws:
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  region: ap-south-1
+  bucket: blog-app-micro-devops
+  cdnComain: https://d2l4x4t80dl784.cloudfront.net

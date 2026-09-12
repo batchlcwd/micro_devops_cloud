@@ -38,7 +38,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
-                                .requestMatchers("/api/v1/articles/cover-images/**").permitAll()
+                                .requestMatchers("/api/v1/articles/cover-images/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/v3/api-docs/**","/actuator/health").permitAll()
+
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/**").hasRole("GUEST")
@@ -48,14 +52,14 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(((request, response, authException) -> {
-                    String message = authException.getMessage();
-                    ApiResponse apiResponse = ApiResponse.create(message, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    String responseString = objectMapper.writeValueAsString(apiResponse);
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                    response.setContentType("application/json");
-                    response.getWriter().write(responseString);
-                })
+                            String message = authException.getMessage();
+                            ApiResponse apiResponse = ApiResponse.create(message, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
+                            ObjectMapper objectMapper = new ObjectMapper();
+                            String responseString = objectMapper.writeValueAsString(apiResponse);
+                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                            response.setContentType("application/json");
+                            response.getWriter().write(responseString);
+                        })
 
                 ).accessDeniedHandler((request, response, accessDeniedException) -> {
                     String message = accessDeniedException.getMessage();
