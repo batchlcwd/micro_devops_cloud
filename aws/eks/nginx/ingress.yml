@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: nginx
+  annotations:
+    # AWS Load Balancer Controller annotations for EKS
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    # Optional: If using NGINX Ingress Controller instead of ALB, uncomment below:
+    # kubernetes.io/ingress.class: "nginx"
+spec:
+  # Ingress class: 'alb' for AWS Application Load Balancer Controller, or 'nginx' for NGINX Ingress Controller
+  ingressClassName: alb
+  rules:
+    # Optional: specify a custom domain name:
+    # - host: nginx.example.com
+    #   http:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80
