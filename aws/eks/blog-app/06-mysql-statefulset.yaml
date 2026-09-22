@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: mysql
+  namespace: blog-app
+
+spec:
+
+  serviceName: mysql-service
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: mysql
+
+  template:
+
+    metadata:
+      labels:
+        app: mysql
+
+    spec:
+
+      containers:
+
+        - name: mysql
+
+          image: mysql:8.4
+
+          ports:
+            - containerPort: 3306
+              name: mysql
+
+          env:
+
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: MYSQL_DATABASE
+
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+
+          volumeMounts:
+
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+
+          resources:
+
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+
+          readinessProbe:
+
+            exec:
+              command:
+                - sh
+                - -c
+                - "mysqladmin ping -h localhost -uroot -p$MYSQL_ROOT_PASSWORD"
+
+            initialDelaySeconds: 20
+            periodSeconds: 10
+
+          livenessProbe:
+
+            exec:
+              command:
+                - sh
+                - -c
+                - "mysqladmin ping -h localhost -uroot -p$MYSQL_ROOT_PASSWORD"
+
+            initialDelaySeconds: 30
+            periodSeconds: 20
+
+
+  volumeClaimTemplates:
+
+    - metadata:
+        name: mysql-data
+
+      spec:
+
+        accessModes:
+          - ReadWriteOnce
+
+        storageClassName: gp3
+
+        resources:
+          requests:
+            storage: 10Gi
