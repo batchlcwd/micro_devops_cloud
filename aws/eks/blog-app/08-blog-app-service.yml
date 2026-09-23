@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: blog-app-service
+  namespace: blog-app
+  # annotations:
+  #   service.beta.kubernetes.io/aws-load-balancer-type: "external"
+  #   service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+  #   service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+
+
+
+
+spec:
+
+  type: ClusterIP
+
+  selector:
+    app: blog-app
+
+  ports:
+
+    - protocol: TCP
+
+      port: 80
+
+      targetPort: 8080
