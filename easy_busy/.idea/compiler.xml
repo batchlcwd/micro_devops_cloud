@@ -22,6 +22,7 @@
         <module name="cart-order-service" />
         <module name="payment-service" />
         <module name="inventory-service" />
+        <module name="notifications-service" />
       </profile>
       <profile name="Annotation profile for users-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -31,10 +32,9 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
-        <module name="products-service" />
         <module name="users-service" />
+        <module name="products-service" />
         <module name="ai-service" />
-        <module name="notifications-service" />
       </profile>
     </annotationProcessing>
   </component>

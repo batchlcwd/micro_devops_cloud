@@ -1,24 +1,222 @@
-2026-07-04 16:34:17 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Starting ProductsServiceApplication using Java 25.0.1 with PID 1884 (D:\Live Batches\micro_devops\easy_busy\products-service\products-service\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
-2026-07-04 16:34:17 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : The following 1 profile is active: "dev"
-2026-07-04 16:34:17 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
-2026-07-04 16:34:17 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[default], label=null, version=e2e92a478b23158758dc6e535ff561300e173aee, state=
-2026-07-04 16:34:17 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
-2026-07-04 16:34:17 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[dev], label=null, version=e2e92a478b23158758dc6e535ff561300e173aee, state=
-2026-07-04 16:34:19 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-07-04 16:34:19 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 219 ms. Found 3 JPA repository interfaces.
-2026-07-04 16:34:19 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=6234a4c7-fc1a-32cf-afed-791ec0bb5296
-2026-07-04 16:34:20 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8081 (http)
-2026-07-04 16:34:20 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
-2026-07-04 16:34:20 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
-2026-07-04 16:34:20 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2526 ms
-2026-07-04 16:34:20 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-07-04 16:34:20 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
-2026-07-04 16:34:21 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-07-04 16:34:21 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
-2026-07-04 16:34:21 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1c66272b
-2026-07-04 16:34:21 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
-2026-07-04 16:34:22 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-07-04 16:34:22 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+2026-08-21 19:05:02 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Starting ProductsServiceApplication using Java 25.0.1 with PID 33276 (D:\Live Batches\micro_devops\easy_busy\products-service\products-service\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-08-21 19:05:02 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : The following 1 profile is active: "dev"
+2026-08-21 19:05:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-21 19:05:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[default], label=null, version=095433e75378dad627e61e185707f88d09bb611b, state=
+2026-08-21 19:05:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-21 19:05:02 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[dev], label=null, version=095433e75378dad627e61e185707f88d09bb611b, state=
+2026-08-21 19:05:02 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-21 19:05:03 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 150 ms. Found 3 JPA repository interfaces.
+2026-08-21 19:05:03 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=188c6a25-ca75-363b-ac0a-f08d12b40ccc
+2026-08-21 19:05:03 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8081 (http)
+2026-08-21 19:05:03 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-08-21 19:05:03 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-08-21 19:05:03 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1535 ms
+2026-08-21 19:05:04 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-08-21 19:05:04 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-08-21 19:05:04 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-21 19:05:04 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-08-21 19:05:05 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-08-21 19:05:05 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-08-21 19:05:05 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc : HHH100046: Could not obtain connection to query JDBC database metadata
+org.hibernate.exception.JDBCConnectionException: Unable to obtain isolated JDBC connection [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:80)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:101)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:51)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:366)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironment(JdbcEnvironmentInitiator.java:143)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:120)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:80)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:133)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:260)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:235)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:212)
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:44)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:251)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:203)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:172)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1392)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.populateSessionFactoryBuilder(EntityManagerFactoryBuilderImpl.java:1472)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1454)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:93)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:443)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:436)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:411)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:419)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:977)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at com.substring.easybuy.products.ProductsServiceApplication.main(ProductsServiceApplication.java:23)
+Caused by: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:373)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:576)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:97)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+	at org.hibernate.engine.jdbc.connections.internal.DataSourceConnectionProvider.getConnection(DataSourceConnectionProvider.java:137)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:508)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:48)
+	... 37 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:261)
+	at org.postgresql.core.PGStream.<init>(PGStream.java:122)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:146)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 51 common frames omitted
+2026-08-21 19:05:05 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-21 19:05:05 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [undefined/unknown]
+	Database driver: undefined/unknown
+	Database dialect: PostgreSQLDialect
+	Database version: 13.0
+	Default catalog/schema: unknown/unknown
+	Autocommit mode: undefined/unknown
+	Isolation level: NONE [default NONE]
+	JDBC fetch size: undefined/unknown
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-21 19:05:06 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-21 19:05:06 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-08-21 19:05:07 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-08-21 19:05:07 WARN  [main] traceId= spanId= org.hibernate.orm.jdbc.error : Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2026-08-21 19:05:07 ERROR [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+2026-08-21 19:05:07 WARN  [main] traceId= spanId= o.s.b.w.s.s.c.AnnotationConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+2026-08-21 19:05:07 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Stopping service [Tomcat]
+2026-08-21 19:05:07 INFO  [main] traceId= spanId= o.s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-08-21 19:05:07 ERROR [main] traceId= spanId= o.s.boot.SpringApplication : Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1817)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:977)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at com.substring.easybuy.products.ProductsServiceApplication.main(ProductsServiceApplication.java:23)
+Caused by: jakarta.persistence.PersistenceException: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:448)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:411)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:419)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1864)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1813)
+	... 15 common frames omitted
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:80)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:101)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:71)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:37)
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:61)
+	at org.hibernate.tool.schema.extract.spi.ExtractionContext.getQueryResults(ExtractionContext.java:41)
+	at org.hibernate.tool.schema.extract.internal.SequenceInformationExtractorLegacyImpl.extractMetadata(SequenceInformationExtractorLegacyImpl.java:36)
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.initializeSequences(DatabaseInformationImpl.java:73)
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.<init>(DatabaseInformationImpl.java:63)
+	at org.hibernate.tool.schema.extract.internal.CachingDatabaseInformationImpl.<init>(CachingDatabaseInformationImpl.java:43)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.buildDatabaseInformation(GroupedSchemaMigratorImpl.java:112)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:83)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:269)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$1(SchemaManagementToolCoordinator.java:101)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1430)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:100)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:35)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:33)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:323)
+	at org.hibernate.internal.SessionFactoryRegistry.instantiateSessionFactory(SessionFactoryRegistry.java:64)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:437)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1456)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:93)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:443)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:436)
+	... 19 common frames omitted
+Caused by: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:373)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:576)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:97)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+	at org.hibernate.engine.jdbc.connections.internal.DataSourceConnectionProvider.getConnection(DataSourceConnectionProvider.java:137)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:508)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:44)
+	... 41 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:261)
+	at org.postgresql.core.PGStream.<init>(PGStream.java:122)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:146)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 55 common frames omitted
+2026-08-21 19:10:00 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Starting ProductsServiceApplication using Java 25.0.1 with PID 26012 (D:\Live Batches\micro_devops\easy_busy\products-service\products-service\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-08-21 19:10:00 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : The following 1 profile is active: "dev"
+2026-08-21 19:10:00 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-21 19:10:00 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[default], label=null, version=095433e75378dad627e61e185707f88d09bb611b, state=
+2026-08-21 19:10:00 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-08-21 19:10:00 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=PRODUCT-SERVICE, profiles=[dev], label=null, version=095433e75378dad627e61e185707f88d09bb611b, state=
+2026-08-21 19:10:01 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-21 19:10:01 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 159 ms. Found 3 JPA repository interfaces.
+2026-08-21 19:10:01 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=188c6a25-ca75-363b-ac0a-f08d12b40ccc
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8081 (http)
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1649 ms
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-21 19:10:02 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-08-21 19:10:03 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@189874b5
+2026-08-21 19:10:03 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-08-21 19:10:03 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-21 19:10:03 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
 	Database JDBC URL [jdbc:postgresql://localhost:5432/productdb?currentSchema=public]
 	Database driver: PostgreSQL JDBC Driver
 	Database dialect: PostgreSQLDialect
@@ -30,330 +228,50 @@
 	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-07-04 16:34:23 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-07-04 16:34:23 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-07-04 16:34:23 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-07-04 16:34:24 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
-2026-07-04 16:34:25 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 17 endpoints beneath base path '/actuator'
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1783182865684 with initial instances count: 1
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application PRODUCT-SERVICE with eureka with status UP
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1783182865686, current=UP, previous=STARTING]
-2026-07-04 16:34:25 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081: registering service...
-2026-07-04 16:34:25 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081 - registration status: 204
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 8081 (http) with context path '/'
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
-2026-07-04 16:34:25 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Started ProductsServiceApplication in 12.302 seconds (process running for 16.399)
-2026-07-04 16:36:31 INFO  [http-nio-8081-exec-1] traceId=a7a768de88fc908473c5c15795e5ae2b spanId=8dd944bee724a60c o.a.c.c.C.[Tomcat].[localhost].[/] : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-07-04 16:36:31 INFO  [http-nio-8081-exec-1] traceId=a7a768de88fc908473c5c15795e5ae2b spanId=8dd944bee724a60c o.s.web.servlet.DispatcherServlet : Initializing Servlet 'dispatcherServlet'
-2026-07-04 16:36:31 INFO  [http-nio-8081-exec-1] traceId=a7a768de88fc908473c5c15795e5ae2b spanId=8dd944bee724a60c o.s.web.servlet.DispatcherServlet : Completed initialization in 3 ms
-2026-07-04 16:39:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 16:44:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 16:49:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 16:54:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 16:59:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 17:04:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 17:09:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 17:14:25 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
-2026-07-04 17:17:18 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application PRODUCT-SERVICE with eureka with status DOWN
-2026-07-04 17:17:18 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1783185438834, current=DOWN, previous=UP]
-2026-07-04 17:17:18 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081: registering service...
-2026-07-04 17:17:18 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/} exception=I/O error on POST request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
-	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
-	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
-	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
-	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.register(RestClientEurekaHttpClient.java:64)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
-	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
-	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
-	at java.base/java.net.Socket.connect(Socket.java:659)
-	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
-	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
-	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
-	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
-	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
-	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
-	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
-	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
-	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
-	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
-	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
-	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
-	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
-	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
-	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
-	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
-	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
-	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
-	... 23 more
-
-2026-07-04 17:17:18 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
-2026-07-04 17:17:18 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.boot.tomcat.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
-2026-07-04 17:17:18 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on POST request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
-	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
-	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
-	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
-	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.register(RestClientEurekaHttpClient.java:64)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
-	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
-	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
-	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
-	at java.base/java.net.Socket.connect(Socket.java:659)
-	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
-	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
-	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
-	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
-	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
-	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
-	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
-	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
-	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
-	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
-	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
-	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
-	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
-	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
-	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
-	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
-	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
-	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
-	... 24 more
-
-2026-07-04 17:17:18 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE": Connect to http://localhost:8761 failed: Connection refused: getsockopt
-2026-07-04 17:17:18 INFO  [tomcat-shutdown] traceId= spanId= o.s.boot.tomcat.GracefulShutdown : Graceful shutdown complete
-2026-07-04 17:17:18 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081 - registration failed Cannot execute request on any known server
-com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
-	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
-	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
-	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-2026-07-04 17:17:18 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.discovery.InstanceInfoReplicator : There was a problem with the instance info replicator
-com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
-	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
-	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
-	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
-	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
-	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-2026-07-04 17:17:18 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-07-04 17:17:18 INFO  [SpringApplicationShutdownHook] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown initiated...
-2026-07-04 17:17:18 INFO  [SpringApplicationShutdownHook] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown completed.
-2026-07-04 17:17:18 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
-2026-07-04 17:17:21 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
-2026-07-04 17:17:21 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081": Connect to http://localhost:8761 failed: Connection refused: getsockopt
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
-	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
-	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
-	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
-	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.cancel(RestClientEurekaHttpClient.java:73)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
-	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
-	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
-	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
-	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
-	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
-	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
-	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
-	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
-	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
-	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
-	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
-	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
-	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
-	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176)
-	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
-	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
-	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
-	at java.base/java.net.Socket.connect(Socket.java:659)
-	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
-	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
-	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
-	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
-	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
-	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
-	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
-	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
-	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
-	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
-	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
-	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
-	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
-	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
-	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
-	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
-	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
-	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
-	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
-	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
-	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
-	... 40 more
-
-2026-07-04 17:17:21 WARN  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081": Connect to http://localhost:8761 failed: Connection refused: getsockopt
-2026-07-04 17:17:21 ERROR [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081 - de-registration failedCannot execute request on any known server
-com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
-	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
-	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
-	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
-	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
-	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
-	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
-	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
-	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
-	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
-	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
-	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
-	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
-	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
-	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:176)
-	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
-	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
-	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
-2026-07-04 17:17:22 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient
+2026-08-21 19:10:04 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-21 19:10:04 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-21 19:10:04 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-08-21 19:10:04 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-08-21 19:10:05 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 17 endpoints beneath base path '/actuator'
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-08-21 19:10:05 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1787339406209 with initial instances count: 1
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application PRODUCT-SERVICE with eureka with status UP
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1787339406212, current=UP, previous=STARTING]
+2026-08-21 19:10:06 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081: registering service...
+2026-08-21 19:10:06 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_PRODUCT-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:PRODUCT-SERVICE:8081 - registration status: 204
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 8081 (http) with context path '/'
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+2026-08-21 19:10:06 INFO  [main] traceId= spanId= c.s.e.p.ProductsServiceApplication : Started ProductsServiceApplication in 8.387 seconds (process running for 11.0)
+2026-08-21 19:15:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:20:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:25:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:30:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:35:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:40:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:45:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:50:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 19:55:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:00:05 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:05:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:10:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:15:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:20:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:25:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:30:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:35:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:40:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-08-21 20:45:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration

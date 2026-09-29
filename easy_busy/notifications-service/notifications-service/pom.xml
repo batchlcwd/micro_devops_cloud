@@ -28,7 +28,19 @@
 	</scm>
 	<properties>
 		<java.version>25</java.version>
+		<spring-cloud.version>2025.1.1</spring-cloud.version>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -45,6 +57,27 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-kafka</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.substring.easybuy</groupId>
+			<artifactId>common-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -128,6 +161,24 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+					<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.5.2</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:25-jre-noble</image>
+					</from>
+					<to>
+						<image>batchlcwd/${project.artifactId}:latest</image>
+					</to>
+					<container>
+						<ports>
+							<port>8080</port>
+						</ports>
+					</container>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,0 +1,315 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: easybuy
+spec:
+  serviceName: mysql
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: SPRING_DATASOURCE_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-persistent-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: easybuy
+spec:
+  clusterIP: None
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka
+  namespace: easybuy
+spec:
+  selector:
+    matchLabels:
+      app: kafka
+  serviceName: kafka
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: kafka
+          image: confluentinc/confluent-local:7.5.0
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          ports:
+            - containerPort: 9092
+              name: plaintext
+            - containerPort: 29093
+              name: controller
+          env:
+            - name: KAFKA_HEAP_OPTS
+              value: "-Xms512M -Xmx512M"
+            - name: KAFKA_LOG4J_ROOT_LOGLEVEL
+              value: "ERROR"
+            - name: KAFKA_LOG4J_LOGGERS
+              value: "kafka=ERROR,org.apache.kafka=ERROR,state.change.logger=ERROR,kafka.controller=ERROR,kafka.coordinator=ERROR,kafka.server=ERROR,kafka.cluster=ERROR,kafka.log=ERROR"
+            - name: KAFKAREST_LOG4J_ROOT_LOGLEVEL
+              value: "ERROR"
+            - name: KAFKA_NODE_ID
+              value: "1"
+            - name: KAFKA_PROCESS_ROLES
+              value: "broker,controller"
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+            - name: KAFKA_CONTROLLER_QUORUM_VOTERS
+              value: "1@kafka-0.kafka.easybuy.svc.cluster.local:29093"
+            - name: KAFKA_LISTENERS
+              value: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:29092"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092"
+            - name: KAFKA_CONTROLLER_LISTENER_NAMES
+              value: "CONTROLLER"
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: "PLAINTEXT"
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
+              value: "0"
+            - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR
+              value: "1"
+            - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1"
+            - name: CLUSTER_ID
+              value: "6PMpHYL9QkeyXRj9Nrp4KA"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          volumeMounts:
+            - name: kafka-data
+              mountPath: /var/lib/kafka/data
+  volumeClaimTemplates:
+    - metadata:
+        name: kafka-data
+      spec:
+        accessModes: [ReadWriteOnce]
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+  namespace: easybuy
+spec:
+  clusterIP: None
+  selector:
+    app: kafka
+  ports:
+    - name: plaintext
+      port: 9092
+      targetPort: 9092
+    - name: controller
+      port: 29093
+      targetPort: 29093
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailhog
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailhog
+  template:
+    metadata:
+      labels:
+        app: mailhog
+    spec:
+      containers:
+        - name: mailhog
+          image: mailhog/mailhog:latest
+          ports:
+            - containerPort: 1025
+              name: smtp
+            - containerPort: 8025
+              name: http
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailhog
+  namespace: easybuy
+spec:
+  ports:
+    - name: smtp
+      port: 1025
+      targetPort: 1025
+    - name: http
+      port: 8025
+      targetPort: 8025
+  selector:
+    app: mailhog
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: easybuy
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_DB
+              value: "productdb"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: SPRING_DATASOURCE_PASSWORD
+          ports:
+            - containerPort: 5432
+              name: postgres
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          volumeMounts:
+            - name: postgres-persistent-storage
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-persistent-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: easybuy
+spec:
+  clusterIP: None
+  ports:
+    - port: 5432
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: easybuy
+spec:
+  serviceName: redis
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          ports:
+            - containerPort: 6379
+              name: redis
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: easybuy
+spec:
+  clusterIP: None
+  ports:
+    - port: 6379
+  selector:
+    app: redis

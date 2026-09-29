@@ -1,0 +1,609 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: batchlcwd/api-gateway:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+            - name: SPRING_DATA_REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_DATA_REDIS_HOST
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+  namespace: easybuy
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: api-gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-service
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-service
+  template:
+    metadata:
+      labels:
+        app: users-service
+    spec:
+      containers:
+        - name: users-service
+          image: batchlcwd/users-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8085
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8085
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8085
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8085
+  selector:
+    app: users-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products-service
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: products-service
+  template:
+    metadata:
+      labels:
+        app: products-service
+    spec:
+      containers:
+        - name: products-service
+          image: batchlcwd/products-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: products-service
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: products-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service
+  template:
+    metadata:
+      labels:
+        app: inventory-service
+    spec:
+      containers:
+        - name: inventory-service
+          image: batchlcwd/inventory-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8083
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8083
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8083
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-service
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8083
+  selector:
+    app: inventory-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-order-service
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart-order-service
+  template:
+    metadata:
+      labels:
+        app: cart-order-service
+    spec:
+      containers:
+        - name: cart-order-service
+          image: batchlcwd/cart-order-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: KAFKA_BOOTSTRAP_SERVERS
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart-order-service
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: cart-order-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+        - name: payment-service
+          image: batchlcwd/payment-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: KAFKA_BOOTSTRAP_SERVERS
+            - name: RAZORPAY_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: RAZORPAY_KEY_ID
+            - name: RAZORPAY_KEY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: RAZORPAY_KEY_SECRET
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: payment-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-service
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-service
+  template:
+    metadata:
+      labels:
+        app: notifications-service
+    spec:
+      containers:
+        - name: notifications-service
+          image: batchlcwd/notifications-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: KAFKA_BOOTSTRAP_SERVERS
+            - name: SPRING_MAIL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_MAIL_HOST
+            - name: SPRING_MAIL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_MAIL_PORT
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-service
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: notifications-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-service
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-service
+  template:
+    metadata:
+      labels:
+        app: ai-service
+    spec:
+      containers:
+        - name: ai-service
+          image: batchlcwd/ai-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: CONFIG_SERVER_URL
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: OPENAI_API_KEY
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: SPRING_PROFILES_ACTIVE
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-service
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: ai-service
+

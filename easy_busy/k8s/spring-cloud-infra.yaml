@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-discovery
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-discovery
+  template:
+    metadata:
+      labels:
+        app: service-discovery
+    spec:
+      containers:
+        - name: service-discovery
+          image: batchlcwd/service-discovery:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8761
+              name: eureka
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8761
+            initialDelaySeconds: 40
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8761
+            initialDelaySeconds: 25
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-discovery
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8761
+  selector:
+    app: service-discovery
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-server
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+      containers:
+        - name: config-server
+          image: batchlcwd/config-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8079
+              name: config
+          env:
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: EUREKA_DEFAULT_ZONE
+            - name: GITHUB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: GITHUB_URL
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8079
+            initialDelaySeconds: 40
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8079
+            initialDelaySeconds: 25
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server
+  namespace: easybuy
+spec:
+  ports:
+    - port: 8079
+  selector:
+    app: config-server

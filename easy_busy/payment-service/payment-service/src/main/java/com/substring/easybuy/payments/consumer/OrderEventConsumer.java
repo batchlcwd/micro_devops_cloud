@@ -53,11 +53,6 @@ public class OrderEventConsumer {
             log.info("Processing payment via Kafka consumer for Order ID: {}", orderEvent.getOrderId());
             PaymentResponse paymentResponse = paymentService.processPayment(paymentRequest);
 
-            //payment fail simulate
-            if(2>1){
-                throw new Exception("Payment fail...");
-            }
-
             // Publish success acknowledgment event
             PaymentEvent paymentEvent = new PaymentEvent(
                     paymentResponse.orderId(),
