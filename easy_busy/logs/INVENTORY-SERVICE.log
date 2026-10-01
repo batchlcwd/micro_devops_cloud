@@ -193,3 +193,23 @@
 2026-10-01 17:42:11 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.internals.ConsumerUtils : Setting offset for partition payment-topic-0 to the committed offset FetchPosition{offset=3, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null isFenced: false)], epoch=22}}
 2026-10-01 17:42:11 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.s.k.l.KafkaMessageListenerContainer : inventory-group: partitions assigned: [payment-topic-0]
 2026-10-01 17:47:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 17:52:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 17:57:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:02:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:07:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:12:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:14:34 INFO  [http-nio-8083-exec-1] traceId=96713f13974409d86bce978fc008d31e spanId=208bfa5610096ab2 o.a.c.c.C.[Tomcat].[localhost].[/] : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-01 18:14:34 INFO  [http-nio-8083-exec-1] traceId=96713f13974409d86bce978fc008d31e spanId=208bfa5610096ab2 o.s.web.servlet.DispatcherServlet : Initializing Servlet 'dispatcherServlet'
+2026-10-01 18:14:36 INFO  [http-nio-8083-exec-1] traceId=96713f13974409d86bce978fc008d31e spanId=208bfa5610096ab2 o.s.web.servlet.DispatcherServlet : Completed initialization in 1501 ms
+2026-10-01 18:17:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:22:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:27:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:32:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:37:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:42:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:47:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:52:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:57:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:02:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:03:11 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId=5f3fdc3396860091a4b90e157490f6a7 spanId=3d084af3632551cb c.s.e.i.c.PaymentEventConsumer : Received PaymentEvent in inventory-service from Kafka: PaymentEvent{orderId=10, transactionId='3b0dfb92-7397-4285-aa64-5f1ba53e0f83', amount=1899.98, status='PAID', message='Payment processed successfully via Kafka consumer'}
+2026-10-01 19:07:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration

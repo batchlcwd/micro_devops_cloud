@@ -206,3 +206,182 @@
 2026-10-01 18:20:16 INFO  [http-nio-8082-exec-1] traceId=e19a01d8f9631042e1890242b1743437 spanId=3dad2fa142fea6a1 o.s.web.servlet.DispatcherServlet : Completed initialization in 80 ms
 2026-10-01 18:21:37 INFO  [http-nio-8082-exec-2] traceId=732c0e87bb6e37b6a24273d6799d752d spanId=3fecacb3d4c070f1 c.s.e.c.c.f.ProductClientFallback : product fallback 
 2026-10-01 18:24:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:29:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:34:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:39:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:44:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:49:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:54:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:59:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:06:19 INFO  [main] traceId= spanId= c.s.e.c.CartOrderServiceApplication : Starting CartOrderServiceApplication using Java 25.0.1 with PID 64112 (D:\Live Batches\micro_devops\easy_busy\cart-order-service\cart-order-service\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-10-01 19:06:19 INFO  [main] traceId= spanId= c.s.e.c.CartOrderServiceApplication : The following 1 profile is active: "dev"
+2026-10-01 19:06:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-10-01 19:06:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=CART-ORDER-SERVICE, profiles=[default], label=null, version=e9c8ddaaa507e29c792703f18f53aff3af15532f, state=
+2026-10-01 19:06:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-10-01 19:06:19 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=CART-ORDER-SERVICE, profiles=[dev], label=null, version=e9c8ddaaa507e29c792703f18f53aff3af15532f, state=
+2026-10-01 19:06:20 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-01 19:06:20 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 213 ms. Found 4 JPA repository interfaces.
+2026-10-01 19:06:21 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=95cfacc2-0b22-3dff-b83f-5b2ee8a75c56
+2026-10-01 19:06:21 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8082 (http)
+2026-10-01 19:06:21 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-10-01 19:06:21 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-10-01 19:06:21 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2292 ms
+2026-10-01 19:06:22 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-01 19:06:22 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-10-01 19:06:22 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-01 19:06:23 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-10-01 19:06:23 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@445b7f80
+2026-10-01 19:06:23 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-10-01 19:06:23 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-01 19:06:23 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/micro_devops?useSSL=false&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.45
+	Default catalog/schema: micro_devops/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-01 19:06:24 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-01 19:06:24 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-01 19:06:24 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-01 19:06:25 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-01 19:06:26 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-10-01 19:06:26 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-01 19:06:26 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 27 endpoints beneath base path '/actuator'
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1790861787298 with initial instances count: 9
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application CART-ORDER-SERVICE with eureka with status UP
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790861787305, current=UP, previous=STARTING]
+2026-10-01 19:06:27 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082: registering service...
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application CART-ORDER-SERVICE with eureka with status DOWN
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790861787315, current=DOWN, previous=UP]
+2026-10-01 19:06:27 WARN  [main] traceId= spanId= o.s.b.w.s.s.c.AnnotationConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown initiated...
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown completed.
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-10-01 19:06:27 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082 - registration status: 204
+2026-10-01 19:06:27 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082: registering service...
+2026-10-01 19:06:27 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082 - registration status: 204
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082 - deregister  status: 200
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient
+2026-10-01 19:06:27 INFO  [main] traceId= spanId= o.s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-10-01 19:06:27 ERROR [main] traceId= spanId= o.s.b.d.LoggingFailureAnalysisReporter : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8082 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8082 or configure this application to listen on another port.
+
+2026-10-01 19:09:26 INFO  [main] traceId= spanId= c.s.e.c.CartOrderServiceApplication : Starting CartOrderServiceApplication using Java 25.0.1 with PID 72948 (D:\Live Batches\micro_devops\easy_busy\cart-order-service\cart-order-service\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-10-01 19:09:26 INFO  [main] traceId= spanId= c.s.e.c.CartOrderServiceApplication : The following 1 profile is active: "dev"
+2026-10-01 19:09:26 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-10-01 19:09:26 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=CART-ORDER-SERVICE, profiles=[default], label=null, version=e9c8ddaaa507e29c792703f18f53aff3af15532f, state=
+2026-10-01 19:09:26 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-10-01 19:09:26 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=CART-ORDER-SERVICE, profiles=[dev], label=null, version=e9c8ddaaa507e29c792703f18f53aff3af15532f, state=
+2026-10-01 19:09:27 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-01 19:09:27 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 204 ms. Found 4 JPA repository interfaces.
+2026-10-01 19:09:27 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=95cfacc2-0b22-3dff-b83f-5b2ee8a75c56
+2026-10-01 19:09:28 INFO  [main] traceId= spanId= o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8082 (http)
+2026-10-01 19:09:28 INFO  [main] traceId= spanId= o.a.catalina.core.StandardService : Starting service [Tomcat]
+2026-10-01 19:09:28 INFO  [main] traceId= spanId= o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-10-01 19:09:28 INFO  [main] traceId= spanId= o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2211 ms
+2026-10-01 19:09:29 INFO  [main] traceId= spanId= org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-01 19:09:29 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-10-01 19:09:29 INFO  [main] traceId= spanId= o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-01 19:09:29 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-10-01 19:09:29 INFO  [main] traceId= spanId= com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@34e0f4d3
+2026-10-01 19:09:29 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-10-01 19:09:29 WARN  [main] traceId= spanId= org.hibernate.orm.deprecation : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-01 19:09:30 INFO  [main] traceId= spanId= o.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/micro_devops?useSSL=false&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.45
+	Default catalog/schema: micro_devops/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-01 19:09:30 INFO  [main] traceId= spanId= org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-01 19:09:31 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-01 19:09:31 INFO  [main] traceId= spanId= o.s.d.j.r.q.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-01 19:09:31 WARN  [main] traceId= spanId= o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-10-01 19:09:33 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 27 endpoints beneath base path '/actuator'
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1790861973730 with initial instances count: 9
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application CART-ORDER-SERVICE with eureka with status UP
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790861973740, current=UP, previous=STARTING]
+2026-10-01 19:09:33 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082: registering service...
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application CART-ORDER-SERVICE with eureka with status DOWN
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790861973751, current=DOWN, previous=UP]
+2026-10-01 19:09:33 WARN  [main] traceId= spanId= o.s.b.w.s.s.c.AnnotationConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= o.s.o.j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown initiated...
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Shutdown completed.
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-10-01 19:09:33 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082 - registration status: 204
+2026-10-01 19:09:33 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082: registering service...
+2026-10-01 19:09:33 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082 - registration status: 204
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_CART-ORDER-SERVICE/LAPTOP-UJ0KBI4K.mshome.net:CART-ORDER-SERVICE:8082 - deregister  status: 200
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient
+2026-10-01 19:09:33 INFO  [main] traceId= spanId= o.s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-10-01 19:09:33 ERROR [main] traceId= spanId= o.s.b.d.LoggingFailureAnalysisReporter : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8082 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8082 or configure this application to listen on another port.
+

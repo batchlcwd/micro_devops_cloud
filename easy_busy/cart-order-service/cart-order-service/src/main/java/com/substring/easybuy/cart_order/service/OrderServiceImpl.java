@@ -185,6 +185,7 @@ public class OrderServiceImpl implements OrderService {
 
             return toResponse(saved);
         } catch (RuntimeException ex) {
+            log.error("Checkout failed with error: ", ex);
             for (int i = reservedSnapshots.size() - 1; i >= 0; i--) {
                 CartItem item = cart.getItems().get(i);
                 try {
@@ -283,10 +284,10 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
         order.setUserId(cart.getUserId());
-        order.setBillingName(request.billingName().trim());
-        order.setBillingPhone(request.billingPhone().trim());
-        order.setExtraInformation(request.extraInformation().trim());
-        order.setShippingAddress(request.shippingAddress().trim());
+        order.setBillingName(request.billingName() != null ? request.billingName().trim() : "");
+        order.setBillingPhone(request.billingPhone() != null ? request.billingPhone().trim() : "");
+        order.setExtraInformation(request.extraInformation() != null ? request.extraInformation().trim() : "");
+        order.setShippingAddress(request.shippingAddress() != null ? request.shippingAddress().trim() : "");
         order.setPaymentMethod(request.paymentMethod());
         order.setPaymentStatus(PaymentStatus.PENDING);
         order.setStatus(OrderStatus.CONFIRMED);

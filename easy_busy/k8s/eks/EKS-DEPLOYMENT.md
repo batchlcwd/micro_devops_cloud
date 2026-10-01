@@ -187,3 +187,84 @@ If `ADDRESS` stays empty, check the controller's logs — the usual causes are t
 ```bash
 kubectl logs -n kube-system deploy/aws-load-balancer-controller
 ```
+
+---
+
+## 🤖 CI/CD: Auto-Deploy on Push
+
+`.github/workflows/easy-busy-cicd.yml` (repo root, not under `easy_busy/` — GitHub only reads workflows from the true repo root) triggers on **any** push touching `easy_busy/**`, not just the manifests:
+- **`pull_request`**: runs `kubectl diff` against the k8s manifests as a safe preview. Nothing is built or deployed.
+- **`push` to `main`**: rebuilds and pushes every service's Docker image to Docker Hub (via the same Jib command from Step 3 above, just automated), applies `01` → `07` (idempotent even if nothing in `k8s/eks/` changed), then runs `kubectl rollout restart deployment` so the freshly-pushed `:latest` images and any ConfigMap/Secret changes actually reach running pods — `kubectl apply` alone can't tell a `:latest` tag's underlying image changed, since the Deployment spec text is identical either way.
+
+This rebuilds **all 10** services on every push rather than only the ones that changed — simpler and more reliable than diffing which service directories changed, at the cost of a slower pipeline. `common-service` (a plain Maven dependency of `cart-order-service`/`inventory-service`/`payment-service`/`notifications-service`, not a reactor module) is `mvn install`ed into the runner's local repo first, since a fresh CI runner has no local Maven cache.
+
+This needs a one-time AWS + Docker Hub setup before the first run — GitHub Actions has no credentials of its own.
+
+### 0. Docker Hub access token
+GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**:
+- `DOCKERHUB_USERNAME` — your Docker Hub username (`batchlcwd`)
+- `DOCKERHUB_TOKEN` — an **access token**, not your password: Docker Hub → Account Settings → Security → New Access Token
+
+### 1. Create the GitHub OIDC provider for AWS (skip if your account already has one)
+```bash
+aws iam create-open-id-connect-provider \
+  --url https://token.actions.githubusercontent.com \
+  --client-id-list sts.amazonaws.com \
+  --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
+```
+
+### 2. Create the IAM role GitHub Actions will assume
+Trust policy (`trust-policy.json`) — replace `<account_id>`, `<github-org>`, `<repo-name>`:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::<account_id>:oidc-provider/token.actions.githubusercontent.com"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+          "token.actions.githubusercontent.com:sub": [
+            "repo:<github-org>/<repo-name>:ref:refs/heads/main",
+            "repo:<github-org>/<repo-name>:pull_request"
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+```bash
+aws iam create-role --role-name github-actions-eks-deploy --assume-role-policy-document file://trust-policy.json
+
+# eks:DescribeCluster is all the IAM side needs - actual k8s permissions come from the access entry in step 3
+aws iam put-role-policy --role-name github-actions-eks-deploy --policy-name eks-describe --policy-document '{
+  "Version": "2012-10-17",
+  "Statement": [{"Effect": "Allow", "Action": "eks:DescribeCluster", "Resource": "arn:aws:eks:ap-south-1:<account_id>:cluster/substring-prod"}]
+}'
+```
+
+### 3. Grant that role access to the cluster, scoped to the `easybuy` namespace
+Deliberately namespace-scoped (`AmazonEKSEditPolicy`, not cluster-admin) — CI only ever needs to touch `easybuy`:
+```bash
+aws eks create-access-entry \
+  --cluster-name substring-prod \
+  --principal-arn arn:aws:iam::<account_id>:role/github-actions-eks-deploy
+
+aws eks associate-access-policy \
+  --cluster-name substring-prod \
+  --principal-arn arn:aws:iam::<account_id>:role/github-actions-eks-deploy \
+  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSEditPolicy \
+  --access-scope type=namespace,namespaces=easybuy
+```
+
+### 4. Add the remaining repo secret
+GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**:
+- Name: `AWS_ROLE_ARN`
+- Value: `arn:aws:iam::<account_id>:role/github-actions-eks-deploy`
+
+With all three secrets in place (`DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `AWS_ROLE_ARN`), the next push touching anything under `easy_busy/` will trigger the full build-push-deploy workflow.
