@@ -2,6 +2,7 @@ import { ChevronRight, PackageOpen } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { EmptyState } from '@/components/common/EmptyState'
+import { ErrorState } from '@/components/common/ErrorState'
 import { ImageWithFallback } from '@/components/common/ImageWithFallback'
 import { PageHeader } from '@/components/common/PageHeader'
 import { OrderStatusBadge, PaymentStatusBadge } from '@/components/common/StatusBadges'
@@ -9,7 +10,9 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
+import { useProductImages } from '@/hooks/useProductImages'
 import { formatDate, formatPrice } from '@/lib/format'
+import { isOrderActive, shortOrderNumber } from '@/lib/orderStatus'
 import { useAuthStore } from '@/stores/authStore'
 import { useOrderStore } from '@/stores/orderStore'
 
@@ -23,20 +26,21 @@ const filters = [
 export function OrdersPage() {
   useDocumentTitle('My orders')
   const user = useAuthStore((s) => s.user)!
-  const { myOrders, myOrdersLoading, fetchMyOrders } = useOrderStore()
+  const { myOrders, myOrdersLoading, error, fetchMyOrders } = useOrderStore()
   const [filter, setFilter] = useState('all')
+  const images = useProductImages(myOrders.flatMap((o) => o.items.map((i) => i.productId)))
 
   useEffect(() => {
     fetchMyOrders(user.id)
   }, [fetchMyOrders, user.id])
 
   const visible = myOrders.filter((o) =>
-    filter === 'all' ? true : filter === 'active' ? ['PENDING', 'CONFIRMED', 'SHIPPED'].includes(o.status) : o.status === filter,
+    filter === 'all' ? true : filter === 'active' ? isOrderActive(o) : o.status === filter,
   )
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-8">
-      <PageHeader title="My orders" description="Track, manage and review your purchases" />
+      <PageHeader title="My orders" description="Track and review your purchases" />
 
       <Tabs value={filter} onValueChange={setFilter} className="mb-6">
         <TabsList>
@@ -44,7 +48,9 @@ export function OrdersPage() {
         </TabsList>
       </Tabs>
 
-      {myOrdersLoading && myOrders.length === 0 ? (
+      {error && myOrders.length === 0 ? (
+        <ErrorState message={error} onRetry={() => fetchMyOrders(user.id)} />
+      ) : myOrdersLoading && myOrders.length === 0 ? (
         <div className="space-y-4">
           {Array.from({ length: 3 }, (_, i) => <Skeleton key={i} className="h-40 rounded-xl" />)}
         </div>
@@ -65,8 +71,8 @@ export function OrdersPage() {
             >
               <div className="flex flex-wrap items-center gap-x-8 gap-y-2 border-b bg-muted/40 px-5 py-3 text-sm">
                 <div>
-                  <div className="text-xs text-muted-foreground">Order number</div>
-                  <div className="font-medium">#{order.orderNumber}</div>
+                  <div className="text-xs text-muted-foreground">Order</div>
+                  <div className="font-medium">#{shortOrderNumber(order.orderNumber)}</div>
                 </div>
                 <div>
                   <div className="text-xs text-muted-foreground">Placed on</div>
@@ -77,20 +83,20 @@ export function OrdersPage() {
                   <div className="font-medium">{formatPrice(order.totalAmount)}</div>
                 </div>
                 <div className="flex items-center gap-2 sm:ml-auto">
-                  <PaymentStatusBadge status={order.payment.status} />
+                  <PaymentStatusBadge status={order.paymentStatus} />
                   <OrderStatusBadge status={order.status} />
                 </div>
               </div>
               <div className="flex items-center gap-4 px-5 py-4">
                 <div className="flex -space-x-3">
                   {order.items.slice(0, 3).map((i) => (
-                    <ImageWithFallback key={i.id} src={i.productImage} alt={i.productTitle} className="size-14 rounded-lg border-2 border-background" />
+                    <ImageWithFallback key={i.id} src={images[i.productId]} alt={i.productTitle} className="size-14 rounded-lg border-2 border-background" />
                   ))}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="line-clamp-1 text-sm font-medium">{order.items.map((i) => i.productTitle).join(', ')}</div>
                   <div className="text-xs text-muted-foreground">
-                    {order.items.reduce((n, i) => n + i.quantity, 0)} item(s)
+                    {order.items.reduce((n, i) => n + i.quantity, 0)} item(s) · {order.paymentMethod === 'ONLINE' ? 'Paid online' : 'Cash on delivery'}
                   </div>
                 </div>
                 <ChevronRight className="size-5 shrink-0 text-muted-foreground" />

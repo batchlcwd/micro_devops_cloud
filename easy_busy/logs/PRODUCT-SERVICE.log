@@ -1847,3 +1847,13 @@ java.lang.UnsupportedOperationException
 2026-10-01 13:36:47 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-10-01 13:41:47 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-10-01 13:46:47 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 13:51:47 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 13:56:47 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 14:01:47 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 14:05:43 INFO  [http-nio-8081-exec-6] traceId=03953b10ddd5bbfb09fd42f5a1b6ffd0 spanId=4bb1875ea90a24a2 c.s.e.p.s.impl.ProductServiceImpl : Filtering products: minPrice=null, maxPrice=null, categoryId=null, live=true, page=0, size=100
+2026-10-01 14:06:34 INFO  [http-nio-8081-exec-4] traceId=71db71bc5d1819c6fb098bf4295d2a8e spanId=077783aaaf0232c8 c.s.e.p.s.impl.ProductServiceImpl : Filtering products: minPrice=null, maxPrice=null, categoryId=null, live=true, page=0, size=100
+2026-10-01 14:06:40 INFO  [http-nio-8081-exec-8] traceId=21f09afb899c1a6a979b12277c3e9e19 spanId=68344246a360c32f c.s.e.p.s.impl.ProductServiceImpl : Filtering products: minPrice=null, maxPrice=null, categoryId=1, live=true, page=0, size=100
+2026-10-01 14:06:47 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 14:06:53 INFO  [http-nio-8081-exec-6] traceId=da4201d11033d7848a02051dd1dbe80e spanId=455468df7b54d377 c.s.e.p.s.impl.ProductServiceImpl : Filtering products: minPrice=null, maxPrice=null, categoryId=null, live=true, page=0, size=100
+2026-10-01 14:07:05 INFO  [http-nio-8081-exec-5] traceId=bc5470cc8b5df3ee692d2312209410d0 spanId=699d992610bba47c c.s.e.p.s.impl.ProductServiceImpl : Filtering products: minPrice=null, maxPrice=null, categoryId=null, live=true, page=0, size=100
+2026-10-01 14:08:02 INFO  [http-nio-8081-exec-10] traceId=b99e1e02a3cfdfd848309509672f01f0 spanId=615a09d5c37d4d61 c.s.e.p.s.impl.ProductServiceImpl : Filtering products: minPrice=null, maxPrice=null, categoryId=null, live=true, page=0, size=100

@@ -2,6 +2,7 @@ import { PackageSearch, Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { EmptyState } from '@/components/common/EmptyState'
+import { ErrorState } from '@/components/common/ErrorState'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -29,14 +30,14 @@ import { productService } from '@/services'
 import { useProductStore } from '@/stores/productStore'
 import type { ProductSort } from '@/types'
 
-const PRICE_MAX = 150000
+const PRICE_MAX = 200000
 const PAGE_SIZE = 12
 
 const sortOptions: { value: ProductSort; label: string }[] = [
-  { value: 'popularity', label: 'Popularity' },
+  { value: 'newest', label: 'Newest first' },
   { value: 'price-asc', label: 'Price: Low to High' },
   { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'newest', label: 'Newest first' },
+  { value: 'discount', label: 'Biggest discount' },
   { value: 'rating', label: 'Customer rating' },
 ]
 
@@ -118,7 +119,7 @@ export function ProductListPage() {
 
   const q = params.get('q') ?? ''
   const categoryId = params.get('category') ? Number(params.get('category')) : undefined
-  const sort = (params.get('sort') as ProductSort) || 'popularity'
+  const sort = (params.get('sort') as ProductSort) || 'newest'
   const page = Math.max(0, Number(params.get('page') ?? 1) - 1)
   const minPrice = Number(params.get('min') ?? 0)
   const maxPrice = Number(params.get('max') ?? PRICE_MAX)
@@ -145,7 +146,7 @@ export function ProductListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch])
 
-  const { data, loading } = useAsync(
+  const { data, loading, error, reload } = useAsync(
     () =>
       productService.getProducts({
         search: q,
@@ -228,7 +229,7 @@ export function ProductListPage() {
                   </div>
                 </SheetContent>
               </Sheet>
-              <Select value={sort} onValueChange={(v) => update({ sort: v === 'popularity' ? undefined : v })}>
+              <Select value={sort} onValueChange={(v) => update({ sort: v === 'newest' ? undefined : v })}>
                 <SelectTrigger className="w-full sm:w-52" aria-label="Sort by">
                   <SelectValue />
                 </SelectTrigger>
@@ -266,7 +267,9 @@ export function ProductListPage() {
             </div>
           )}
 
-          {!loading && data?.content.length === 0 ? (
+          {error ? (
+            <ErrorState message={error.message} onRetry={reload} />
+          ) : !loading && data?.content.length === 0 ? (
             <EmptyState
               icon={PackageSearch}
               title="No products found"

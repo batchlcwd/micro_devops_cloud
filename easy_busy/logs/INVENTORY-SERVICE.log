@@ -215,3 +215,7 @@
 2026-10-01 19:07:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-10-01 19:12:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-10-01 19:17:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:22:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:27:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:32:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:37:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration

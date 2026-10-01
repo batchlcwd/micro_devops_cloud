@@ -4,8 +4,9 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { OrderStatusSelect } from '@/components/admin/OrderStatusSelect'
 import { EmptyState } from '@/components/common/EmptyState'
+import { ErrorState } from '@/components/common/ErrorState'
 import { PageHeader } from '@/components/common/PageHeader'
-import { orderStatusMeta, PaymentStatusBadge } from '@/components/common/StatusBadges'
+import { PaymentStatusBadge } from '@/components/common/StatusBadges'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -14,6 +15,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { formatDateTime, formatPrice } from '@/lib/format'
+import { errorMessage } from '@/lib/http'
+import { orderStatusLabel, shortOrderNumber } from '@/lib/orderStatus'
 import { useOrderStore } from '@/stores/orderStore'
 import { ORDER_STATUSES, type Order, type OrderStatus } from '@/types'
 
@@ -21,7 +24,7 @@ export function AdminOrdersPage() {
   useDocumentTitle('Orders')
   const [params, setParams] = useSearchParams()
   const statusFilter = params.get('status') ?? 'ALL'
-  const { allOrders, allOrdersLoading, fetchAllOrders, updateStatus } = useOrderStore()
+  const { allOrders, allOrdersLoading, error, fetchAllOrders, updateStatus } = useOrderStore()
   const [search, setSearch] = useState('')
   const [updatingId, setUpdatingId] = useState<number | null>(null)
 
@@ -34,7 +37,7 @@ export function AdminOrdersPage() {
     return allOrders.filter(
       (o) =>
         (statusFilter === 'ALL' || o.status === statusFilter) &&
-        (!q || `${o.orderNumber} ${o.billingName} ${o.shippingAddress.email}`.toLowerCase().includes(q)),
+        (!q || `${o.orderNumber} ${o.billingName} ${o.billingPhone} ${o.id}`.toLowerCase().includes(q)),
     )
   }, [allOrders, statusFilter, search])
 
@@ -43,10 +46,10 @@ export function AdminOrdersPage() {
   async function changeStatus(order: Order, status: OrderStatus) {
     setUpdatingId(order.id)
     try {
-      await updateStatus(order.id, status, 'Updated by admin')
-      toast.success(`Order #${order.orderNumber} → ${orderStatusMeta[status].label}`)
+      await updateStatus(order.id, status)
+      toast.success(`Order #${shortOrderNumber(order.orderNumber)} → ${orderStatusLabel(status)}`)
     } catch (e) {
-      toast.error('Could not update status', { description: e instanceof Error ? e.message : undefined })
+      toast.error('Could not update status', { description: errorMessage(e) })
     } finally {
       setUpdatingId(null)
     }
@@ -63,7 +66,7 @@ export function AdminOrdersPage() {
               <TabsList>
                 {['ALL', ...ORDER_STATUSES].map((s) => (
                   <TabsTrigger key={s} value={s}>
-                    {s === 'ALL' ? 'All' : orderStatusMeta[s as OrderStatus].label} ({countFor(s)})
+                    {s === 'ALL' ? 'All' : orderStatusLabel(s as OrderStatus)} ({countFor(s)})
                   </TabsTrigger>
                 ))}
               </TabsList>
@@ -71,7 +74,7 @@ export function AdminOrdersPage() {
           </div>
           <div className="relative xl:w-72">
             <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Order #, customer, email…" className="pl-9" />
+            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Order #, customer, phone…" className="pl-9" />
           </div>
         </div>
 
@@ -89,7 +92,13 @@ export function AdminOrdersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {allOrdersLoading && allOrders.length === 0 ? (
+              {error && allOrders.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="p-6">
+                    <ErrorState message={error} onRetry={fetchAllOrders} className="border-0 py-8" />
+                  </TableCell>
+                </TableRow>
+              ) : allOrdersLoading && allOrders.length === 0 ? (
                 Array.from({ length: 6 }, (_, i) => (
                   <TableRow key={i}><TableCell colSpan={7} className="px-4"><Skeleton className="h-10 w-full" /></TableCell></TableRow>
                 ))
@@ -103,25 +112,25 @@ export function AdminOrdersPage() {
                 filtered.map((o) => (
                   <TableRow key={o.id}>
                     <TableCell className="pl-4">
-                      <Link to={`/admin/orders/${o.id}`} className="font-medium hover:underline">#{o.orderNumber}</Link>
+                      <Link to={`/admin/orders/${o.id}`} className="font-medium hover:underline">#{shortOrderNumber(o.orderNumber)}</Link>
                       <div className="text-xs text-muted-foreground">{formatDateTime(o.createdAt)}</div>
                     </TableCell>
                     <TableCell>
                       <div className="font-medium">{o.billingName}</div>
-                      <div className="text-xs text-muted-foreground">{o.shippingAddress.city}</div>
+                      <div className="text-xs text-muted-foreground">{o.billingPhone}</div>
                     </TableCell>
                     <TableCell className="hidden text-muted-foreground md:table-cell">{o.items.reduce((n, i) => n + i.quantity, 0)}</TableCell>
                     <TableCell className="text-right font-medium tabular-nums">{formatPrice(o.totalAmount)}</TableCell>
                     <TableCell>
-                      <PaymentStatusBadge status={o.payment.status} />
-                      <div className="mt-1 text-xs text-muted-foreground">{o.payment.method === 'ONLINE' ? 'Razorpay' : 'COD'}</div>
+                      <PaymentStatusBadge status={o.paymentStatus} />
+                      <div className="mt-1 text-xs text-muted-foreground">{o.paymentMethod === 'ONLINE' ? 'Razorpay' : 'COD'}</div>
                     </TableCell>
                     <TableCell>
-                      <OrderStatusSelect value={o.status} onChange={(s) => changeStatus(o, s)} disabled={updatingId === o.id} className="w-36" />
+                      <OrderStatusSelect value={o.status} onChange={(s) => changeStatus(o, s)} disabled={updatingId === o.id} className="w-40" />
                     </TableCell>
                     <TableCell className="pr-4 text-right">
                       <Button variant="ghost" size="icon-sm" asChild>
-                        <Link to={`/admin/orders/${o.id}`} aria-label={`View order ${o.orderNumber}`}><Eye /></Link>
+                        <Link to={`/admin/orders/${o.id}`} aria-label={`View order ${shortOrderNumber(o.orderNumber)}`}><Eye /></Link>
                       </Button>
                     </TableCell>
                   </TableRow>

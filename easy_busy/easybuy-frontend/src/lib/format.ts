@@ -1,7 +1,7 @@
-const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })
+const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 2 })
 const compact = new Intl.NumberFormat('en-IN', { notation: 'compact', maximumFractionDigits: 1 })
 
-export const formatPrice = (amount: number) => inr.format(Math.round(amount))
+export const formatPrice = (amount: number) => inr.format(amount)
 
 export const formatCompact = (n: number) => compact.format(n)
 

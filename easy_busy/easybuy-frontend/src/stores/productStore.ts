@@ -1,24 +1,25 @@
 import { create } from 'zustand'
-import { categoryService, productService } from '@/services'
+import { categoryService, inventoryService, productService } from '@/services'
 import type { Category, Product, ProductInput } from '@/types'
 
 interface ProductState {
   categories: Category[]
   categoriesLoaded: boolean
-  /** Full catalogue for admin screens */
+  /** Full catalogue (including hidden products) for admin screens */
   adminProducts: Product[]
   adminLoading: boolean
-  fetchCategories: () => Promise<void>
+  fetchCategories: (force?: boolean) => Promise<void>
+  createCategory: (title: string) => Promise<Category>
   fetchAdminProducts: () => Promise<void>
-  createProduct: (input: ProductInput) => Promise<Product>
+  /** Creates the product, then its inventory record (inventory-service has no product event listener). */
+  createProduct: (input: ProductInput, stock: { quantity: number; warehouse: string }) => Promise<Product>
   updateProduct: (id: string, input: ProductInput) => Promise<Product>
   deleteProduct: (id: string) => Promise<void>
 }
 
 /**
- * Shared catalogue state. Storefront listing/detail pages query
- * `productService` directly through hooks since their results are
- * query-specific; categories and admin CRUD live here.
+ * Shared catalogue state. Storefront listing/detail pages call
+ * `productService` through hooks since their results are query-specific.
  */
 export const useProductStore = create<ProductState>((set, get) => ({
   categories: [],
@@ -26,10 +27,19 @@ export const useProductStore = create<ProductState>((set, get) => ({
   adminProducts: [],
   adminLoading: false,
 
-  fetchCategories: async () => {
-    if (get().categoriesLoaded) return
-    const categories = await categoryService.getAll()
-    set({ categories, categoriesLoaded: true })
+  fetchCategories: async (force) => {
+    if (get().categoriesLoaded && !force) return
+    try {
+      set({ categories: await categoryService.getAll(), categoriesLoaded: true })
+    } catch {
+      set({ categoriesLoaded: false })
+    }
+  },
+
+  createCategory: async (title) => {
+    const category = await categoryService.create(title)
+    set((s) => ({ categories: [...s.categories, category] }))
+    return category
   },
 
   fetchAdminProducts: async () => {
@@ -41,9 +51,18 @@ export const useProductStore = create<ProductState>((set, get) => ({
     }
   },
 
-  createProduct: async (input) => {
+  createProduct: async (input, stock) => {
     const product = await productService.create(input)
     set((s) => ({ adminProducts: [product, ...s.adminProducts] }))
+    await inventoryService.create({
+      productId: product.id,
+      sku: `EB-${(product.categories[0]?.title ?? 'GEN').slice(0, 3).toUpperCase()}-${product.id.slice(0, 8).toUpperCase()}`,
+      productName: product.title,
+      warehouseLocation: stock.warehouse,
+      availableQuantity: stock.quantity,
+      reorderLevel: 10,
+      active: product.live,
+    })
     return product
   },
 

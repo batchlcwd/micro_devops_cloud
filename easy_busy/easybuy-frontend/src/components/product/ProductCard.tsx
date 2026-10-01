@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAddToCart } from '@/hooks/useAddToCart'
+import { averageRating } from '@/lib/pricing'
 import type { Product } from '@/types'
 import { PriceTag } from './PriceTag'
 import { RatingStars } from './RatingStars'
@@ -12,12 +13,13 @@ import { RatingStars } from './RatingStars'
 export function ProductCard({ product }: { product: Product }) {
   const { addToCart, pendingId } = useAddToCart()
   const adding = pendingId === product.id
+  const { rating, count } = averageRating(product.reviews)
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-lg">
       <Link to={`/products/${product.id}`} className="relative block aspect-square overflow-hidden bg-muted">
         <ImageWithFallback
-          src={product.productImages[0]}
+          src={product.productImages?.[0]}
           alt={product.title}
           className="size-full transition-transform duration-500 group-hover:scale-105"
         />
@@ -26,11 +28,13 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </Link>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{product.brand}</div>
+        {product.categories?.[0] && (
+          <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{product.categories[0].title}</div>
+        )}
         <Link to={`/products/${product.id}`} className="line-clamp-2 min-h-10 text-sm leading-5 font-medium hover:underline">
           {product.title}
         </Link>
-        <RatingStars rating={product.rating} count={product.reviewCount} />
+        <RatingStars rating={rating} count={count} />
         <div className="mt-auto flex items-end justify-between gap-2 pt-1">
           <PriceTag price={product.price} discount={product.discount} />
           <Button

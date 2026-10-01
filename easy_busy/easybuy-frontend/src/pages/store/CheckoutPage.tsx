@@ -1,5 +1,5 @@
 import { Banknote, CreditCard, Loader2, Lock, MapPin, ShoppingCart } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useShallow } from 'zustand/react/shallow'
@@ -7,18 +7,19 @@ import { PriceBreakdown } from '@/components/checkout/PriceBreakdown'
 import { EmptyState } from '@/components/common/EmptyState'
 import { ImageWithFallback } from '@/components/common/ImageWithFallback'
 import { Button } from '@/components/ui/button'
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
-import { demoAddress, indianStates } from '@/data/users'
+import { indianStates } from '@/data/staticData'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { useRazorpayPayment } from '@/hooks/useRazorpayPayment'
 import { formatPrice } from '@/lib/format'
-import { effectivePrice } from '@/lib/pricing'
+import { ApiError, errorMessage } from '@/lib/http'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
 import { selectCartTotals, useCartStore } from '@/stores/cartStore'
@@ -39,6 +40,19 @@ function validate(a: ShippingAddress): Errors {
   return e
 }
 
+/** CheckoutRequest.shippingAddress is a single string on the backend. */
+function formatAddress(a: ShippingAddress) {
+  return [
+    [a.line1.trim(), a.line2?.trim()].filter(Boolean).join(', '),
+    `${a.city.trim()}, ${a.state} - ${a.pincode}`,
+    a.country,
+    `Email: ${a.email.trim()}`,
+  ].join('\n')
+}
+
+/** Last 10 digits of a stored phone number like "+919876543210". */
+const localPhone = (phone?: string) => (phone ?? '').replace(/\D/g, '').slice(-10)
+
 function Field({ id, label, error, className, children }: { id: string; label: string; error?: string; className?: string; children: React.ReactNode }) {
   return (
     <div className={cn('space-y-1.5', className)}>
@@ -53,15 +67,14 @@ export function CheckoutPage() {
   useDocumentTitle('Checkout')
   const navigate = useNavigate()
   const user = useAuthStore((s) => s.user)
-  const items = useCartStore((s) => s.items)
-  const clearCart = useCartStore((s) => s.clear)
+  const { items, mode, loading: cartLoading, refresh: refreshCart } = useCartStore()
   const totals = useCartStore(useShallow(selectCartTotals))
   const placeOrder = useOrderStore((s) => s.placeOrder)
   const { payForOrder, paying } = useRazorpayPayment()
 
   const [address, setAddress] = useState<ShippingAddress>({
     fullName: user?.name ?? '',
-    phone: user?.phone ?? '',
+    phone: localPhone(user?.phoneNumber),
     email: user?.email ?? '',
     line1: '',
     line2: '',
@@ -75,7 +88,22 @@ export function CheckoutPage() {
   const [errors, setErrors] = useState<Errors>({})
   const [placing, setPlacing] = useState(false)
 
+  // Checkout reads the server-side cart, so make sure we show exactly what will be ordered
+  useEffect(() => {
+    if (user && mode === 'server') refreshCart().catch(() => {})
+  }, [user, mode, refreshCart])
+
   if (!user) return <Navigate to="/login?redirect=/checkout" replace />
+  if (user.role === 'ADMIN') return <Navigate to="/cart" replace />
+
+  if ((cartLoading || mode !== 'server') && items.length === 0) {
+    return (
+      <div className="container mx-auto grid gap-8 px-4 py-8 lg:grid-cols-[1fr_400px]">
+        <Skeleton className="h-[520px] rounded-xl" />
+        <Skeleton className="h-80 rounded-xl" />
+      </div>
+    )
+  }
 
   if (items.length === 0 && !placing) {
     return (
@@ -107,23 +135,29 @@ export function CheckoutPage() {
 
     setPlacing(true)
     try {
-      const order = await placeOrder({
-        userId: user!.id,
-        shippingAddress: address,
-        items,
+      const order = await placeOrder(user!.id, {
+        billingName: address.fullName.trim(),
+        billingPhone: address.phone,
+        shippingAddress: formatAddress(address),
         paymentMethod: method,
-        extraInformation: notes || undefined,
+        paymentDetails: method === 'ONLINE' ? 'Razorpay' : 'Cash on delivery',
+        extraInformation: notes.trim() || undefined,
       })
       if (method === 'OFFLINE') {
-        toast.success('Order placed', { description: `Order ${order.orderNumber} will be paid on delivery.` })
+        toast.success('Order placed', { description: 'Pay with cash or UPI when your order arrives.' })
       } else {
         await payForOrder(order)
       }
-      // Order exists and stock is reserved — the cart has served its purpose
-      clearCart()
+      // cart-order-service empties the cart during checkout
+      refreshCart().catch(() => {})
       navigate(`/orders/${order.id}?placed=1`, { replace: true })
     } catch (err) {
-      toast.error('Could not place order', { description: err instanceof Error ? err.message : undefined })
+      // cart-order-service answers 502 "Checkout failed" when it can't reserve stock for an item
+      const description =
+        err instanceof ApiError && err.status === 502
+          ? 'Some items in your cart are out of stock or unavailable. Please review your cart and try again.'
+          : errorMessage(err)
+      toast.error('Could not place order', { description })
       setPlacing(false)
     }
   }
@@ -139,11 +173,6 @@ export function CheckoutPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2"><MapPin className="size-4" /> Shipping address</CardTitle>
               <CardDescription>Where should we deliver your order?</CardDescription>
-              <CardAction>
-                <Button type="button" variant="outline" size="sm" onClick={() => { setAddress(demoAddress); setErrors({}) }}>
-                  Use saved address
-                </Button>
-              </CardAction>
             </CardHeader>
             <CardContent className="grid gap-4 sm:grid-cols-2">
               <Field id="fullName" label="Full name" error={errors.fullName}>
@@ -235,7 +264,7 @@ export function CheckoutPage() {
                     <div className="min-w-0 flex-1">
                       <div className="line-clamp-2 text-sm">{item.title}</div>
                     </div>
-                    <div className="text-sm font-medium">{formatPrice(effectivePrice(item.price, item.discount) * item.quantity)}</div>
+                    <div className="text-sm font-medium">{formatPrice(item.unitPrice * item.quantity)}</div>
                   </div>
                 ))}
               </div>

@@ -37,7 +37,7 @@ function SearchForm({ className, onSubmitted }: { className?: string; onSubmitte
       <Input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Search products, brands…"
+        placeholder="Search products…"
         className="h-9 pl-9"
         aria-label="Search products"
       />

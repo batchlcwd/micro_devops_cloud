@@ -14,3 +14,6 @@ data:
   SPRING_MAIL_HOST: "mailhog"
   SPRING_MAIL_PORT: "1025"
   SPRING_DATA_REDIS_HOST: "redis"
+  # api-gateway CORS allow-list, comma-separated. TODO: replace with your real
+  # deployed frontend origin(s) - this placeholder only allows local dev.
+  FRONTEND_ORIGINS: "http://localhost:3000"

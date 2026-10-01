@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { errorMessage } from '@/lib/http'
 import { stockStatus } from '@/lib/pricing'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import type { InventoryItem } from '@/types'
@@ -37,11 +38,11 @@ export function UpdateStockDialog({ item, onOpenChange }: UpdateStockDialogProps
     if (!item) return
     setSaving(true)
     try {
-      await updateStock(item.id, { availableQuantity: qty, reorderLevel })
+      await updateStock(item, qty, reorderLevel)
       toast.success('Stock updated', { description: `${item.productName}: ${qty} units available` })
       onOpenChange(false)
     } catch (err) {
-      toast.error('Could not update stock', { description: err instanceof Error ? err.message : undefined })
+      toast.error('Could not update stock', { description: errorMessage(err) })
     } finally {
       setSaving(false)
     }
@@ -67,6 +68,9 @@ export function UpdateStockDialog({ item, onOpenChange }: UpdateStockDialogProps
                 <Button key={n} type="button" variant="secondary" size="xs" onClick={() => setQuantity(String(qty + n))}>+{n}</Button>
               ))}
             </div>
+            {item && item.reservedQuantity > 0 && (
+              <p className="text-xs text-muted-foreground">{item.reservedQuantity} more units are reserved by open orders.</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="reorder">Reorder level</Label>

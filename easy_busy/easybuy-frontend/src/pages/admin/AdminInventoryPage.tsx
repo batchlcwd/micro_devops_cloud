@@ -1,8 +1,10 @@
-import { AlertTriangle, Boxes, PackageCheck, PackageX, Search } from 'lucide-react'
+import { AlertTriangle, Boxes, PackagePlus, PackageCheck, PackageX, Search } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { CreateStockDialog } from '@/components/admin/CreateStockDialog'
 import { UpdateStockDialog } from '@/components/admin/UpdateStockDialog'
 import { EmptyState } from '@/components/common/EmptyState'
+import { ErrorState } from '@/components/common/ErrorState'
 import { ImageWithFallback } from '@/components/common/ImageWithFallback'
 import { PageHeader } from '@/components/common/PageHeader'
 import { StockBadge } from '@/components/common/StatusBadges'
@@ -18,7 +20,7 @@ import { stockStatus } from '@/lib/pricing'
 import { cn } from '@/lib/utils'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { useProductStore } from '@/stores/productStore'
-import type { InventoryItem } from '@/types'
+import type { InventoryItem, Product } from '@/types'
 
 type Filter = 'all' | 'low' | 'out'
 
@@ -26,15 +28,16 @@ export function AdminInventoryPage() {
   useDocumentTitle('Inventory')
   const [params, setParams] = useSearchParams()
   const filter = (params.get('filter') as Filter) || 'all'
-  const { items, loading, fetchInventory } = useInventoryStore()
+  const { items, loading, error, fetchInventory } = useInventoryStore()
   const { adminProducts, fetchAdminProducts } = useProductStore()
   const [search, setSearch] = useState('')
   const [editing, setEditing] = useState<InventoryItem | null>(null)
+  const [creatingFor, setCreatingFor] = useState<Product | null>(null)
 
   useEffect(() => {
     fetchInventory()
-    if (adminProducts.length === 0) fetchAdminProducts()
-  }, [fetchInventory, fetchAdminProducts, adminProducts.length])
+    if (useProductStore.getState().adminProducts.length === 0) fetchAdminProducts().catch(() => {})
+  }, [fetchInventory, fetchAdminProducts])
 
   const counts = useMemo(
     () => ({
@@ -44,6 +47,12 @@ export function AdminInventoryPage() {
       out: items.filter((i) => stockStatus(i) === 'OUT_OF_STOCK').length,
     }),
     [items],
+  )
+
+  // Products without an inventory row (inventory-service doesn't create them automatically)
+  const untracked = useMemo(
+    () => (error ? [] : adminProducts.filter((p) => !items.some((i) => i.productId === p.id))),
+    [adminProducts, items, error],
   )
 
   const filtered = useMemo(() => {
@@ -56,7 +65,7 @@ export function AdminInventoryPage() {
     })
   }, [items, filter, search])
 
-  const imageFor = (productId: string) => adminProducts.find((p) => p.id === productId)?.productImages[0]
+  const imageFor = (productId: string) => adminProducts.find((p) => p.id === productId)?.productImages?.[0]
 
   const summary = [
     { label: 'Total SKUs', value: counts.all, icon: Boxes, tone: 'text-foreground' },
@@ -68,6 +77,27 @@ export function AdminInventoryPage() {
   return (
     <>
       <PageHeader title="Inventory" description="Monitor and update stock levels across warehouses" />
+
+      {!loading && untracked.length > 0 && (
+        <Card className="mb-6 border-amber-300 bg-amber-50/60 dark:border-amber-500/30 dark:bg-amber-500/5">
+          <div className="px-4">
+            <div className="flex items-center gap-2 font-medium">
+              <PackagePlus className="size-4 text-amber-600" />
+              {untracked.length} product{untracked.length === 1 ? ' has' : 's have'} no stock record
+            </div>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Checkout fails for these products because stock can't be reserved. Create a record to start selling them.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {untracked.map((p) => (
+                <Button key={p.id} variant="outline" size="sm" onClick={() => setCreatingFor(p)}>
+                  <PackagePlus data-icon="inline-start" /> {p.title}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </Card>
+      )}
 
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {summary.map(({ label, value, icon: Icon, tone }) => (
@@ -112,7 +142,13 @@ export function AdminInventoryPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {loading && items.length === 0 ? (
+              {error && items.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={8} className="p-6">
+                    <ErrorState message={error} onRetry={fetchInventory} className="border-0 py-8" />
+                  </TableCell>
+                </TableRow>
+              ) : loading && items.length === 0 ? (
                 Array.from({ length: 8 }, (_, i) => (
                   <TableRow key={i}><TableCell colSpan={8} className="px-4"><Skeleton className="h-10 w-full" /></TableCell></TableRow>
                 ))
@@ -149,7 +185,7 @@ export function AdminInventoryPage() {
                       <TableCell className="hidden text-right text-muted-foreground tabular-nums md:table-cell">{i.reservedQuantity}</TableCell>
                       <TableCell className="hidden text-right text-muted-foreground tabular-nums md:table-cell">{i.reorderLevel}</TableCell>
                       <TableCell><StockBadge status={status} /></TableCell>
-                      <TableCell className="hidden text-muted-foreground xl:table-cell">{formatDate(i.updatedAt)}</TableCell>
+                      <TableCell className="hidden text-muted-foreground xl:table-cell">{i.updatedAt ? formatDate(i.updatedAt) : '—'}</TableCell>
                       <TableCell className="pr-4 text-right">
                         <Button variant={status === 'IN_STOCK' ? 'outline' : 'default'} size="sm" onClick={() => setEditing(i)}>
                           {status === 'OUT_OF_STOCK' ? 'Restock' : 'Update'}
@@ -165,6 +201,7 @@ export function AdminInventoryPage() {
       </Card>
 
       <UpdateStockDialog item={editing} onOpenChange={(o) => !o && setEditing(null)} />
+      <CreateStockDialog product={creatingFor} onOpenChange={(o) => !o && setCreatingFor(null)} />
     </>
   )
 }

@@ -1,34 +1,44 @@
-import { delay } from '@/lib/http'
-import type { InventoryItem } from '@/types'
-import { clone, db, persist } from './mock/db'
+import { api, ApiError } from '@/lib/http'
+import type { CreateInventoryRequest, InventoryItem } from '@/types'
 
+/**
+ * inventory-service via gateway route /inventories.
+ * Every call needs a signed-in user; writes need ADMIN.
+ */
 export const inventoryService = {
-  /** REST: GET /api/inventories */
-  async getAll(): Promise<InventoryItem[]> {
-    await delay()
-    return clone(db.inventory)
-  },
+  /** GET /api/inventories (ADMIN) */
+  getAll: () => api.inventories.get<InventoryItem[]>('/inventories'),
 
-  /** REST: GET /api/inventories/product/{productId} */
+  /**
+   * GET /api/inventories/product/{productId}
+   * Returns null when the product has no stock record, or when the visitor is
+   * signed out (the gateway requires a token for inventory reads).
+   */
   async getByProductId(productId: string): Promise<InventoryItem | null> {
-    await delay(200)
-    const item = db.inventory.find((i) => i.productId === productId)
-    return item ? clone(item) : null
+    try {
+      return await api.inventories.get<InventoryItem>(`/inventories/product/${productId}`)
+    } catch (e) {
+      if (e instanceof ApiError && [401, 403, 404].includes(e.status)) return null
+      throw e
+    }
   },
 
-  /** REST: GET /api/inventories/low-stock */
-  async getLowStock(): Promise<InventoryItem[]> {
-    await delay()
-    return clone(db.inventory.filter((i) => i.availableQuantity <= i.reorderLevel))
-  },
+  /** GET /api/inventories/low-stock?threshold= */
+  getLowStock: (threshold = 10) => api.inventories.get<InventoryItem[]>('/inventories/low-stock', { threshold }),
 
-  /** REST: PUT /api/inventories/{id} */
-  async update(id: number, patch: Pick<InventoryItem, 'availableQuantity' | 'reorderLevel'>): Promise<InventoryItem> {
-    await delay()
-    const item = db.inventory.find((i) => i.id === id)
-    if (!item) throw new Error('Inventory record not found')
-    Object.assign(item, patch, { updatedAt: new Date().toISOString() })
-    persist()
-    return clone(item)
-  },
+  /** POST /api/inventories (ADMIN) */
+  create: (req: CreateInventoryRequest) => api.inventories.post<InventoryItem>('/inventories', req),
+
+  /** PATCH /api/inventories/{id}/adjust-stock — positive or negative delta (ADMIN) */
+  adjustStock: (id: number, quantityDelta: number, reason?: string) =>
+    api.inventories.patch<InventoryItem>(`/inventories/${id}/adjust-stock`, { quantityDelta, reason }),
+
+  /** PUT /api/inventories/{id} — metadata only, not quantity (ADMIN) */
+  update: (id: number, item: Pick<InventoryItem, 'productName' | 'warehouseLocation' | 'reorderLevel' | 'active'>) =>
+    api.inventories.put<InventoryItem>(`/inventories/${id}`, {
+      productName: item.productName,
+      warehouseLocation: item.warehouseLocation,
+      reorderLevel: item.reorderLevel,
+      active: item.active,
+    }),
 }

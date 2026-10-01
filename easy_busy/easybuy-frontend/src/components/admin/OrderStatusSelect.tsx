@@ -1,20 +1,7 @@
-import { orderStatusMeta } from '@/components/common/StatusBadges'
+import { orderStatusIcon } from '@/components/common/StatusBadges'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { allowedTransitions, orderStatusLabel } from '@/lib/orderStatus'
 import { ORDER_STATUSES, type OrderStatus } from '@/types'
-
-/** Which statuses an order may move to from its current one. */
-export function allowedTransitions(current: OrderStatus): OrderStatus[] {
-  switch (current) {
-    case 'PENDING':
-      return ['CONFIRMED', 'CANCELLED']
-    case 'CONFIRMED':
-      return ['SHIPPED', 'CANCELLED']
-    case 'SHIPPED':
-      return ['DELIVERED']
-    default:
-      return []
-  }
-}
 
 interface OrderStatusSelectProps {
   value: OrderStatus
@@ -32,10 +19,10 @@ export function OrderStatusSelect({ value, onChange, disabled, className }: Orde
       </SelectTrigger>
       <SelectContent>
         {ORDER_STATUSES.map((s) => {
-          const Icon = orderStatusMeta[s].icon
+          const Icon = orderStatusIcon[s]
           return (
             <SelectItem key={s} value={s} disabled={s !== value && !allowed.includes(s)}>
-              <Icon /> {orderStatusMeta[s].label}
+              <Icon /> {orderStatusLabel(s)}
             </SelectItem>
           )
         })}

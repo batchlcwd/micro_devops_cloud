@@ -1,64 +1,58 @@
 # EasyBuy Frontend
 
-Storefront and admin dashboard for the EasyBuy microservices, built with React 19, Vite, TypeScript, Tailwind CSS v4, shadcn/ui (Radix), Zustand, React Router and Lucide icons.
-
-It runs entirely on mock data for now. The backend can be wired in through the `services/` layer without touching any UI code.
+Storefront and admin dashboard for the EasyBuy microservices. Built with React 19, Vite, TypeScript, Tailwind CSS v4, shadcn/ui (Radix), Zustand, React Router and Lucide icons. Every screen calls the real Spring Boot APIs through the API gateway.
 
 ```bash
+cp .env.example .env
 npm install
-npm run dev        # http://localhost:5173
+npm run dev        # http://localhost:5173  (backend gateway must be running on :8080)
 npm run build      # type-check + production build
 ```
 
-Sign in from `/login` with a demo account: **Customer** for shopping and orders, **Admin** for `/admin`.
+## How it talks to the backend
 
-## Features
+```
+browser ──/gw/*──▶ Vite dev proxy ──▶ API gateway :8080 ──▶ microservices (via Eureka)
+```
 
-**Store**: home (hero, categories, featured, new arrivals/popular), product listing (search, category and price filters, sorting, pagination, all synced to the URL), product details (gallery, live stock, quantity, related products), cart (persisted to localStorage), checkout (address validation, Razorpay or cash on delivery), orders list, and order details (progress tracker, shipping, payment, cancel, retry payment).
+- **Proxy:** the gateway has no CORS configuration, so in development the browser calls `/gw/...` and Vite forwards it to `GATEWAY_URL`. For a production build on another origin, set `VITE_API_BASE_URL` to the gateway URL and enable CORS on the gateway.
+- **Service prefixes:** gateway routes are prefixed by service (`RouteConfig.java`), and `src/lib/http.ts` exposes one client per route:
 
-**Admin**: dashboard (revenue, orders, products, low-stock alerts, recent orders), product CRUD with a live/hidden toggle, inventory (low and out-of-stock indicators, stock updates), and orders (status filter, inline status changes, details page with an activity log).
+  | Client | Gateway prefix | Service |
+  | --- | --- | --- |
+  | `api.products` | `/products/api` | products-service |
+  | `api.cartOrders` | `/cart-orders/api` | cart-order-service |
+  | `api.users` | `/users/api` | users-service |
+  | `api.inventories` | `/inventories/api` | inventory-service |
+  | `api.payments` | `/payments/api` | payment-service |
+
+- **Auth:** `POST /users/api/users/login` returns `accessToken`, `refreshToken` and `user`. The access token is sent as `Bearer`. On a 401 the client calls `/users/api/users/refresh` once and retries; if that fails the user is signed out.
+
+## Backend behaviour the UI accounts for
+
+These come from reading the service code. The `docs/finalwork` guides differ in places.
+
+- **userId in paths:** the gateway compares `{userId}` in `/carts/{userId}` and `/orders/{userId}/checkout` with the JWT `userId` claim, which is the user's UUID. The docs' email examples would get a 403.
+- **Order statuses** are `CONFIRMED → IN_PROGRESS → DISPATCHED → OUT_OF_DELIVERY → DELIVERED`, plus `CANCELLED`. There is no `PENDING` or `SHIPPED`. Payment statuses are `PENDING / PAID / FAILED`.
+- **Customer order details** come from `GET /orders/user/{userId}`. The gateway returns 403 to non-admins for `GET /orders/{orderId}` and `DELETE /orders/{orderId}`, because its ownership check reads the order id as a user id. Customers therefore can't cancel orders from the UI.
+- **Cart:** guest carts live in localStorage. When a user signs in, the guest items are pushed into the server cart (`/carts/{userId}`), which is the source of truth from then on. Checkout reads the server cart.
+- **Totals:** order totals are the sum of discounted line totals. There is no delivery fee, and the UI shows the same amount.
+- **Stock visibility:** inventory reads need a token, so signed-out shoppers see "Sign in to check availability".
+- **Stock records:** `inventory-service` does not create stock records for new products. *Admin → Products → Add product* creates the product and its inventory record. *Admin → Inventory* lists products that have no record and lets you create one; checkout fails for those products until you do.
+- **Catalogue queries:** products-service has separate `/filter` and `/search` endpoints and no sort parameter. The listing page loads `/filter?live=true&categoryId=` (all pages, cached for 30s) and does search, price filtering, sorting and pagination client-side. Move these into the request once the backend supports them together.
+- **Payments:** `POST /payments/razorpay/create-order` → checkout → `POST /payments/razorpay/verify`. With dummy Razorpay keys the backend returns `order_MOCK_…` ids; the UI then shows an in-app test checkout, and `/verify` accepts it. With real keys, Razorpay's `checkout.js` opens using the `keyId` the backend returns. The order's `paymentStatus` updates asynchronously over Kafka, so the order page polls briefly.
+- **New accounts** are always `GUEST`. To get an admin, change the role (`PUT /users/api/users/change-role`, which itself needs an admin) or update the database.
 
 ## Structure
 
 ```
 src/
+  lib/          http client (gateway, JWT, refresh) · tokenStorage · pricing · orderStatus · format
+  services/     one module per backend service, each method annotated with its endpoint
+  stores/       Zustand: auth · cart (guest/server) · product · inventory · order · mockRazorpay
+  hooks/        useAsync · useAddToCart · useRazorpayPayment · useProductImages · …
   components/   ui/ (shadcn) · common/ · layout/ · product/ · checkout/ · order/ · admin/
-  pages/        store/ · admin/ · LoginPage · NotFoundPage
-  layouts/      StoreLayout · AdminLayout
-  stores/       cart · auth · product · inventory · order · mockRazorpay (Zustand)
-  services/     product · category · inventory · order · payment · auth · dashboard
-  services/mock/db.ts   in-memory DB seeded from data/, persisted to localStorage
-  data/         all dummy data
-  hooks/        useAsync · useAddToCart · useRazorpayPayment · useDebounce · …
-  lib/          http client · pricing · formatting · utils
-  types/        domain types that mirror the Spring Boot DTOs
+  pages/        store/ · admin/ · Login · Register · NotFound
+  data/         static reference data only (Indian states, category cover images)
+  types/        types mirroring the Spring Boot DTOs
 ```
-
-Data flows **UI → stores/hooks → services → (mock db | REST)**. Components never import `data/` directly.
-
-## Connecting the Spring Boot backend
-
-1. Copy `.env.example` to `.env` and set `VITE_USE_MOCKS=false`.
-2. In each service, replace the mock body with the `http` call documented in the method's comment. For example:
-   ```ts
-   /** REST: GET /api/products/{productId} */
-   async getById(id) { return http.get<Product>(`/api/products/${id}`) }
-   ```
-3. Types already follow `ProductDto`, `PagedResponse`, `OrderResponse`, `InventoryResponse` and `RazorpayOrderResponse`. Two differences still need a mapper in the service:
-   - `OrderResponse.shippingAddress` is a `String`, while the frontend uses a structured `ShippingAddress`.
-   - The frontend order statuses (`PENDING/CONFIRMED/SHIPPED/DELIVERED/CANCELLED`) differ from the backend enum (`IN_PROGRESS/DISPATCHED/OUT_OF_DELIVERY/…`).
-4. Delete `services/mock/` once every service has been switched over.
-
-## Razorpay
-
-The payment flow lives in `hooks/useRazorpayPayment.ts`:
-`paymentService.createRazorpayOrder` → `paymentService.openCheckout` → `paymentService.verifyPayment` → update the order.
-
-The checkout UI comes from a gateway that is chosen by `VITE_PAYMENT_GATEWAY`:
-
-- `mock` (default): `services/payment/mockRazorpayGateway.ts` opens an in-app dialog that can simulate success or failure.
-- `razorpay`: `services/payment/razorpayGateway.ts` loads `checkout.js` and uses the real `handler` / `ondismiss` / `payment.failed` callbacks.
-
-Both gateways implement the same `PaymentGateway` interface, so moving to production only means pointing the payment service methods at `/api/payments/razorpay/create-order` and `/verify`.
-
-To reset the mock data, clear the `easybuy-mock-db-v1` key from localStorage.

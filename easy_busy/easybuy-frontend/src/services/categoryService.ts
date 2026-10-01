@@ -1,11 +1,10 @@
-import { delay } from '@/lib/http'
+import { api } from '@/lib/http'
 import type { Category } from '@/types'
-import { clone, db } from './mock/db'
 
 export const categoryService = {
-  /** REST: GET /api/categories */
-  async getAll(): Promise<Category[]> {
-    await delay(250)
-    return clone(db.categories)
-  },
+  /** GET /api/categories */
+  getAll: () => api.products.get<Category[]>('/categories'),
+
+  /** POST /api/categories (ADMIN) */
+  create: (title: string) => api.products.post<Category>('/categories', { title }),
 }

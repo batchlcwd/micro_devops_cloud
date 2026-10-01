@@ -4,6 +4,7 @@ import { AdminLayout } from '@/layouts/AdminLayout'
 import { StoreLayout } from '@/layouts/StoreLayout'
 import { LoginPage } from '@/pages/LoginPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
+import { RegisterPage } from '@/pages/RegisterPage'
 import { CartPage } from '@/pages/store/CartPage'
 import { CheckoutPage } from '@/pages/store/CheckoutPage'
 import { HomePage } from '@/pages/store/HomePage'
@@ -14,6 +15,7 @@ import { ProductListPage } from '@/pages/store/ProductListPage'
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
+  { path: '/register', element: <RegisterPage /> },
   {
     element: <StoreLayout />,
     children: [

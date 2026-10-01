@@ -5,7 +5,7 @@ import { useProductStore } from '@/stores/productStore'
 import { Logo } from './Logo'
 
 const perks = [
-  { icon: Truck, title: 'Free delivery', text: 'On orders above ₹999' },
+  { icon: Truck, title: 'Free delivery', text: 'On every order' },
   { icon: RotateCcw, title: 'Easy returns', text: '7-day hassle-free returns' },
   { icon: CreditCard, title: 'Secure payments', text: 'Powered by Razorpay' },
   { icon: Headphones, title: '24/7 support', text: 'We are here to help' },

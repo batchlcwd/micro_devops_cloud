@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ProductFormDialog } from '@/components/admin/ProductFormDialog'
 import { EmptyState } from '@/components/common/EmptyState'
+import { ErrorState } from '@/components/common/ErrorState'
 import { ImageWithFallback } from '@/components/common/ImageWithFallback'
 import { PageHeader } from '@/components/common/PageHeader'
 import {
@@ -33,7 +34,9 @@ import { Switch } from '@/components/ui/switch'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { formatPrice } from '@/lib/format'
+import { errorMessage } from '@/lib/http'
 import { effectivePrice } from '@/lib/pricing'
+import { productService } from '@/services'
 import { useProductStore } from '@/stores/productStore'
 import type { Product } from '@/types'
 
@@ -47,8 +50,10 @@ export function AdminProductsPage() {
   const [editing, setEditing] = useState<Product | null>(null)
   const [deleting, setDeleting] = useState<Product | null>(null)
 
+  const [loadError, setLoadError] = useState<string | null>(null)
+
   useEffect(() => {
-    fetchAdminProducts()
+    fetchAdminProducts().catch((e) => setLoadError(errorMessage(e)))
     fetchCategories()
   }, [fetchAdminProducts, fetchCategories])
 
@@ -56,24 +61,34 @@ export function AdminProductsPage() {
     const q = search.trim().toLowerCase()
     return adminProducts.filter(
       (p) =>
-        (!q || `${p.title} ${p.brand ?? ''}`.toLowerCase().includes(q)) &&
+        (!q || p.title.toLowerCase().includes(q)) &&
         (category === 'all' || p.categories.some((c) => String(c.id) === category)) &&
         (status === 'all' || (status === 'live' ? p.live : !p.live)),
     )
   }, [adminProducts, search, category, status])
 
   async function toggleLive(p: Product) {
-    const { id, createdAt: _c, updatedAt: _u, reviews: _r, ...input } = p
-    await updateProduct(id, { ...input, live: !p.live })
-    toast.success(p.live ? 'Product hidden from store' : 'Product is now live', { description: p.title })
+    try {
+      await updateProduct(p.id, { ...productService.toInput(p), live: !p.live })
+      toast.success(p.live ? 'Product hidden from store' : 'Product is now live', { description: p.title })
+    } catch (e) {
+      toast.error('Could not update product', { description: errorMessage(e) })
+    }
   }
 
   async function confirmDelete() {
     if (!deleting) return
-    await deleteProduct(deleting.id)
-    toast.success('Product deleted', { description: deleting.title })
-    setDeleting(null)
+    try {
+      await deleteProduct(deleting.id)
+      toast.success('Product deleted', { description: deleting.title })
+    } catch (e) {
+      toast.error('Could not delete product', { description: errorMessage(e) })
+    } finally {
+      setDeleting(null)
+    }
   }
+
+  const load = () => fetchAdminProducts().catch((e) => setLoadError(errorMessage(e)))
 
   return (
     <>
@@ -91,7 +106,7 @@ export function AdminProductsPage() {
         <div className="flex flex-col gap-3 border-b p-4 sm:flex-row">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name or brand…" className="pl-9" />
+            <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name…" className="pl-9" />
           </div>
           <Select value={category} onValueChange={setCategory}>
             <SelectTrigger className="w-full sm:w-44"><SelectValue /></SelectTrigger>
@@ -123,7 +138,13 @@ export function AdminProductsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {adminLoading && adminProducts.length === 0 ? (
+              {loadError && adminProducts.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="p-6">
+                    <ErrorState message={loadError} onRetry={() => { setLoadError(null); load() }} className="border-0 py-8" />
+                  </TableCell>
+                </TableRow>
+              ) : adminLoading && adminProducts.length === 0 ? (
                 Array.from({ length: 6 }, (_, i) => (
                   <TableRow key={i}>
                     <TableCell colSpan={6} className="px-4"><Skeleton className="h-10 w-full" /></TableCell>
@@ -140,14 +161,14 @@ export function AdminProductsPage() {
                   <TableRow key={p.id}>
                     <TableCell className="pl-4">
                       <div className="flex items-center gap-3">
-                        <ImageWithFallback src={p.productImages[0]} alt="" className="size-11 shrink-0 rounded-md border" />
+                        <ImageWithFallback src={p.productImages?.[0]} alt="" className="size-11 shrink-0 rounded-md border" />
                         <div className="min-w-0">
                           <div className="max-w-xs truncate font-medium">{p.title}</div>
-                          <div className="text-xs text-muted-foreground">{p.brand ?? '—'}</div>
+                          <div className="font-mono text-xs text-muted-foreground">{p.id.slice(0, 8)}</div>
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell><Badge variant="secondary">{p.categories[0]?.title ?? 'Uncategorised'}</Badge></TableCell>
+                    <TableCell><Badge variant="secondary">{p.categories?.[0]?.title ?? 'Uncategorised'}</Badge></TableCell>
                     <TableCell className="text-right tabular-nums">
                       <div className="font-medium">{formatPrice(effectivePrice(p.price, p.discount))}</div>
                       {p.discount > 0 && <div className="text-xs text-muted-foreground line-through">{formatPrice(p.price)}</div>}
@@ -195,7 +216,7 @@ export function AdminProductsPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this product?</AlertDialogTitle>
             <AlertDialogDescription>
-              “{deleting?.title}” and its inventory record will be permanently removed. Existing orders are not affected.
+              “{deleting?.title}” will be permanently removed from the catalogue. Existing orders are not affected; its inventory record stays until you remove it.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

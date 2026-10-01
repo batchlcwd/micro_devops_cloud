@@ -44,6 +44,11 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: SPRING_DATA_REDIS_HOST
+            - name: FRONTEND_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: easybuy-config
+                  key: FRONTEND_ORIGINS
           resources:
             requests:
               cpu: 250m

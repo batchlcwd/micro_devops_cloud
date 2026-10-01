@@ -2,6 +2,7 @@ import { ChevronRight, Loader2, PackageX, RotateCcw, ShieldCheck, ShoppingBag, S
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { EmptyState } from '@/components/common/EmptyState'
+import { ErrorState } from '@/components/common/ErrorState'
 import { ImageWithFallback } from '@/components/common/ImageWithFallback'
 import { StockBadge } from '@/components/common/StatusBadges'
 import { PriceTag } from '@/components/product/PriceTag'
@@ -16,11 +17,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAddToCart } from '@/hooks/useAddToCart'
 import { useAsync } from '@/hooks/useAsync'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
-import { formatDate } from '@/lib/format'
-import { stockStatus } from '@/lib/pricing'
+import { ApiError } from '@/lib/http'
+import { averageRating, stockStatus } from '@/lib/pricing'
 import { cn } from '@/lib/utils'
 import { inventoryService, productService } from '@/services'
-import { useCartStore } from '@/stores/cartStore'
+import { useAuthStore } from '@/stores/authStore'
+import { MAX_QTY_PER_ITEM, useCartStore } from '@/stores/cartStore'
 
 function DetailsSkeleton() {
   return (
@@ -41,14 +43,13 @@ function DetailsSkeleton() {
 export function ProductDetailsPage() {
   const { id = '' } = useParams()
   const navigate = useNavigate()
+  const signedIn = useAuthStore((s) => !!s.user)
   const { addToCart, pendingId } = useAddToCart()
   const inCart = useCartStore((s) => s.items.find((i) => i.productId === id)?.quantity ?? 0)
 
-  const { data, loading } = useAsync(async () => {
-    const [product, inventory] = await Promise.all([productService.getById(id), inventoryService.getByProductId(id)])
-    return { product, inventory }
-  }, [id])
-  const product = data?.product
+  const { data: product, loading, error, reload } = useAsync(() => productService.getById(id), [id])
+  // Inventory reads need a token, so stock is only known for signed-in shoppers
+  const stock = useAsync(() => (signedIn ? inventoryService.getByProductId(id) : Promise.resolve(null)), [id, signedIn])
   const related = useAsync(() => (product ? productService.getRelated(product, 4) : Promise.resolve([])), [product?.id])
 
   const [activeImage, setActiveImage] = useState(0)
@@ -68,27 +69,37 @@ export function ProductDetailsPage() {
     )
   }
 
-  if (!product || !product.live) {
+  const notFound = (error instanceof ApiError && (error.status === 404 || error.status === 400)) || (product && !product.live)
+  if (notFound || !product) {
     return (
       <div className="container mx-auto px-4 py-16">
-        <EmptyState
-          icon={PackageX}
-          title="Product not found"
-          description="This product may have been removed or is no longer available."
-          action={<Button asChild><Link to="/products">Browse products</Link></Button>}
-        />
+        {error && !notFound ? (
+          <ErrorState message={error.message} onRetry={reload} />
+        ) : (
+          <EmptyState
+            icon={PackageX}
+            title="Product not found"
+            description="This product may have been removed or is no longer available."
+            action={<Button asChild><Link to="/products">Browse products</Link></Button>}
+          />
+        )}
       </div>
     )
   }
 
-  const available = data?.inventory?.availableQuantity ?? 0
-  const status = stockStatus(data?.inventory ?? undefined)
-  const maxAddable = Math.max(0, available - inCart)
-  const outOfStock = available <= 0
-  const category = product.categories[0]
+  const inventory = stock.data
+  const stockKnown = signedIn && !stock.loading && inventory !== null && inventory !== undefined
+  const available = inventory?.availableQuantity ?? 0
+  const status = stockStatus(inventory)
+  const outOfStock = stockKnown && available <= 0
+  const limit = stockKnown ? Math.min(MAX_QTY_PER_ITEM, available) : MAX_QTY_PER_ITEM
+  const maxAddable = Math.max(0, limit - inCart)
+  const category = product.categories?.[0]
+  const { rating, count } = averageRating(product.reviews)
+  const images = product.productImages?.length ? product.productImages : ['']
 
   async function handleAdd(buyNow = false) {
-    const ok = await addToCart(product!, qty, available)
+    const ok = await addToCart(product!, qty, stockKnown ? available : undefined)
     if (ok) setQty(1)
     if (ok && buyNow) navigate('/cart')
   }
@@ -113,14 +124,14 @@ export function ProductDetailsPage() {
         {/* Gallery */}
         <div className="space-y-3">
           <div className="relative aspect-square overflow-hidden rounded-2xl border bg-muted">
-            <ImageWithFallback src={product.productImages[activeImage]} alt={product.title} className="size-full" />
+            <ImageWithFallback src={images[activeImage]} alt={product.title} className="size-full" />
             {product.discount > 0 && (
               <Badge className="absolute top-4 left-4 border-0 bg-rose-600 text-white">-{product.discount}%</Badge>
             )}
           </div>
-          {product.productImages.length > 1 && (
+          {images.length > 1 && (
             <div className="flex gap-3">
-              {product.productImages.map((src, i) => (
+              {images.map((src, i) => (
                 <button
                   key={src}
                   type="button"
@@ -140,17 +151,29 @@ export function ProductDetailsPage() {
 
         {/* Info */}
         <div className="flex flex-col">
-          <div className="text-sm font-medium tracking-wide text-muted-foreground uppercase">{product.brand}</div>
+          {category && <div className="text-sm font-medium tracking-wide text-muted-foreground uppercase">{category.title}</div>}
           <h1 className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">{product.title}</h1>
-          <RatingStars rating={product.rating} count={product.reviewCount} showStars className="mt-3 text-sm" />
+          <RatingStars rating={rating} count={count} showStars className="mt-3 text-sm" />
 
           <PriceTag price={product.price} discount={product.discount} size="lg" className="mt-5" />
           <p className="mt-1 text-xs text-muted-foreground">Inclusive of all taxes</p>
 
-          <div className="mt-4 flex items-center gap-3">
-            <StockBadge status={status} />
-            {status === 'LOW_STOCK' && <span className="text-sm font-medium text-amber-700 dark:text-amber-400">Only {available} left — order soon!</span>}
-            {status === 'IN_STOCK' && <span className="text-sm text-muted-foreground">Ships in 1–2 business days</span>}
+          <div className="mt-4 flex min-h-6 items-center gap-3">
+            {!signedIn ? (
+              <span className="text-sm text-muted-foreground">
+                <Link to={`/login?redirect=/products/${product.id}`} className="font-medium text-foreground underline-offset-4 hover:underline">Sign in</Link> to check availability
+              </span>
+            ) : stock.loading ? (
+              <Skeleton className="h-5 w-40" />
+            ) : stockKnown ? (
+              <>
+                <StockBadge status={status} />
+                {status === 'LOW_STOCK' && <span className="text-sm font-medium text-amber-700 dark:text-amber-400">Only {available} left — order soon!</span>}
+                {status === 'IN_STOCK' && <span className="text-sm text-muted-foreground">Ships in 1–2 business days</span>}
+              </>
+            ) : (
+              <span className="text-sm text-muted-foreground">Availability information is not available for this item.</span>
+            )}
           </div>
 
           <p className="mt-5 text-muted-foreground">{product.shortDesc}</p>
@@ -165,7 +188,7 @@ export function ProductDetailsPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-4">
                 <span className="text-sm font-medium">Quantity</span>
-                <QuantitySelector value={qty} onChange={setQty} max={Math.max(1, Math.min(maxAddable, 10))} disabled={maxAddable === 0} />
+                <QuantitySelector value={qty} onChange={setQty} max={Math.max(1, maxAddable)} disabled={maxAddable === 0} />
                 {inCart > 0 && <span className="text-xs text-muted-foreground">{inCart} already in cart</span>}
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
@@ -181,9 +204,9 @@ export function ProductDetailsPage() {
           )}
 
           <div className="mt-8 grid grid-cols-3 gap-3 text-center text-xs text-muted-foreground">
-            <div className="rounded-lg border p-3"><Truck className="mx-auto mb-1.5 size-5 text-foreground" />Free delivery over ₹999</div>
+            <div className="rounded-lg border p-3"><Truck className="mx-auto mb-1.5 size-5 text-foreground" />Free delivery</div>
             <div className="rounded-lg border p-3"><RotateCcw className="mx-auto mb-1.5 size-5 text-foreground" />7-day returns</div>
-            <div className="rounded-lg border p-3"><ShieldCheck className="mx-auto mb-1.5 size-5 text-foreground" />1-year warranty</div>
+            <div className="rounded-lg border p-3"><ShieldCheck className="mx-auto mb-1.5 size-5 text-foreground" />Secure payments</div>
           </div>
         </div>
       </div>
@@ -191,7 +214,7 @@ export function ProductDetailsPage() {
       <Tabs defaultValue="description" className="mt-14">
         <TabsList>
           <TabsTrigger value="description">Description</TabsTrigger>
-          <TabsTrigger value="reviews">Reviews ({product.reviews?.length ?? 0})</TabsTrigger>
+          <TabsTrigger value="reviews">Reviews ({count})</TabsTrigger>
         </TabsList>
         <TabsContent value="description" className="max-w-3xl pt-4 leading-relaxed whitespace-pre-line text-muted-foreground">
           {product.longDesc}
@@ -201,17 +224,14 @@ export function ProductDetailsPage() {
             <div className="divide-y">
               {product.reviews.map((r) => (
                 <div key={r.id} className="py-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium">{r.userName}</span>
-                    <span className="text-xs text-muted-foreground">{formatDate(r.createdAt)}</span>
-                  </div>
+                  <div className="font-medium">{r.title}</div>
                   <RatingStars rating={r.rating} showStars className="mt-1" />
                   <p className="mt-2 text-sm text-muted-foreground">{r.comment}</p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">No reviews yet. Be the first to review this product.</p>
+            <p className="text-sm text-muted-foreground">No reviews yet.</p>
           )}
         </TabsContent>
       </Tabs>

@@ -1,12 +1,15 @@
-import { demoAdmin, demoCustomer } from '@/data/users'
-import { delay } from '@/lib/http'
-import type { User, UserRole } from '@/types'
+import { api } from '@/lib/http'
+import type { LoginResponse, RegisterRequest, User } from '@/types'
 
+/** users-service via gateway route /users. */
 export const authService = {
-  /** REST: POST /api/auth/login — mocked as a one-click demo login per role. */
-  async loginAs(role: UserRole): Promise<{ user: User; token: string }> {
-    await delay(400)
-    const user = role === 'ADMIN' ? demoAdmin : demoCustomer
-    return { user, token: `mock-jwt-${user.id}` }
-  },
+  /** POST /api/users/login */
+  login: (email: string, password: string) =>
+    api.users.post<LoginResponse>('/users/login', { email, password }, { anonymous: true }),
+
+  /** POST /api/users — new accounts are always created with role GUEST */
+  register: (req: RegisterRequest) => api.users.post<User>('/users', req, { anonymous: true }),
+
+  /** GET /api/users/{id} */
+  getUser: (id: string) => api.users.get<User>(`/users/${id}`),
 }

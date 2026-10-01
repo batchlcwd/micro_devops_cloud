@@ -99,3 +99,14 @@ This generated password is for development use only. Your security configuration
 2026-10-01 19:07:55 INFO  [http-nio-8085-exec-3] traceId=3b1d70e6cb735db77891252bd545f9ac spanId=170973950ff474c3 c.s.e.u.service.impl.UserServiceImpl : Login service executed:
 2026-10-01 19:10:49 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-10-01 19:15:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:20:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:25:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:30:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:35:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:36:08 INFO  [http-nio-8085-exec-7] traceId=30d682633c97648415821fef232b0c7d spanId=b2b01a9858dccb88 c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:36:09 INFO  [http-nio-8085-exec-7] traceId=30d682633c97648415821fef232b0c7d spanId=b2b01a9858dccb88 c.s.e.u.service.impl.UserServiceImpl : Login service executed:
+2026-10-01 19:36:51 INFO  [http-nio-8085-exec-10] traceId=62633bdbf628ed14a4b3fd7a8571a533 spanId=381d7582234fab1d c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:36:51 INFO  [http-nio-8085-exec-10] traceId=62633bdbf628ed14a4b3fd7a8571a533 spanId=381d7582234fab1d c.s.e.u.service.impl.UserServiceImpl : Login service executed:
+2026-10-01 19:36:58 INFO  [http-nio-8085-exec-1] traceId=a3f20f739fdec5cdb4227e293bfb620d spanId=5972e0ff0f8508d8 c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:36:58 INFO  [http-nio-8085-exec-1] traceId=a3f20f739fdec5cdb4227e293bfb620d spanId=5972e0ff0f8508d8 c.s.e.u.service.impl.UserServiceImpl : Login service executed:
+2026-10-01 19:36:59 INFO  [http-nio-8085-exec-3] traceId=cc7fd412a897145bf27f6358dc113d33 spanId=ade12ea4adb01f5f c.s.e.u.service.impl.UserServiceImpl : Login service started:
