@@ -8,7 +8,7 @@ import type { Order, PaymentTransaction } from '@/types'
 /**
  * Razorpay flow for a placed order (payment-service):
  *   1. POST /razorpay/create-order   → Razorpay order id + key
- *   2. checkout (real checkout.js, or the in-app dialog for simulated `order_MOCK_` orders)
+ *   2. Razorpay Checkout (checkout.js) — the customer pays inside Razorpay's modal
  *   3. POST /razorpay/verify         → transaction PAID; cart-order-service is updated via Kafka
  * Resolves with the verified transaction, or null if payment didn't complete.
  */

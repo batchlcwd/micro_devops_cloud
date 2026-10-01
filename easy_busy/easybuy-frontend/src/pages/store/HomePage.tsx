@@ -124,17 +124,17 @@ export function HomePage() {
 
       {/* Promo banner */}
       <section className="container mx-auto px-4">
-        <div className="relative overflow-hidden rounded-2xl bg-primary px-6 py-10 text-primary-foreground sm:px-12">
+        <div className="relative overflow-hidden rounded-2xl bg-primary px-6 py-10 text-primary-foreground sm:px-12 dark:bg-muted dark:text-foreground dark:ring-1 dark:ring-border">
           <div className="relative z-10 max-w-lg space-y-3">
             <Badge className="border-0 bg-rose-600 text-white">Fast & safe</Badge>
             <h3 className="text-2xl font-semibold sm:text-3xl">Secure checkout with Razorpay</h3>
-            <p className="text-primary-foreground/70">Pay with UPI, cards or net banking — or choose cash on delivery.</p>
-            <Button variant="secondary" asChild>
+            <p className="text-primary-foreground/70 dark:text-muted-foreground">Pay with UPI, cards or net banking — or choose cash on delivery.</p>
+            <Button variant="secondary" className="dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/85" asChild>
               <Link to="/products?sort=discount">Shop the deals</Link>
             </Button>
           </div>
-          <div className="absolute -top-16 -right-16 size-64 rounded-full bg-primary-foreground/5" />
-          <div className="absolute -right-4 -bottom-24 size-72 rounded-full bg-primary-foreground/5" />
+          <div className="absolute -top-16 -right-16 size-64 rounded-full bg-primary-foreground/5 dark:bg-foreground/5" />
+          <div className="absolute -right-4 -bottom-24 size-72 rounded-full bg-primary-foreground/5 dark:bg-foreground/5" />
         </div>
       </section>
 

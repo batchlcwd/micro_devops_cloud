@@ -1,27 +1,23 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { setUnauthorizedHandler } from '@/lib/http'
+import { setTokensRefreshedHandler, setUnauthorizedHandler } from '@/lib/http'
+import { decodeToken } from '@/lib/jwt'
 import { tokenStorage } from '@/lib/tokenStorage'
 import { authService } from '@/services'
-import type { RegisterRequest, User } from '@/types'
+import type { RegisterRequest, User, UserRole } from '@/types'
 
 interface AuthState {
   user: User | null
   login: (email: string, password: string) => Promise<User>
   register: (req: RegisterRequest) => Promise<User>
   logout: () => void
+  /**
+   * Re-reads role / userId from the stored access token. The gateway authorises by
+   * the token's claims, so the UI must agree with them — not with the role saved at login.
+   */
+  syncFromToken: () => void
 }
 
-/** Treat an expired JWT as signed out on startup. */
-function tokenExpired(token: string | null) {
-  if (!token) return true
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
-    return typeof payload.exp === 'number' && payload.exp * 1000 < Date.now()
-  } catch {
-    return true
-  }
-}
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -32,7 +28,8 @@ export const useAuthStore = create<AuthState>()(
         const res = await authService.login(email, password)
         tokenStorage.set(res.accessToken, res.refreshToken)
         set({ user: res.user })
-        return res.user
+        get().syncFromToken()
+        return get().user!
       },
 
       register: async (req) => {
@@ -44,15 +41,29 @@ export const useAuthStore = create<AuthState>()(
         tokenStorage.clear()
         set({ user: null })
       },
+
+      syncFromToken: () => {
+        const user = get().user
+        if (!user) return
+        const claims = decodeToken(tokenStorage.getAccess())
+        if (!claims) {
+          // Signed-in state without a usable token can only lead to 401/403s
+          if (!tokenStorage.getRefresh()) get().logout()
+          return
+        }
+        if (claims.userId && claims.userId !== user.id) {
+          // Tokens belong to a different account than the stored profile — start clean
+          get().logout()
+          return
+        }
+        if (claims.role && claims.role !== user.role) set({ user: { ...user, role: claims.role as UserRole } })
+      },
     }),
     {
       name: 'easybuy-auth',
       storage: createJSONStorage(() => localStorage),
       partialize: (s) => ({ user: s.user }),
-      onRehydrateStorage: () => (state) => {
-        // Access token expired and no refresh token left → start signed out
-        if (state?.user && tokenExpired(tokenStorage.getAccess()) && !tokenStorage.getRefresh()) state.logout()
-      },
+      onRehydrateStorage: () => (state) => state?.syncFromToken(),
     },
   ),
 )
@@ -60,5 +71,7 @@ export const useAuthStore = create<AuthState>()(
 setUnauthorizedHandler(() => {
   if (useAuthStore.getState().user) useAuthStore.getState().logout()
 })
+
+setTokensRefreshedHandler(() => useAuthStore.getState().syncFromToken())
 
 export const useIsAdmin = () => useAuthStore((s) => s.user?.role === 'ADMIN')

@@ -2,6 +2,7 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
+import { ThemeToggle } from '@/components/common/ThemeToggle'
 import { Logo } from '@/components/layout/Logo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -42,7 +43,10 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center bg-muted/40 px-4 py-12">
+    <div className="relative flex min-h-svh flex-col items-center justify-center bg-muted/40 px-4 py-12">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
       <Logo className="mb-8" />
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">

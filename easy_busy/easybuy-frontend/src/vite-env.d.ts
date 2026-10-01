@@ -2,5 +2,6 @@
 
 interface ImportMetaEnv {
   readonly VITE_API_BASE_URL?: string
-  readonly VITE_PAYMENT_GATEWAY?: 'mock' | 'razorpay'
+  /** Fallback only — payment-service normally returns the key id with each Razorpay order */
+  readonly VITE_RAZORPAY_KEY_ID?: string
 }

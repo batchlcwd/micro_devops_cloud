@@ -227,3 +227,5 @@
 2026-10-01 19:52:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-10-01 19:57:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
 2026-10-01 20:02:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 20:07:06 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 20:08:03 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId=e9672674165e394a8b1bce85683a4662 spanId=e5d79ec8c1794183 c.s.e.i.c.PaymentEventConsumer : Received PaymentEvent in inventory-service from Kafka: PaymentEvent{orderId=13, transactionId='2ea1144c-73b5-44cc-af14-bb3cc8843cb0', amount=949.99, status='PAID', message='Payment processed successfully via Kafka consumer'}

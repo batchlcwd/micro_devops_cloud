@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { cn } from '@/lib/utils'
 import { useCartCount } from '@/stores/cartStore'
 import { useProductStore } from '@/stores/productStore'
+import { ThemeToggle } from '@/components/common/ThemeToggle'
 import { Logo } from './Logo'
 import { UserMenu } from './UserMenu'
 
@@ -121,6 +122,7 @@ export function Navbar() {
         <SearchForm className="ml-auto hidden w-full max-w-sm md:block" />
 
         <div className="ml-auto flex items-center gap-1 md:ml-0">
+          <ThemeToggle />
           <Button variant="ghost" size="icon" className="relative" asChild>
             <Link to="/cart" aria-label={`Cart, ${cartCount} items`}>
               <ShoppingCart />

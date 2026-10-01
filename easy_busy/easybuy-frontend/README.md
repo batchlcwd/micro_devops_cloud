@@ -1,6 +1,6 @@
 # EasyBuy Frontend
 
-Storefront and admin dashboard for the EasyBuy microservices. Built with React 19, Vite, TypeScript, Tailwind CSS v4, shadcn/ui (Radix), Zustand, React Router and Lucide icons. Every screen calls the real Spring Boot APIs through the API gateway.
+Storefront and admin dashboard for the EasyBuy microservices. Built with React 19, Vite, TypeScript, Tailwind CSS v4, shadcn/ui (Radix), Zustand, React Router and Lucide icons. Every screen calls the real Spring Boot APIs through the API gateway. Light, dark and system themes are supported (toggle in the header).
 
 ```bash
 cp .env.example .env
@@ -40,7 +40,7 @@ These come from reading the service code. The `docs/finalwork` guides differ in 
 - **Stock visibility:** inventory reads need a token, so signed-out shoppers see "Sign in to check availability".
 - **Stock records:** `inventory-service` does not create stock records for new products. *Admin → Products → Add product* creates the product and its inventory record. *Admin → Inventory* lists products that have no record and lets you create one; checkout fails for those products until you do.
 - **Catalogue queries:** products-service has separate `/filter` and `/search` endpoints and no sort parameter. The listing page loads `/filter?live=true&categoryId=` (all pages, cached for 30s) and does search, price filtering, sorting and pagination client-side. Move these into the request once the backend supports them together.
-- **Payments:** `POST /payments/razorpay/create-order` → checkout → `POST /payments/razorpay/verify`. With dummy Razorpay keys the backend returns `order_MOCK_…` ids; the UI then shows an in-app test checkout, and `/verify` accepts it. With real keys, Razorpay's `checkout.js` opens using the `keyId` the backend returns. The order's `paymentStatus` updates asynchronously over Kafka, so the order page polls briefly.
+- **Payments (real Razorpay):** `POST /payments/razorpay/create-order` returns the Razorpay order id and key id. The UI then opens Razorpay's `checkout.js`, and `POST /payments/razorpay/verify` checks the signature server-side. Card and UPI details are entered only in Razorpay's frame. If an attempt fails, Razorpay keeps its modal open so the customer can retry; the UI reports a failure only when the modal is closed without a successful payment. If payment-service is still on dummy keys (it returns `order_MOCK_…` ids), the UI shows a clear "not configured" error instead of opening checkout. The order's `paymentStatus` updates asynchronously over Kafka, so the order page polls briefly.
 - **New accounts** are always `GUEST`. To get an admin, change the role (`PUT /users/api/users/change-role`, which itself needs an admin) or update the database.
 
 ## Structure

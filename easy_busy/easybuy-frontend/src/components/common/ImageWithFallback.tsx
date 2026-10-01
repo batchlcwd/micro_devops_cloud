@@ -18,7 +18,7 @@ export function ImageWithFallback({ className, alt, src, ...props }: ImgHTMLAttr
       alt={alt}
       loading="lazy"
       onError={() => setFailedSrc(src)}
-      className={cn('bg-muted object-cover', className)}
+      className={cn('bg-muted object-cover dark:brightness-[.92]', className)}
       {...props}
     />
   )

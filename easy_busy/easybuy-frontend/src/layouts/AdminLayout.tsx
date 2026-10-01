@@ -1,6 +1,7 @@
 import { Boxes, ExternalLink, LayoutDashboard, LogOut, Menu, Package, ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink, Outlet, ScrollRestoration, useLocation, useNavigate } from 'react-router-dom'
+import { ThemeToggle } from '@/components/common/ThemeToggle'
 import { Logo } from '@/components/layout/Logo'
 import { initials } from '@/components/layout/UserMenu'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -102,6 +103,9 @@ export function AdminLayout() {
             </SheetContent>
           </Sheet>
           <h2 className="text-sm font-medium text-muted-foreground">{current?.label ?? 'Admin'}</h2>
+          <div className="ml-auto">
+            <ThemeToggle />
+          </div>
         </header>
         <main className="flex-1 p-4 lg:p-8">
           <Outlet />

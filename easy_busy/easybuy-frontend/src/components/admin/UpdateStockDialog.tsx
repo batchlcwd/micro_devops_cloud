@@ -79,7 +79,7 @@ export function UpdateStockDialog({ item, onOpenChange }: UpdateStockDialogProps
           </div>
           <div className="flex items-center justify-between rounded-lg bg-muted px-3 py-2.5 text-sm">
             <span className="text-muted-foreground">
-              Change: <span className={delta > 0 ? 'text-emerald-600' : delta < 0 ? 'text-destructive' : ''}>{delta > 0 ? `+${delta}` : delta}</span>
+              Change: <span className={delta > 0 ? 'text-emerald-600 dark:text-emerald-400' : delta < 0 ? 'text-destructive' : ''}>{delta > 0 ? `+${delta}` : delta}</span>
             </span>
             <StockBadge status={stockStatus({ availableQuantity: qty, reorderLevel })} />
           </div>

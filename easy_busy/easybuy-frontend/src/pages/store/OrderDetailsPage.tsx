@@ -95,7 +95,7 @@ export function OrderDetailsPage() {
 
       {justPlaced && order.status !== 'CANCELLED' && (
         <div className="mb-6 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-500/30 dark:bg-emerald-500/10">
-          <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+          <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <div>
             <div className="font-medium text-emerald-900 dark:text-emerald-200">Thank you! Your order has been placed.</div>
             <div className="text-sm text-emerald-800/80 dark:text-emerald-200/70">

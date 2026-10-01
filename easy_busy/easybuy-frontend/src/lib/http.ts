@@ -9,6 +9,7 @@
  * In development VITE_API_BASE_URL defaults to `/gw`, which the Vite dev server
  * proxies to http://localhost:8080 (the gateway has no CORS configuration).
  */
+import { decodeToken } from './jwt'
 import { tokenStorage } from './tokenStorage'
 
 export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '/gw').replace(/\/$/, '')
@@ -36,6 +37,27 @@ export const setUnauthorizedHandler = (fn: () => void) => {
   onUnauthorized = fn
 }
 
+let onTokensRefreshed: (() => void) | null = null
+/** Registered by the auth store: called after a refresh so it can re-read role/userId from the new token. */
+export const setTokensRefreshedHandler = (fn: () => void) => {
+  onTokensRefreshed = fn
+}
+
+/**
+ * The gateway answers 403 with an empty body, so explain the likely reason from
+ * the path and the role in our token (see AuthenticationFilter).
+ */
+function forbiddenMessage(path: string) {
+  const role = decodeToken(tokenStorage.getAccess())?.role ?? 'unknown'
+  if (/\/api\/(carts|orders\/user)\/|\/api\/orders\/[^/]+\/checkout/.test(path)) {
+    return 'This cart or order belongs to a different account. Please sign out and sign in again.'
+  }
+  if (role !== 'ADMIN') {
+    return `This action needs an admin account — you are signed in as ${role}. If your role was just changed, sign out and sign in again.`
+  }
+  return 'The gateway refused this request (403).'
+}
+
 function buildUrl(path: string, query?: Query) {
   const params = new URLSearchParams()
   Object.entries(query ?? {}).forEach(([k, v]) => {
@@ -45,7 +67,7 @@ function buildUrl(path: string, query?: Query) {
   return `${API_BASE_URL}${path}${qs ? `?${qs}` : ''}`
 }
 
-async function parseError(res: Response): Promise<ApiError> {
+async function parseError(res: Response, path: string): Promise<ApiError> {
   const text = await res.text().catch(() => '')
   let message = ''
   try {
@@ -59,7 +81,7 @@ async function parseError(res: Response): Promise<ApiError> {
   if (!message) {
     message =
       res.status === 401 ? 'Please sign in to continue'
-        : res.status === 403 ? 'You do not have permission to do that'
+        : res.status === 403 ? forbiddenMessage(path)
           : res.status === 404 ? 'Not found'
             : res.status >= 500 ? 'The server is unavailable. Please try again shortly.'
               : res.statusText || 'Request failed'
@@ -82,6 +104,7 @@ function refreshTokens(): Promise<boolean> {
       if (!res.ok) return false
       const data = (await res.json()) as { accessToken: string; refreshToken: string }
       tokenStorage.set(data.accessToken, data.refreshToken)
+      onTokensRefreshed?.()
       return true
     })
     .catch(() => false)
@@ -111,7 +134,12 @@ async function request<T>(method: string, path: string, opts: RequestOptions = {
     if (await refreshTokens()) return request<T>(method, path, opts, true)
     onUnauthorized?.()
   }
-  if (!res.ok) throw await parseError(res)
+  // The token's role is fixed at issue time. If the account's role changed since
+  // (e.g. promoted to ADMIN), a refreshed token carries the current role — retry once.
+  if (res.status === 403 && token && !retried) {
+    if (await refreshTokens()) return request<T>(method, path, opts, true)
+  }
+  if (!res.ok) throw await parseError(res, path)
   if (res.status === 204) return undefined as T
   const text = await res.text()
   if (!text) return undefined as T

@@ -69,9 +69,9 @@ export function AdminInventoryPage() {
 
   const summary = [
     { label: 'Total SKUs', value: counts.all, icon: Boxes, tone: 'text-foreground' },
-    { label: 'In stock', value: counts.in, icon: PackageCheck, tone: 'text-emerald-600' },
-    { label: 'Low stock', value: counts.low, icon: AlertTriangle, tone: 'text-amber-600' },
-    { label: 'Out of stock', value: counts.out, icon: PackageX, tone: 'text-red-600' },
+    { label: 'In stock', value: counts.in, icon: PackageCheck, tone: 'text-emerald-600 dark:text-emerald-400' },
+    { label: 'Low stock', value: counts.low, icon: AlertTriangle, tone: 'text-amber-600 dark:text-amber-400' },
+    { label: 'Out of stock', value: counts.out, icon: PackageX, tone: 'text-red-600 dark:text-red-400' },
   ]
 
   return (
@@ -82,7 +82,7 @@ export function AdminInventoryPage() {
         <Card className="mb-6 border-amber-300 bg-amber-50/60 dark:border-amber-500/30 dark:bg-amber-500/5">
           <div className="px-4">
             <div className="flex items-center gap-2 font-medium">
-              <PackagePlus className="size-4 text-amber-600" />
+              <PackagePlus className="size-4 text-amber-600 dark:text-amber-400" />
               {untracked.length} product{untracked.length === 1 ? ' has' : 's have'} no stock record
             </div>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -176,8 +176,8 @@ export function AdminInventoryPage() {
                       <TableCell
                         className={cn(
                           'text-right font-semibold tabular-nums',
-                          status === 'OUT_OF_STOCK' && 'text-red-600',
-                          status === 'LOW_STOCK' && 'text-amber-600',
+                          status === 'OUT_OF_STOCK' && 'text-red-600 dark:text-red-400',
+                          status === 'LOW_STOCK' && 'text-amber-600 dark:text-amber-400',
                         )}
                       >
                         {i.availableQuantity}
