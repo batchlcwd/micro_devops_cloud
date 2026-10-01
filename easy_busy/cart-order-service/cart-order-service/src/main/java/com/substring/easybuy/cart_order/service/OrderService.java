@@ -29,4 +29,8 @@ public interface OrderService {
 	void releaseReservedStock(UUID productId, Integer quantity);
 
 	void updatePaymentStatus(Long orderId, String paymentStatus);
+
+	List<OrderResponse> getAllOrders();
+
+	OrderResponse updateOrderStatus(Long orderId, com.substring.easybuy.cart_order.entity.OrderStatus status);
 }

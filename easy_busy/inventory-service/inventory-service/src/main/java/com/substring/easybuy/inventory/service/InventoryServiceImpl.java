@@ -11,7 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.substring.easybuy.inventory.domain.InventoryItem;
+import lombok.extern.slf4j.Slf4j;
 import com.substring.easybuy.inventory.dto.AdjustStockRequest;
+import com.substring.easybuy.inventory.dto.BatchReleaseItemRequest;
+import com.substring.easybuy.inventory.dto.BatchReserveItemRequest;
 import com.substring.easybuy.inventory.dto.CreateInventoryRequest;
 import com.substring.easybuy.inventory.dto.InventoryResponse;
 import com.substring.easybuy.inventory.dto.ReleaseStockRequest;
@@ -21,6 +24,7 @@ import com.substring.easybuy.inventory.exception.BusinessRuleException;
 import com.substring.easybuy.inventory.exception.ResourceNotFoundException;
 import com.substring.easybuy.inventory.repository.InventoryItemRepository;
 
+@Slf4j
 @Service
 @Transactional
 public class InventoryServiceImpl implements InventoryService {
@@ -171,6 +175,38 @@ public class InventoryServiceImpl implements InventoryService {
         InventoryItem item = repository.findByProductIdForUpdate(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Inventory not found for productId: " + productId));
         return release(item, request.quantity());
+    }
+
+    @Override
+    public List<InventoryResponse> batchReserveStock(List<BatchReserveItemRequest> requests) {
+        log.info("Batch reserving stock for {} items", requests.size());
+        return requests.stream()
+                .map(req -> {
+                    if (req.productId() != null) {
+                        return reserveStockByProductId(req.productId(), new ReserveStockRequest(req.quantity()));
+                    } else if (req.inventoryId() != null) {
+                        return reserveStock(req.inventoryId(), new ReserveStockRequest(req.quantity()));
+                    } else {
+                        throw new BusinessRuleException("Either productId or inventoryId must be provided for batch reserve");
+                    }
+                })
+                .toList();
+    }
+
+    @Override
+    public List<InventoryResponse> batchReleaseStock(List<BatchReleaseItemRequest> requests) {
+        log.info("Batch releasing stock for {} items", requests.size());
+        return requests.stream()
+                .map(req -> {
+                    if (req.productId() != null) {
+                        return releaseStockByProductId(req.productId(), new ReleaseStockRequest(req.quantity()));
+                    } else if (req.inventoryId() != null) {
+                        return releaseStock(req.inventoryId(), new ReleaseStockRequest(req.quantity()));
+                    } else {
+                        throw new BusinessRuleException("Either productId or inventoryId must be provided for batch release");
+                    }
+                })
+                .toList();
     }
 
     @Override

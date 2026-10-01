@@ -13,14 +13,25 @@ import java.math.BigDecimal;
 public class NotificationServiceImpl implements NotificationService {
 
     private final JavaMailSender mailSender;
+    private final ResendEmailService resendEmailService;
 
-    public NotificationServiceImpl(JavaMailSender mailSender) {
+    public NotificationServiceImpl(JavaMailSender mailSender, ResendEmailService resendEmailService) {
         this.mailSender = mailSender;
+        this.resendEmailService = resendEmailService;
     }
 
     @Override
     public void sendEmail(EmailRequest request) {
         log.info("Sending email to: {} with subject: {}", request.toEmail(), request.subject());
+        
+        // Step 1: Attempt Resend API
+        boolean sentViaResend = resendEmailService.sendEmailViaResend(request.toEmail(), request.subject(), request.body());
+        if (sentViaResend) {
+            log.info("Email delivered via Resend provider for recipient: {}", request.toEmail());
+            return;
+        }
+
+        // Step 2: Fallback to JavaMailSender (SMTP)
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("easybuy-notifications@example.com");
@@ -29,7 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
             message.setText(request.body());
             
             mailSender.send(message);
-            log.info("Email sent successfully to: {}", request.toEmail());
+            log.info("Email sent successfully via SMTP to: {}", request.toEmail());
         } catch (Exception e) {
             log.error("Failed to send email to: {}. Error: {}", request.toEmail(), e.getMessage());
             // We log and do not rethrow, as notification failure shouldn't crash checkout saga.

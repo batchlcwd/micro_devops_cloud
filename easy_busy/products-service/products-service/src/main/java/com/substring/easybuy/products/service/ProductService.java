@@ -43,4 +43,10 @@ public interface ProductService {
 
     //Get images of product
     List<String> getProductImages(UUID productId);
+
+    // Search products by keyword
+    PagedResponse<ProductDto> searchProducts(String query, int page, int size);
+
+    // Filter products by price range, category, and live status
+    PagedResponse<ProductDto> filterProducts(java.math.BigDecimal minPrice, java.math.BigDecimal maxPrice, Long categoryId, Boolean live, int page, int size);
 }

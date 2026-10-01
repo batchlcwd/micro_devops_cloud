@@ -37,11 +37,6 @@ public class UserController {
     //token[accessToken, refreshToken]
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
-
-        if (loginRequest.getEmail().equals("ex@gmail.com")) {
-            throw new RuntimeException("invalid data");
-        }
-
         return ResponseEntity.ok(userService.login(loginRequest));
     }
 

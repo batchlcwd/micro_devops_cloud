@@ -19,144 +19,67 @@ reclaimPolicy: Retain
 #mysql stateful set
 apiVersion: apps/v1
 kind: StatefulSet
-
 metadata:
   name: mysql
   namespace: easybuy
-
 spec:
-
-  serviceName: mysql-service
+  serviceName: mysql
   replicas: 1
-
   selector:
     matchLabels:
       app: mysql
-
   template:
-
     metadata:
       labels:
         app: mysql
-
     spec:
-
       containers:
-
         - name: mysql
-
-          image: mysql:8.4
-
-          ports:
-            - containerPort: 3306
-              name: mysql
-
+          image: mysql:8.0
           env:
-
-            - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: MYSQL_DATABASE
-
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_ROOT_PASSWORD
-
-            - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_USER
-
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_PASSWORD
-
-          volumeMounts:
-
-            - name: mysql-data
-              mountPath: /var/lib/mysql
-
+                  name: easybuy-secrets
+                  key: SPRING_DATASOURCE_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql
           resources:
-
             requests:
-              memory: "512Mi"
-              cpu: "250m"
-
+              cpu: 250m
+              memory: 512Mi
             limits:
-              memory: "1Gi"
-              cpu: "1000m"
-
-          readinessProbe:
-
-            exec:
-              command:
-                - sh
-                - -c
-                - "mysqladmin ping -h localhost -uroot -p$MYSQL_ROOT_PASSWORD"
-
-            initialDelaySeconds: 20
-            periodSeconds: 10
-
-          livenessProbe:
-
-            exec:
-              command:
-                - sh
-                - -c
-                - "mysqladmin ping -h localhost -uroot -p$MYSQL_ROOT_PASSWORD"
-
-            initialDelaySeconds: 30
-            periodSeconds: 20
-
-
+              cpu: 1000m
+              memory: 1Gi
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
   volumeClaimTemplates:
-
     - metadata:
-        name: mysql-data
-
+        name: mysql-persistent-storage
       spec:
-
         accessModes:
           - ReadWriteOnce
-
         storageClassName: gp3
-
         resources:
           requests:
-            storage: 10Gi
-
+            storage: 5Gi
 ---
 #mysql service
 apiVersion: v1
 kind: Service
-
 metadata:
-  name: mysql-service
+  name: mysql
   namespace: easybuy
-
 spec:
   clusterIP: None
-
+  ports:
+    - port: 3306
   selector:
     app: mysql
 
-  ports:
-    - name: mysql
-      port: 3306
-      targetPort: 3306
-
-      # mysql-0.mysql-service
-      # mysql-1.mysql-service
-
 ---
-
-
 #kafka manifest
 apiVersion: apps/v1
 kind: StatefulSet
@@ -261,8 +184,56 @@ spec:
       targetPort: 29093
 
 ---
+#mailhog (SMTP sink used by notifications-service)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailhog
+  namespace: easybuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailhog
+  template:
+    metadata:
+      labels:
+        app: mailhog
+    spec:
+      containers:
+        - name: mailhog
+          image: mailhog/mailhog:latest
+          ports:
+            - containerPort: 1025
+              name: smtp
+            - containerPort: 8025
+              name: http
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailhog
+  namespace: easybuy
+spec:
+  ports:
+    - name: smtp
+      port: 1025
+      targetPort: 1025
+    - name: http
+      port: 8025
+      targetPort: 8025
+  selector:
+    app: mailhog
 
-#postgresql
+---
+#postgresql (used by products-service)
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -283,20 +254,18 @@ spec:
         - name: postgres
           image: postgres:15
           env:
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
             - name: POSTGRES_DB
               value: "productdb"
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: easybuy-secret
-                  key: SPRING_DATASOURCE_USERNAME
+                  name: easybuy-secrets
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: easybuy-secret
-                  key: SPRING_DATASOURCE_PASSWORD
+                  name: easybuy-secrets
+                  key: POSTGRES_PASSWORD
           ports:
             - containerPort: 5432
               name: postgres

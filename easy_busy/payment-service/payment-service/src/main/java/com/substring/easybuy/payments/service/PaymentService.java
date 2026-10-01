@@ -18,4 +18,5 @@ public interface PaymentService {
     
     RazorpayOrderResponse createRazorpayOrder(Long orderId, BigDecimal amount);
     PaymentResponse verifyRazorpayPayment(RazorpayVerificationRequest request);
+    void processRazorpayWebhook(String payload, String signature);
 }

@@ -60,26 +60,26 @@ Ensure your terminal context is connected to your EKS cluster:
 aws eks update-kubeconfig --region <region> --name easybuy-cluster
 ```
 
-Deploy the resources in order:
+Deploy the resources in order (the file number is the apply order; `00-cluster-config.yml` is applied separately via `eksctl`, not `kubectl`):
 
 ```bash
 # 1. Create easybuy namespace
-kubectl apply -f namespace.yaml
+kubectl apply -f 01-namespace.yml
 
-# 2. Deploy AWS EBS gp3 StorageClass
-kubectl apply -f storageclass.yaml
+# 2. Deploy AWS EBS gp3 StorageClass + stateful infra (MySQL, Kafka, Mailhog, Postgres, Redis)
+kubectl apply -f 02-instfastructure.yml
 
-# 3. Apply ConfigMaps and Secrets
-kubectl apply -f env-configs.yaml
+# 3. Apply the ConfigMap
+kubectl apply -f 03-config-map.yml
 
-# 4. Deploy Databases and Infrastructure (MySQL, Postgres, Kafka, Redis, Mailhog)
-kubectl apply -f infrastructure.yaml
+# 4. Apply the Secret
+kubectl apply -f 04-secret.yml
 
 # 5. Deploy Discovery and Config Servers
-kubectl apply -f spring-cloud-infra.yaml
+kubectl apply -f 05-spring-cloud-infra.yml
 
 # 6. Deploy All Application Microservices
-kubectl apply -f microservices.yaml
+kubectl apply -f 06-easy-buy-microservices.yml
 ```
 
 ---

@@ -23,6 +23,9 @@ public class RouteConfig {
     private final String cartOrderServiceId;
     private final String usersServiceId;
     private final String inventoryServiceId;
+    private final String paymentServiceId;
+    private final String notificationsServiceId;
+    private final String aiServiceId;
     private final AuthenticationFilter authenticationFilter;
 
     public RouteConfig(
@@ -30,14 +33,18 @@ public class RouteConfig {
             @Value("${CARD_ORDER_SERVICE_NAME:CART-ORDER-SERVICE}") String cartOrderServiceId,
             @Value("${USERS_SERVICE_NAME:users-service}") String usersServiceId,
             @Value("${INVENTORY_SERVICE_NAME:INVENTORY-SERVICE}") String inventoryServiceId,
+            @Value("${PAYMENT_SERVICE_NAME:PAYMENT-SERVICE}") String paymentServiceId,
+            @Value("${NOTIFICATIONS_SERVICE_NAME:NOTIFICATIONS-SERVICE}") String notificationsServiceId,
+            @Value("${AI_SERVICE_NAME:AI-SERVICE}") String aiServiceId,
             AuthenticationFilter authenticationFilter) {
         this.productServiceId = productServiceId;
         this.cartOrderServiceId = cartOrderServiceId;
         this.usersServiceId = usersServiceId;
         this.inventoryServiceId = inventoryServiceId;
+        this.paymentServiceId = paymentServiceId;
+        this.notificationsServiceId = notificationsServiceId;
+        this.aiServiceId = aiServiceId;
         this.authenticationFilter = authenticationFilter;
-        System.out.println(this.productServiceId);
-        System.out.println(this.cartOrderServiceId);
     }
 
     @Bean
@@ -64,6 +71,21 @@ public class RouteConfig {
                         f.filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
                                 .rewritePath("/inventories/?(?<remaining>.*)", "/${remaining}")
                 ).uri("lb://" + inventoryServiceId))
+
+                .route("payment-route", route -> route.path("/payments/**").filters(f ->
+                        f.filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
+                                .rewritePath("/payments/?(?<remaining>.*)", "/${remaining}")
+                ).uri("lb://" + paymentServiceId))
+
+                .route("notifications-route", route -> route.path("/notifications/**").filters(f ->
+                        f.filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
+                                .rewritePath("/notifications/?(?<remaining>.*)", "/${remaining}")
+                ).uri("lb://" + notificationsServiceId))
+
+                .route("ai-route", route -> route.path("/ai/**").filters(f ->
+                        f.filter(authenticationFilter.apply(new AuthenticationFilter.Config()))
+                                .rewritePath("/ai/?(?<remaining>.*)", "/${remaining}")
+                ).uri("lb://" + aiServiceId))
 
                 .build();
     }

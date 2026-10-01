@@ -252,6 +252,33 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getAllOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    @Override
+    public OrderResponse updateOrderStatus(Long orderId, OrderStatus status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found for id: " + orderId));
+        order.setStatus(status);
+        if (status == OrderStatus.CANCELLED) {
+            order.setCancelledAt(Instant.now());
+            for (OrderItem item : order.getItems()) {
+                try {
+                    inventoryClient.releaseByProductId(item.getProductId(), new ReleaseStockRequest(item.getQuantity()));
+                } catch (Exception ex) {
+                    log.warn("Failed to release stock during status cancellation for product: {}", item.getProductId());
+                }
+            }
+        }
+        return toResponse(orderRepository.save(order));
+    }
+
     private Order buildOrderFromCart(Cart cart, CheckoutRequest request) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());

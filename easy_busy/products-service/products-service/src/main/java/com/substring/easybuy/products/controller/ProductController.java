@@ -40,6 +40,27 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts(page, size));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<PagedResponse<ProductDto>> searchProducts(
+            @RequestParam String q,
+            @RequestParam(defaultValue = "0") @Min(value = 0) int page,
+            @RequestParam(defaultValue = "12") @Min(value = 1) @Max(value = 100) int size
+    ) {
+        return ResponseEntity.ok(productService.searchProducts(q, page, size));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<PagedResponse<ProductDto>> filterProducts(
+            @RequestParam(required = false) java.math.BigDecimal minPrice,
+            @RequestParam(required = false) java.math.BigDecimal maxPrice,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Boolean live,
+            @RequestParam(defaultValue = "0") @Min(value = 0) int page,
+            @RequestParam(defaultValue = "12") @Min(value = 1) @Max(value = 100) int size
+    ) {
+        return ResponseEntity.ok(productService.filterProducts(minPrice, maxPrice, categoryId, live, page, size));
+    }
+
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable UUID productId) {
         return ResponseEntity.ok(productService.getProductById(productId));

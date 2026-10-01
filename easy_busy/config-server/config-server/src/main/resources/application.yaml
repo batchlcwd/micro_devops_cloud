@@ -10,8 +10,6 @@ spring:
       server:
         git:
           uri: ${GITHUB_URL:https://github.com/batchlcwd/easy_buy_config}
-          username: ${GITHUB_USERNAME:batchlcwd}
-          password: ${GITHUB_PASSWORD}
           defaultLabel: main
 
 

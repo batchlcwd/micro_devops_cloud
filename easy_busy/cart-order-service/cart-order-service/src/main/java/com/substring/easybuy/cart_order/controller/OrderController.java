@@ -29,6 +29,11 @@ public class OrderController {
 		this.orderService = orderService;
 	}
 
+	@GetMapping
+	public ResponseEntity<List<OrderResponse>> getAllOrders() {
+		return ResponseEntity.ok(orderService.getAllOrders());
+	}
+
 	@PostMapping("/{userId}/checkout")
 	public ResponseEntity<OrderResponse> checkout(@PathVariable String userId, @Valid @RequestBody CheckoutRequest request) {
 		return ResponseEntity.ok(orderService.checkout(userId, request));
@@ -47,6 +52,13 @@ public class OrderController {
 	@GetMapping("/user/{userId}")
 	public List<OrderResponse> getOrdersByUserId(@PathVariable String userId) {
 		return orderService.getOrdersByUserId(userId);
+	}
+
+	@org.springframework.web.bind.annotation.PatchMapping("/{orderId}/status")
+	public ResponseEntity<OrderResponse> updateOrderStatus(
+			@PathVariable Long orderId,
+			@org.springframework.web.bind.annotation.RequestParam com.substring.easybuy.cart_order.entity.OrderStatus status) {
+		return ResponseEntity.ok(orderService.updateOrderStatus(orderId, status));
 	}
 
 	@DeleteMapping("/{orderId}")

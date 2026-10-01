@@ -41,5 +41,9 @@ public interface InventoryService {
 
 	InventoryResponse releaseStockByProductId(UUID productId, ReleaseStockRequest request);
 
+	List<InventoryResponse> batchReserveStock(List<com.substring.easybuy.inventory.dto.BatchReserveItemRequest> requests);
+
+	List<InventoryResponse> batchReleaseStock(List<com.substring.easybuy.inventory.dto.BatchReleaseItemRequest> requests);
+
 	void delete(Long id);
 }

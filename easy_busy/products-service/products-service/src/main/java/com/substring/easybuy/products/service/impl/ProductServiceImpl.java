@@ -14,10 +14,12 @@ import com.substring.easybuy.products.service.ImageStorageService;
 import com.substring.easybuy.products.service.ProductService;
 import com.substring.easybuy.products.exception.InvalidRequestException;
 import com.substring.easybuy.products.exception.ResourceNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
@@ -178,6 +181,24 @@ public class ProductServiceImpl implements ProductService {
     private Product findProduct(UUID productId) {
         return productRepo.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + productId));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PagedResponse<ProductDto> searchProducts(String query, int page, int size) {
+        log.info("Searching products with query: {}, page: {}, size: {}", query, page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+        Page<ProductDto> dtoPage = productRepo.searchProducts(query, pageable).map(this::toDto);
+        return toPagedResponse(dtoPage);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PagedResponse<ProductDto> filterProducts(java.math.BigDecimal minPrice, java.math.BigDecimal maxPrice, Long categoryId, Boolean live, int page, int size) {
+        log.info("Filtering products: minPrice={}, maxPrice={}, categoryId={}, live={}, page={}, size={}", minPrice, maxPrice, categoryId, live, page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("price").ascending());
+        Page<ProductDto> dtoPage = productRepo.filterProducts(minPrice, maxPrice, categoryId, live, pageable).map(this::toDto);
+        return toPagedResponse(dtoPage);
     }
 
     private Category findCategory(Long categoryId) {

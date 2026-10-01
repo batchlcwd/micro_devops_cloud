@@ -46,6 +46,14 @@ public class PaymentController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/razorpay/webhook")
+    public ResponseEntity<String> handleRazorpayWebhook(
+            @RequestBody String payload,
+            @RequestHeader(value = "X-Razorpay-Signature", required = false) String signature) {
+        paymentService.processRazorpayWebhook(payload, signature);
+        return ResponseEntity.ok("Razorpay Webhook processed successfully");
+    }
+
     @GetMapping("/order/{orderId}")
     public ResponseEntity<List<PaymentResponse>> getPaymentsByOrderId(@PathVariable Long orderId) {
         return ResponseEntity.ok(paymentService.getPaymentsByOrderId(orderId));

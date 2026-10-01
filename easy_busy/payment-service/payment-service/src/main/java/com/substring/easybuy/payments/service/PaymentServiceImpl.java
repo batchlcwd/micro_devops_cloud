@@ -39,6 +39,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Value("${razorpay.key.secret}")
     private String razorpayKeySecret;
 
+    @Value("${razorpay.webhook.secret:dummy_webhook_secret}")
+    private String razorpayWebhookSecret;
+
     public PaymentServiceImpl(TransactionRepository transactionRepository, PaymentEventPublisher paymentEventPublisher) {
         this.transactionRepository = transactionRepository;
         this.paymentEventPublisher = paymentEventPublisher;
@@ -210,6 +213,55 @@ public class PaymentServiceImpl implements PaymentService {
             paymentEventPublisher.publishPaymentEvent(paymentEvent);
             
             throw new BusinessRuleException("Payment signature verification failed");
+        }
+    }
+
+    @Override
+    public void processRazorpayWebhook(String payload, String signature) {
+        log.info("Processing Razorpay Webhook notification");
+        if (razorpayWebhookSecret != null && !razorpayWebhookSecret.equals("dummy_webhook_secret") && signature != null) {
+            try {
+                boolean isValid = Utils.verifyWebhookSignature(payload, signature, razorpayWebhookSecret);
+                if (!isValid) {
+                    log.error("Invalid Razorpay webhook signature");
+                    throw new BusinessRuleException("Invalid webhook signature");
+                }
+            } catch (RazorpayException e) {
+                log.error("Error verifying Razorpay webhook signature", e);
+                throw new BusinessRuleException("Webhook verification failed: " + e.getMessage());
+            }
+        }
+
+        try {
+            JSONObject json = new JSONObject(payload);
+            String event = json.optString("event");
+            log.info("Razorpay webhook event type: {}", event);
+
+            if ("payment.captured".equals(event) || "order.paid".equals(event)) {
+                JSONObject paymentEntity = json.getJSONObject("payload").getJSONObject("payment").getJSONObject("entity");
+                String razorpayOrderId = paymentEntity.optString("order_id");
+                String razorpayPaymentId = paymentEntity.optString("id");
+
+                Transaction transaction = transactionRepository.findByPaymentGatewayOrderId(razorpayOrderId)
+                        .orElse(null);
+                if (transaction != null && transaction.getStatus() != PaymentStatus.PAID) {
+                    transaction.setStatus(PaymentStatus.PAID);
+                    transaction.setPaymentGatewayTxnId(razorpayPaymentId);
+                    transactionRepository.save(transaction);
+
+                    PaymentEvent paymentEvent = new PaymentEvent(
+                        transaction.getOrderId(),
+                        transaction.getTransactionId(),
+                        transaction.getAmount(),
+                        "PAID",
+                        "Razorpay Webhook: Payment Captured"
+                    );
+                    paymentEventPublisher.publishPaymentEvent(paymentEvent);
+                    log.info("Updated transaction {} to PAID via webhook", transaction.getTransactionId());
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error parsing Razorpay webhook payload: {}", e.getMessage());
         }
     }
 

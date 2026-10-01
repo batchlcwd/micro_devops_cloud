@@ -99,6 +99,16 @@ public class InventoryController {
 		return service.releaseStockByProductId(productId, request);
 	}
 
+	@PostMapping("/batch-reserve")
+	public ResponseEntity<List<InventoryResponse>> batchReserve(@Valid @RequestBody List<com.substring.easybuy.inventory.dto.BatchReserveItemRequest> requests) {
+		return ResponseEntity.ok(service.batchReserveStock(requests));
+	}
+
+	@PostMapping("/batch-release")
+	public ResponseEntity<List<InventoryResponse>> batchRelease(@Valid @RequestBody List<com.substring.easybuy.inventory.dto.BatchReleaseItemRequest> requests) {
+		return ResponseEntity.ok(service.batchReleaseStock(requests));
+	}
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);

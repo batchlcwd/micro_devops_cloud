@@ -144,8 +144,10 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 (path.contains("/api/users") && "POST".equalsIgnoreCase(method)) || // User registration
                 (path.contains("/api/products") && "GET".equalsIgnoreCase(method)) || // View products
                 (path.contains("/api/categories") && "GET".equalsIgnoreCase(method)) || // View categories
-                (path.contains("/api/reviews") && "GET".equalsIgnoreCase(method)); // View reviews
-        //public mentions
+                (path.contains("/api/reviews") && "GET".equalsIgnoreCase(method)) || // View reviews
+                path.contains("/api/payments/razorpay/") || // Razorpay webhook and verification
+                path.contains("/api/notifications/") || // Notifications endpoints
+                path.contains("/api/ai/"); // AI recommendation and description endpoints
     }
 
     /**
