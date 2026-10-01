@@ -1,3 +1,7 @@
+#all microservices manifest
+
+#api gateway deployment
+#api gateway - service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,6 +66,8 @@ spec:
             periodSeconds: 10
             failureThreshold: 5
 ---
+# Local cluster has no AWS NLB, so api-gateway is exposed via NodePort instead
+# (k8s/eks uses type: LoadBalancer + the aws-load-balancer-type: nlb annotation).
 apiVersion: v1
 kind: Service
 metadata:
@@ -70,12 +76,17 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 8080
+    - port: 80
       targetPort: 8080
       nodePort: 30080
   selector:
     app: api-gateway
+
 ---
+#user service deployment
+#user service - service
+# prod config (easy_buy_config/USERS-SERVICE-prod.properties) listens on 8085 and needs
+# SPRING_DATASOURCE_* injected explicitly (its default points at localhost/root123).
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -113,6 +124,18 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: SPRING_PROFILES_ACTIVE
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql:3306/easybuy_users?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true"
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: easybuy-secrets
+                  key: SPRING_DATASOURCE_PASSWORD
           resources:
             requests:
               cpu: 250m
@@ -145,7 +168,12 @@ spec:
     - port: 8085
   selector:
     app: users-service
+
 ---
+#product service deployment
+#product service - service
+# prod config (PRODUCT-SERVICE.properties) listens on 8081; datasource is Postgres
+# and is fully hardcoded in PRODUCT-SERVICE-prod.properties (see 02-instfastructure.yml postgres creds).
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -166,7 +194,7 @@ spec:
           image: batchlcwd/products-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -183,6 +211,33 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: SPRING_PROFILES_ACTIVE
+            # ImageKit credentials now come from easy_buy_config (PRODUCT-SERVICE-prod.properties)
+            # instead of this Secret. Left here, commented, in case that changes.
+            # - name: IMAGEKIT_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_ID
+            # - name: IMAGEKIT_PUBLIC_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_PUBLIC_KEY
+            # - name: IMAGEKIT_PRIVATE_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_PRIVATE_KEY
+            # - name: IMAGEKIT_URL_ENDPOINT
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_URL_ENDPOINT
+            # - name: IMAGEKIT_FOLDER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_FOLDER
           resources:
             requests:
               cpu: 250m
@@ -193,14 +248,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8081
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8081
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -212,10 +267,14 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8081
   selector:
     app: products-service
+
 ---
+#inventory service deployment
+#inventory service - service
+# prod config listens on 8083; datasource/kafka are hardcoded in INVENTORY-SERVICE-prod.properties.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -285,7 +344,11 @@ spec:
     - port: 8083
   selector:
     app: inventory-service
+
 ---
+#cart-order service deployment
+#cart-order service - service
+# prod config (CART-ORDER-SERVICE.properties) listens on 8082.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -306,7 +369,7 @@ spec:
           image: batchlcwd/cart-order-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -318,11 +381,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: KAFKA_BOOTSTRAP_SERVERS
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
@@ -338,14 +396,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8082
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8082
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -357,10 +415,14 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8082
   selector:
     app: cart-order-service
+
 ---
+#payment service deployment
+#payment service - service
+# prod config (PAYMENT-SERVICE.properties) listens on 8086.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -381,7 +443,7 @@ spec:
           image: batchlcwd/payment-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8086
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -393,21 +455,18 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: KAFKA_BOOTSTRAP_SERVERS
-            - name: RAZORPAY_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: easybuy-secrets
-                  key: RAZORPAY_KEY_ID
-            - name: RAZORPAY_KEY_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: easybuy-secrets
-                  key: RAZORPAY_KEY_SECRET
+            # Razorpay credentials now come from easy_buy_config (PAYMENT-SERVICE-prod.properties)
+            # instead of this Secret. Left here, commented, in case that changes.
+            # - name: RAZORPAY_KEY_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: RAZORPAY_KEY_ID
+            # - name: RAZORPAY_KEY_SECRET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: RAZORPAY_KEY_SECRET
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
@@ -423,14 +482,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8086
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8086
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -442,10 +501,14 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8086
   selector:
     app: payment-service
+
 ---
+#notifications service deployment
+#notifications service - service
+# prod config (NOTIFICATIONS-SERVICE-prod.properties) listens on 8087.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -466,7 +529,7 @@ spec:
           image: batchlcwd/notifications-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8087
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -478,11 +541,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: KAFKA_BOOTSTRAP_SERVERS
             - name: SPRING_MAIL_HOST
               valueFrom:
                 configMapKeyRef:
@@ -508,14 +566,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8087
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8087
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -527,10 +585,14 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8087
   selector:
     app: notifications-service
+
 ---
+#ai service deployment
+#ai service - service
+# prod config (AI-SERVICE-prod.properties) listens on 8088.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -551,7 +613,7 @@ spec:
           image: batchlcwd/ai-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8088
           env:
             - name: CONFIG_SERVER_URL
               valueFrom:
@@ -563,11 +625,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: OPENAI_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: easybuy-secrets
-                  key: OPENAI_API_KEY
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
@@ -583,14 +640,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: 8088
             initialDelaySeconds: 90
             periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8088
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5
@@ -602,7 +659,6 @@ metadata:
   namespace: easybuy
 spec:
   ports:
-    - port: 8080
+    - port: 8088
   selector:
     app: ai-service
-
