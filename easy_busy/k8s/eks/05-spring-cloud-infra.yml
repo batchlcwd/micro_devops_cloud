@@ -82,11 +82,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: GITHUB_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: GITHUB_URL
           resources:
             requests:
               cpu: 250m

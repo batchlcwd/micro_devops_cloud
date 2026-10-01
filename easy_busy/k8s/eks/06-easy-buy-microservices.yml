@@ -210,6 +210,33 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: SPRING_PROFILES_ACTIVE
+            # ImageKit credentials now come from easy_buy_config (PRODUCT-SERVICE-prod.properties)
+            # instead of this Secret. Left here, commented, in case that changes.
+            # - name: IMAGEKIT_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_ID
+            # - name: IMAGEKIT_PUBLIC_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_PUBLIC_KEY
+            # - name: IMAGEKIT_PRIVATE_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_PRIVATE_KEY
+            # - name: IMAGEKIT_URL_ENDPOINT
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_URL_ENDPOINT
+            # - name: IMAGEKIT_FOLDER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: IMAGEKIT_FOLDER
           resources:
             requests:
               cpu: 250m
@@ -279,11 +306,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: KAFKA_BOOTSTRAP_SERVERS
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
@@ -358,11 +380,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: KAFKA_BOOTSTRAP_SERVERS
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
@@ -437,21 +454,18 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: KAFKA_BOOTSTRAP_SERVERS
-            - name: RAZORPAY_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: easybuy-secrets
-                  key: RAZORPAY_KEY_ID
-            - name: RAZORPAY_KEY_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: easybuy-secrets
-                  key: RAZORPAY_KEY_SECRET
+            # Razorpay credentials now come from easy_buy_config (PAYMENT-SERVICE-prod.properties)
+            # instead of this Secret. Left here, commented, in case that changes.
+            # - name: RAZORPAY_KEY_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: RAZORPAY_KEY_ID
+            # - name: RAZORPAY_KEY_SECRET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: easybuy-secrets
+            #       key: RAZORPAY_KEY_SECRET
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
@@ -526,11 +540,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: easybuy-config
-                  key: KAFKA_BOOTSTRAP_SERVERS
             - name: SPRING_MAIL_HOST
               valueFrom:
                 configMapKeyRef:
@@ -615,11 +624,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: EUREKA_DEFAULT_ZONE
-            - name: OPENAI_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: easybuy-secrets
-                  key: OPENAI_API_KEY
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
