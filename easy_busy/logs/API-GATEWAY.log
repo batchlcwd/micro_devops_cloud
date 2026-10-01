@@ -200,3 +200,4 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:1474)
 2026-10-01 19:14:11 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:19:11 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
