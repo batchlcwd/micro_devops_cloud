@@ -110,3 +110,22 @@ This generated password is for development use only. Your security configuration
 2026-10-01 19:36:58 INFO  [http-nio-8085-exec-1] traceId=a3f20f739fdec5cdb4227e293bfb620d spanId=5972e0ff0f8508d8 c.s.e.u.service.impl.UserServiceImpl : Login service started:
 2026-10-01 19:36:58 INFO  [http-nio-8085-exec-1] traceId=a3f20f739fdec5cdb4227e293bfb620d spanId=5972e0ff0f8508d8 c.s.e.u.service.impl.UserServiceImpl : Login service executed:
 2026-10-01 19:36:59 INFO  [http-nio-8085-exec-3] traceId=cc7fd412a897145bf27f6358dc113d33 spanId=ade12ea4adb01f5f c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:39:46 INFO  [http-nio-8085-exec-6] traceId=9a2d2f9255e5f64c926fee6d80e6a956 spanId=ac0a4cc4cafffd86 c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:39:46 INFO  [http-nio-8085-exec-6] traceId=9a2d2f9255e5f64c926fee6d80e6a956 spanId=ac0a4cc4cafffd86 c.s.e.u.service.impl.UserServiceImpl : Login service executed:
+2026-10-01 19:40:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:41:30 INFO  [http-nio-8085-exec-4] traceId=2949965a52bdd0f5e6a960ae633d15a3 spanId=3e4e7d981ff53c99 c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:41:30 INFO  [http-nio-8085-exec-4] traceId=2949965a52bdd0f5e6a960ae633d15a3 spanId=3e4e7d981ff53c99 c.s.e.u.service.impl.UserServiceImpl : Login service executed:
+2026-10-01 19:43:49 INFO  [http-nio-8085-exec-10] traceId=82ce1adc3b1adc987a54bc0250bf449f spanId=0eeadd9b4ea579a2 c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:43:49 WARN  [http-nio-8085-exec-10] traceId=82ce1adc3b1adc987a54bc0250bf449f spanId=0eeadd9b4ea579a2 o.s.s.c.bcrypt.BCryptPasswordEncoder : Encoded password does not look like BCrypt
+2026-10-01 19:43:51 INFO  [http-nio-8085-exec-2] traceId=aa9063b91d196ee151b0ca8ea65988bd spanId=48c22f86f40fe4bd c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:43:51 WARN  [http-nio-8085-exec-2] traceId=aa9063b91d196ee151b0ca8ea65988bd spanId=48c22f86f40fe4bd o.s.s.c.bcrypt.BCryptPasswordEncoder : Encoded password does not look like BCrypt
+2026-10-01 19:44:34 INFO  [http-nio-8085-exec-1] traceId=93e1a3ca4a2bc97bcb686f5cf0e51f14 spanId=261d1d0611f55281 c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 19:44:34 INFO  [http-nio-8085-exec-1] traceId=93e1a3ca4a2bc97bcb686f5cf0e51f14 spanId=261d1d0611f55281 c.s.e.u.service.impl.UserServiceImpl : Login service executed:
+2026-10-01 19:45:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:50:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 19:55:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 20:00:49 INFO  [http-nio-8085-exec-5] traceId=724136eaa2b3ed89604c59792fbe407e spanId=62510546475df15e c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 20:00:49 INFO  [http-nio-8085-exec-5] traceId=724136eaa2b3ed89604c59792fbe407e spanId=62510546475df15e c.s.e.u.service.impl.UserServiceImpl : Login service executed:
+2026-10-01 20:00:50 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 20:03:10 INFO  [http-nio-8085-exec-9] traceId=4125b9f41a013d696c11a518cd2ee746 spanId=67923f074026058c c.s.e.u.service.impl.UserServiceImpl : Login service started:
+2026-10-01 20:03:11 INFO  [http-nio-8085-exec-9] traceId=4125b9f41a013d696c11a518cd2ee746 spanId=67923f074026058c c.s.e.u.service.impl.UserServiceImpl : Login service executed:
