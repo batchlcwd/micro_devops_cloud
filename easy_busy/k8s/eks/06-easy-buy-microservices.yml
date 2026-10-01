@@ -66,15 +66,15 @@ spec:
             periodSeconds: 10
             failureThreshold: 5
 ---
+# ClusterIP only: public access now goes through the Ingress in 07-ingress.yml
+# (AWS Load Balancer Controller provisions an ALB from that resource).
 apiVersion: v1
 kind: Service
 metadata:
   name: api-gateway
   namespace: easybuy
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: 80
       targetPort: 8080

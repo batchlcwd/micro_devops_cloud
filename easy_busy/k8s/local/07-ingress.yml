@@ -1,0 +1,21 @@
+# Requires the ingress-nginx controller to be installed in the cluster
+# (registers the "nginx" IngressClass) - see LOCAL-DEPLOYMENT.md.
+# api-gateway's own Service is ClusterIP (see 06-easy-buy-microservices.yml);
+# ingress-nginx is the thing actually exposed to your host.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-gateway
+  namespace: easybuy
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 80

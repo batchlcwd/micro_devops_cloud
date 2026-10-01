@@ -194,3 +194,15 @@
 2026-10-01 17:44:24 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.i.ConsumerRebalanceListenerInvoker : [Consumer clientId=consumer-order-group-1, groupId=order-group] Adding newly assigned partitions: [payment-topic-0]
 2026-10-01 17:44:24 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.a.k.c.c.internals.ConsumerUtils : Setting offset for partition payment-topic-0 to the committed offset FetchPosition{offset=3, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null isFenced: false)], epoch=22}}
 2026-10-01 17:44:24 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] traceId= spanId= o.s.k.l.KafkaMessageListenerContainer : order-group: partitions assigned: [payment-topic-0]
+2026-10-01 17:49:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 17:54:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 17:59:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:04:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:09:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:14:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:19:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 18:20:16 INFO  [http-nio-8082-exec-1] traceId=e19a01d8f9631042e1890242b1743437 spanId=3dad2fa142fea6a1 o.a.c.c.C.[Tomcat].[localhost].[/] : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-01 18:20:16 INFO  [http-nio-8082-exec-1] traceId=e19a01d8f9631042e1890242b1743437 spanId=3dad2fa142fea6a1 o.s.web.servlet.DispatcherServlet : Initializing Servlet 'dispatcherServlet'
+2026-10-01 18:20:16 INFO  [http-nio-8082-exec-1] traceId=e19a01d8f9631042e1890242b1743437 spanId=3dad2fa142fea6a1 o.s.web.servlet.DispatcherServlet : Completed initialization in 80 ms
+2026-10-01 18:21:37 INFO  [http-nio-8082-exec-2] traceId=732c0e87bb6e37b6a24273d6799d752d spanId=3fecacb3d4c070f1 c.s.e.c.c.f.ProductClientFallback : product fallback 
+2026-10-01 18:24:20 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration

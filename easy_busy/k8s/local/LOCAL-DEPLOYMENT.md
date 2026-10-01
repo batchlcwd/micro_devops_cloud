@@ -6,7 +6,9 @@ Mirrors `k8s/eks/` file-for-file so you can smoke-test the exact same `prod` wir
 |---|---|---|
 | Cluster | `00-cluster-config.yml` via `eksctl` | your choice of minikube / kind / Docker Desktop (no file needed) |
 | Storage | `gp3` StorageClass (EBS CSI driver) | cluster's default StorageClass (no `storageClassName` set) |
-| `api-gateway` exposure | `Service type: LoadBalancer` + AWS NLB annotation | `Service type: NodePort` (`30080`) |
+| Ingress controller | AWS Load Balancer Controller → ALB | `ingress-nginx` |
+
+Both `api-gateway` Services are `ClusterIP` — public access goes through `07-ingress.yml` in both folders, just fronted by a different controller.
 
 Everything else — `01` through `06` — is the same content as `k8s/eks`, so a clean pass here is a strong signal the EKS manifests will behave the same way.
 
@@ -17,6 +19,12 @@ Everything else — `01` through `06` — is the same content as `k8s/eks`, so a
 - `kubectl`
 - A local cluster: **minikube** (recommended — ships a default StorageClass out of the box) or Docker Desktop's built-in Kubernetes. If you use **kind** instead, install a dynamic provisioner first (e.g. [local-path-provisioner](https://github.com/rancher/local-path-provisioner)) or the `mysql`/`postgres`/`kafka` PVCs in `02-instfastructure.yml` will stay `Pending`.
 - Internet access from the cluster to pull `batchlcwd/*:latest` from Docker Hub and to let `config-server` reach `github.com/batchlcwd/easy_buy_config`.
+- The **ingress-nginx** controller, for `07-ingress.yml`'s `nginx` IngressClass to exist:
+  ```bash
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.11.3/deploy/static/provider/cloud/deploy.yaml
+  # minikube users can instead run: minikube addons enable ingress
+  kubectl get ingressclass   # confirms "nginx" is registered once the controller's pod is Running
+  ```
 
 Give the cluster enough headroom to match the sum of `requests` across every pod (~3.5 vCPU / ~7Gi):
 ```bash
@@ -34,6 +42,7 @@ kubectl apply -f 03-config-map.yml
 kubectl apply -f 04-secret.yml
 kubectl apply -f 05-spring-cloud-infra.yml
 kubectl apply -f 06-easy-buy-microservices.yml
+kubectl apply -f 07-ingress.yml
 ```
 
 Watch the rollout — StatefulSet pods need their PVC `Bound` before they'll start, and every app pod needs `service-discovery`/`config-server` healthy before it'll pass readiness:
@@ -45,10 +54,18 @@ kubectl get pods -n easybuy -w
 
 ## Access it
 
+`api-gateway` is `ClusterIP` now — go through the ingress-nginx controller's Service instead:
 ```bash
-minikube service api-gateway -n easybuy --url
-# or, if your cluster's node IP is reachable directly:
-# http://<node-ip>:30080/api/...
+kubectl get svc -n ingress-nginx ingress-nginx-controller
+```
+
+- **Docker Desktop**: it auto-publishes that `LoadBalancer` Service to your host, so `http://localhost/products/...` (port `80`) should work directly. If not, use the `NodePort` shown in the command above instead: `http://localhost:<nodeport>/products/...`.
+- **minikube**: run `minikube tunnel` in a separate terminal (assigns the controller a real `EXTERNAL-IP`), or use `minikube service ingress-nginx-controller -n ingress-nginx --url`.
+
+Sanity check once you have an address:
+```bash
+curl http://<address>/actuator/health   # api-gateway's own health
+curl http://<address>/products/         # routed through Eureka to products-service (expect 401 without an auth token — that's the gateway's filter working, not a failure)
 ```
 
 Useful side-channels while debugging:

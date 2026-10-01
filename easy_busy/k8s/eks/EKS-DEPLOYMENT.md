@@ -10,7 +10,8 @@ This directory contains the Kubernetes manifests for deploying **Easy Buy** to *
 | `03-config-map.yml` | `easybuy-config` ConfigMap |
 | `04-secret.yml` | `easybuy-secrets` Secret |
 | `05-spring-cloud-infra.yml` | `service-discovery` (Eureka) + `config-server` |
-| `06-easy-buy-microservices.yml` | `api-gateway` + all 7 domain services |
+| `06-easy-buy-microservices.yml` | `api-gateway` (ClusterIP) + all 7 domain services |
+| `07-ingress.yml` | `Ingress` exposing `api-gateway` publicly through an ALB |
 
 ---
 
@@ -18,7 +19,7 @@ This directory contains the Kubernetes manifests for deploying **Easy Buy** to *
 
 1. **Cluster**: `substring-prod` in `ap-south-1`, 2x `t3.large` managed nodes (`00-cluster-config.yml`), OIDC enabled for IRSA.
 2. **Storage Class (`gp3`)**: Dynamically provisions encrypted AWS EBS SSD volumes, with `reclaimPolicy: Retain` so deleting a PVC/StatefulSet never silently deletes the underlying volume.
-3. **Network Load Balancer (NLB)**: Exposes `api-gateway` to the public internet via AWS NLB on port `80`.
+3. **Ingress (ALB)**: `api-gateway`'s Service is `ClusterIP`; public access goes through `07-ingress.yml`, which the **AWS Load Balancer Controller** turns into an internet-facing Application Load Balancer on port `80`. The controller must be installed first — see Step 2.
 
 ---
 
@@ -60,7 +61,32 @@ eksctl create iamserviceaccount \
 eksctl create addon --name aws-ebs-csi-driver --cluster substring-prod --service-account-role-arn arn:aws:iam::<your_account_id>:role/EasyBuyEBSCSIRole --force
 ```
 
-### Step 2: Compile & Push Images to Docker Hub
+### Step 2: Install the AWS Load Balancer Controller (Required for Ingress)
+`07-ingress.yml` needs the `alb` IngressClass, which only exists once this controller is running:
+```bash
+# IAM policy + service account (downloads AWS's published policy document)
+curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
+aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy.json
+
+eksctl create iamserviceaccount \
+  --cluster substring-prod \
+  --namespace kube-system \
+  --name aws-load-balancer-controller \
+  --attach-policy-arn arn:aws:iam::<your_account_id>:policy/AWSLoadBalancerControllerIAMPolicy \
+  --approve
+
+# Install the controller itself via Helm
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName=substring-prod \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller
+```
+> eksctl-created clusters tag their public subnets with `kubernetes.io/role/elb` automatically, which is what the controller needs to pick a subnet for the ALB — no extra tagging required here.
+
+### Step 3: Compile & Push Images to Docker Hub
 Since your EKS cluster will pull the images directly from Docker Hub under the `batchlcwd` namespace:
 
 1. **Login to Docker Hub in your local terminal**:
@@ -112,6 +138,9 @@ kubectl apply -f 05-spring-cloud-infra.yml
 
 # 6. Deploy All Application Microservices
 kubectl apply -f 06-easy-buy-microservices.yml
+
+# 7. Expose api-gateway publicly via ALB Ingress (needs Step 2's controller running)
+kubectl apply -f 07-ingress.yml
 ```
 
 Watch the rollout and confirm every pod reaches `Running`/`1/1` before moving on, especially the StatefulSets in `02` (PVCs need the EBS CSI driver from Step 1 to bind):
@@ -121,11 +150,40 @@ kubectl get pods -n easybuy -w
 
 ---
 
+## 🔒 Enable HTTPS
+
+`07-ingress.yml` is already wired for TLS termination at the ALB — it just needs a real ACM certificate ARN:
+
+1. **Request/import a certificate in ACM**, in the **same region as the cluster** (`ap-south-1` — ACM certs used by an ALB must live in that ALB's region):
+   ```bash
+   aws acm request-certificate --domain-name <your-domain> --validation-method DNS --region ap-south-1
+   ```
+   Complete the DNS validation (add the CNAME ACM gives you to your domain's DNS), then grab the cert's ARN:
+   ```bash
+   aws acm list-certificates --region ap-south-1
+   ```
+2. **Replace the placeholder** in `07-ingress.yml`'s `alb.ingress.kubernetes.io/certificate-arn` annotation with that ARN.
+3. Re-apply: `kubectl apply -f 07-ingress.yml`.
+
+What's already in place:
+- `alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'` — the ALB listens on both.
+- `alb.ingress.kubernetes.io/ssl-redirect: '443'` — the controller auto-adds an HTTP→HTTPS redirect rule, so plain `http://` requests get bounced to `https://` rather than served in the clear.
+- `alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-2021-06` — a modern TLS policy (disables old/weak ciphers).
+
+Point your domain's DNS (an `A`/`ALIAS` record if it's in Route 53, otherwise a `CNAME`) at the ALB's address from the section below once the certificate is attached.
+
+---
+
 ## 🌐 Verifying Public Access
 
-To access the API Gateway, get the external DNS address of the AWS Load Balancer:
+`api-gateway`'s own Service is now `ClusterIP` — the public entry point is the ALB that the AWS Load Balancer Controller provisions from `07-ingress.yml`. Get its address:
 ```bash
-kubectl get svc api-gateway -n easybuy
+kubectl get ingress api-gateway -n easybuy
 ```
-Access the APIs externally using the LoadBalancer DNS name on port `80`:
-`http://<aws-nlb-dns-name>/api/...`
+Wait for the `ADDRESS` column to populate (can take a minute or two after `07-ingress.yml` is applied), then hit it:
+`http://<alb-address>/products/...` (redirects to `https://` once a real certificate ARN is in place) or `https://<alb-address>/products/...` directly.
+
+If `ADDRESS` stays empty, check the controller's logs — the usual causes are the controller not running (Step 2), no subnets tagged `kubernetes.io/role/elb` in the cluster's VPC, or (once HTTPS is enabled) a `certificate-arn` that doesn't exist/isn't in `ap-south-1`:
+```bash
+kubectl logs -n kube-system deploy/aws-load-balancer-controller
+```

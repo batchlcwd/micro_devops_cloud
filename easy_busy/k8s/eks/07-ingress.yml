@@ -1,0 +1,32 @@
+# Requires the AWS Load Balancer Controller to be installed in the cluster
+# (registers the "alb" IngressClass) - see EKS-DEPLOYMENT.md Step 2.
+# This provisions an internet-facing ALB that forwards everything to api-gateway;
+# api-gateway's own Service is ClusterIP (see 06-easy-buy-microservices.yml).
+#
+# TODO: replace the certificate-arn placeholder below with your real ACM
+# certificate ARN before applying (see EKS-DEPLOYMENT.md "Enable HTTPS").
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-gateway
+  namespace: easybuy
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:<your_account_id>:certificate/<your_certificate_id>"
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-2021-06
+    alb.ingress.kubernetes.io/healthcheck-path: /actuator/health/readiness
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 80
