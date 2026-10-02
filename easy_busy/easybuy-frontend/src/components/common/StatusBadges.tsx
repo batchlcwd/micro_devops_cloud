@@ -1,5 +1,6 @@
-import { CheckCircle2, CircleDashed, PackageCheck, PackageOpen, Truck, XCircle, type LucideIcon } from 'lucide-react'
+import { CircleDashed } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { orderStatusIcon } from '@/lib/orderStatusIcon'
 import { orderStatusLabel } from '@/lib/orderStatus'
 import { cn } from '@/lib/utils'
 import type { OrderStatus, PaymentStatus, StockStatus } from '@/types'
@@ -11,15 +12,6 @@ const tone = {
   violet: 'bg-violet-100 text-violet-800 dark:bg-violet-500/15 dark:text-violet-300',
   green: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300',
   red: 'bg-red-100 text-red-800 dark:bg-red-500/15 dark:text-red-300',
-}
-
-export const orderStatusIcon: Record<OrderStatus, LucideIcon> = {
-  CONFIRMED: CheckCircle2,
-  IN_PROGRESS: PackageOpen,
-  DISPATCHED: Truck,
-  OUT_OF_DELIVERY: Truck,
-  DELIVERED: PackageCheck,
-  CANCELLED: XCircle,
 }
 
 const orderTone: Record<OrderStatus, string> = {

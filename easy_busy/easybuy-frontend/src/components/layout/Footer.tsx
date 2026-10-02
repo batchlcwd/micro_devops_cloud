@@ -11,16 +11,18 @@ const perks = [
   { icon: Headphones, title: '24/7 support', text: 'We are here to help' },
 ]
 
+const year = new Date().getFullYear()
+
 export function Footer() {
   const categories = useProductStore((s) => s.categories)
 
   return (
-    <footer className="mt-20 border-t bg-muted/30">
+    <footer className="mt-24 border-t bg-muted/40">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
           {perks.map(({ icon: Icon, title, text }) => (
             <div key={title} className="flex items-start gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-background ring-1 ring-border">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
                 <Icon className="size-5" />
               </div>
               <div>
@@ -70,7 +72,7 @@ export function Footer() {
         </div>
         <Separator />
         <div className="flex flex-col items-center justify-between gap-2 py-6 text-xs text-muted-foreground sm:flex-row">
-          <span>© {new Date().getFullYear()} EasyBuy. All rights reserved.</span>
+          <span>© {year} EasyBuy. All rights reserved.</span>
           <span>Prices are inclusive of all taxes.</span>
         </div>
       </div>

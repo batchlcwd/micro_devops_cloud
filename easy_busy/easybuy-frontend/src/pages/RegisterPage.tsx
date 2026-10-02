@@ -2,8 +2,7 @@ import { Loader2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
-import { ThemeToggle } from '@/components/common/ThemeToggle'
-import { Logo } from '@/components/layout/Logo'
+import { AuthShell } from '@/components/layout/AuthShell'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -80,12 +79,8 @@ export function RegisterPage() {
   )
 
   return (
-    <div className="relative flex min-h-svh flex-col items-center justify-center bg-muted/40 px-4 py-12">
-      <div className="absolute top-4 right-4">
-        <ThemeToggle />
-      </div>
-      <Logo className="mb-8" />
-      <Card className="w-full max-w-sm">
+    <AuthShell>
+      <Card className="w-full max-w-sm shadow-xl shadow-primary/5">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create your account</CardTitle>
           <CardDescription>Shop faster and track your orders</CardDescription>
@@ -110,6 +105,6 @@ export function RegisterPage() {
           </Link>
         </CardFooter>
       </Card>
-    </div>
+    </AuthShell>
   )
 }

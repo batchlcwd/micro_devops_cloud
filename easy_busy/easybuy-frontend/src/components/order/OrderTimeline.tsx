@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react'
-import { orderStatusIcon } from '@/components/common/StatusBadges'
+import { orderStatusIcon } from '@/lib/orderStatusIcon'
 import { formatDateTime } from '@/lib/format'
 import { FULFILMENT_FLOW, orderStatusLabel } from '@/lib/orderStatus'
 import { cn } from '@/lib/utils'

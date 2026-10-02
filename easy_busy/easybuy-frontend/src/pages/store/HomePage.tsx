@@ -19,7 +19,7 @@ function Section({ title, subtitle, action, children }: { title: string; subtitl
     <section className="container mx-auto px-4 py-10 sm:py-14">
       <div className="mb-6 flex items-end justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
           {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
         </div>
         {action}
@@ -40,14 +40,16 @@ export function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b bg-linear-to-br from-muted/60 via-background to-background">
-        <div className="container mx-auto grid items-center gap-10 px-4 py-12 md:grid-cols-2 md:py-20">
+      <section className="relative overflow-hidden border-b bg-linear-to-br from-accent/70 via-background to-background">
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+        <div className="pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-primary/15 blur-3xl" aria-hidden />
+        <div className="relative container mx-auto grid items-center gap-10 px-4 py-12 md:grid-cols-2 md:py-24">
           <div className="space-y-6">
-            <Badge variant="secondary" className="gap-1.5">
+            <Badge variant="secondary" className="gap-1.5 bg-accent px-3 py-3 text-accent-foreground">
               <Sparkles data-icon="inline-start" /> Great deals, every day
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              Everything you love, delivered fast.
+              Everything you love, <span className="text-gradient-brand">delivered fast.</span>
             </h1>
             <p className="max-w-md text-lg text-muted-foreground">
               Discover great products across every category — with free delivery on every order.
@@ -69,8 +71,8 @@ export function HomePage() {
             </div>
           </div>
           <div className="relative">
-            <ImageWithFallback src={heroImage} alt="Shopping at EasyBuy" className="aspect-4/3 w-full rounded-2xl shadow-xl" />
-            <div className="absolute -bottom-5 left-5 hidden rounded-xl border bg-background/95 p-4 shadow-lg backdrop-blur sm:block">
+            <ImageWithFallback src={heroImage} alt="Shopping at EasyBuy" className="aspect-4/3 w-full rounded-3xl shadow-2xl shadow-primary/20 ring-1 ring-border" />
+            <div className="absolute -bottom-5 left-5 hidden rounded-2xl border bg-background/95 p-4 shadow-xl backdrop-blur sm:block">
               <div className="text-xs text-muted-foreground">Delivery</div>
               <div className="text-lg font-semibold">Free on every order</div>
             </div>
@@ -87,7 +89,7 @@ export function HomePage() {
                 <Link
                   key={c.id}
                   to={`/products?category=${c.id}`}
-                  className="group relative aspect-4/5 overflow-hidden rounded-xl"
+                  className="group relative aspect-4/5 overflow-hidden rounded-2xl shadow-sm transition-shadow hover:shadow-xl"
                 >
                   <ImageWithFallback
                     src={categoryCover(c.title)}
@@ -124,12 +126,12 @@ export function HomePage() {
 
       {/* Promo banner */}
       <section className="container mx-auto px-4">
-        <div className="relative overflow-hidden rounded-2xl bg-primary px-6 py-10 text-primary-foreground sm:px-12 dark:bg-muted dark:text-foreground dark:ring-1 dark:ring-border">
+        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-primary via-indigo-600 to-violet-600 px-6 py-12 text-primary-foreground sm:px-12 dark:from-indigo-500/30 dark:via-violet-500/20 dark:to-background dark:text-foreground dark:ring-1 dark:ring-border">
           <div className="relative z-10 max-w-lg space-y-3">
             <Badge className="border-0 bg-rose-600 text-white">Fast & safe</Badge>
             <h3 className="text-2xl font-semibold sm:text-3xl">Secure checkout with Razorpay</h3>
             <p className="text-primary-foreground/70 dark:text-muted-foreground">Pay with UPI, cards or net banking — or choose cash on delivery.</p>
-            <Button variant="secondary" className="dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/85" asChild>
+            <Button variant="secondary" size="lg" className="h-10 bg-white px-5 text-indigo-700 hover:bg-white/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/85" asChild>
               <Link to="/products?sort=discount">Shop the deals</Link>
             </Button>
           </div>

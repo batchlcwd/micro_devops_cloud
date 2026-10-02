@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
   const { rating, count } = averageRating(product.reviews)
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-lg">
+    <div className="group relative flex flex-col overflow-hidden rounded-xl border bg-card transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10">
       <Link to={`/products/${product.id}`} className="relative block aspect-square overflow-hidden bg-muted">
         <ImageWithFallback
           src={product.productImages?.[0]}
@@ -29,9 +29,9 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
       <div className="flex flex-1 flex-col gap-2 p-4">
         {product.categories?.[0] && (
-          <div className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{product.categories[0].title}</div>
+          <div className="text-[11px] font-semibold tracking-wider text-primary/80 uppercase">{product.categories[0].title}</div>
         )}
-        <Link to={`/products/${product.id}`} className="line-clamp-2 min-h-10 text-sm leading-5 font-medium hover:underline">
+        <Link to={`/products/${product.id}`} className="line-clamp-2 min-h-10 text-sm leading-5 font-medium transition-colors hover:text-primary">
           {product.title}
         </Link>
         <RatingStars rating={rating} count={count} />
@@ -39,8 +39,8 @@ export function ProductCard({ product }: { product: Product }) {
           <PriceTag price={product.price} discount={product.discount} />
           <Button
             size="icon"
-            variant="outline"
-            className="shrink-0"
+            variant="secondary"
+            className="size-9 shrink-0 rounded-full text-primary hover:bg-primary hover:text-primary-foreground"
             onClick={() => addToCart(product)}
             disabled={adding}
             aria-label={`Add ${product.title} to cart`}

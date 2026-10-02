@@ -1,4 +1,4 @@
-import { orderStatusIcon } from '@/components/common/StatusBadges'
+import { orderStatusIcon } from '@/lib/orderStatusIcon'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { allowedTransitions, orderStatusLabel } from '@/lib/orderStatus'
 import { ORDER_STATUSES, type OrderStatus } from '@/types'

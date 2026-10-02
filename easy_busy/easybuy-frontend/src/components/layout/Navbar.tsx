@@ -1,5 +1,5 @@
 import { Menu, Search, ShoppingCart } from 'lucide-react'
-import { useEffect, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,9 +21,11 @@ const links = [
 function SearchForm({ className, onSubmitted }: { className?: string; onSubmitted?: () => void }) {
   const navigate = useNavigate()
   const [params] = useSearchParams()
-  const [value, setValue] = useState(params.get('q') ?? '')
-
-  useEffect(() => setValue(params.get('q') ?? ''), [params])
+  const query = params.get('q') ?? ''
+  const [draft, setDraft] = useState<{ source: string; text: string }>({ source: query, text: query })
+  // Re-sync the box when the URL query changes (derived during render, no effect needed).
+  const value = draft.source === query ? draft.text : query
+  const setValue = (text: string) => setDraft({ source: query, text })
 
   function submit(e: FormEvent) {
     e.preventDefault()
@@ -39,7 +41,7 @@ function SearchForm({ className, onSubmitted }: { className?: string; onSubmitte
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Search products…"
-        className="h-9 pl-9"
+        className="h-10 rounded-full bg-muted/60 pl-9 focus-visible:bg-background"
         aria-label="Search products"
       />
     </form>
@@ -52,7 +54,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70">
+    <header className="sticky top-0 z-40 border-b bg-background/85 shadow-xs backdrop-blur-md supports-backdrop-filter:bg-background/70">
       <div className="container mx-auto flex h-16 items-center gap-4 px-4">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
@@ -109,8 +111,8 @@ export function Navbar() {
               end={l.end}
               className={({ isActive }) =>
                 cn(
-                  'rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground',
-                  isActive && 'text-foreground',
+                  'rounded-full px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground',
+                  isActive && 'bg-accent text-accent-foreground hover:bg-accent',
                 )
               }
             >
@@ -127,7 +129,7 @@ export function Navbar() {
             <Link to="/cart" aria-label={`Cart, ${cartCount} items`}>
               <ShoppingCart />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-semibold text-white">
+                <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-semibold text-white ring-2 ring-background">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}

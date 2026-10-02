@@ -12,7 +12,7 @@ interface StatCardProps {
 
 export function StatCard({ label, value, hint, icon: Icon, loading }: StatCardProps) {
   return (
-    <Card>
+    <Card className="transition-shadow hover:shadow-md">
       <CardContent className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="text-sm text-muted-foreground">{label}</div>
@@ -23,8 +23,8 @@ export function StatCard({ label, value, hint, icon: Icon, loading }: StatCardPr
           )}
           {hint && !loading && <div className="mt-1 text-xs text-muted-foreground">{hint}</div>}
         </div>
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted">
-          <Icon className="size-5 text-muted-foreground" />
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent">
+          <Icon className="size-5 text-accent-foreground" />
         </div>
       </CardContent>
     </Card>

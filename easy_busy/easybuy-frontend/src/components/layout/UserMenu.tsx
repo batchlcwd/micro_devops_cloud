@@ -11,15 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { initials } from '@/lib/initials'
 import { useAuthStore } from '@/stores/authStore'
-
-export const initials = (name: string) =>
-  name
-    .split(' ')
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase()
 
 export function UserMenu() {
   const user = useAuthStore((s) => s.user)
