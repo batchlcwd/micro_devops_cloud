@@ -31,7 +31,6 @@ env:
     01-namespace.yml
     02-instfastructure.yml
     03-config-map.yml
-    04-secret.yml
     05-spring-cloud-infra.yml
     06-easy-buy-microservices.yml
     07-ingress.yml
