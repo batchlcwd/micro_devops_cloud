@@ -190,31 +190,40 @@ kubectl logs -n kube-system deploy/aws-load-balancer-controller
 
 ---
 
-## 🤖 CI/CD: Auto-Deploy on Push
+## 🤖 CI/CD: Auto-Deploy on Push (GitHub Actions → EKS)
 
-`.github/workflows/easy-busy-cicd.yml` (repo root, not under `easy_busy/` — GitHub only reads workflows from the true repo root) triggers on **any** push touching `easy_busy/**`, not just the manifests:
-- **`pull_request`**: runs `kubectl diff` against the k8s manifests as a safe preview. Nothing is built or deployed.
-- **`push` to `main`**: rebuilds and pushes every service's Docker image to Docker Hub (via the same Jib command from Step 3 above, just automated), applies `01` → `07` (idempotent even if nothing in `k8s/eks/` changed), then runs `kubectl rollout restart deployment` so the freshly-pushed `:latest` images and any ConfigMap/Secret changes actually reach running pods — `kubectl apply` alone can't tell a `:latest` tag's underlying image changed, since the Deployment spec text is identical either way.
+The workflow is `.github/workflows/easy-busy-cicd.yml` (at the **git repo root**, `micro_devops/`, not under `easy_busy/` — GitHub only reads workflows from the true repo root).
 
-This rebuilds **all 10** services on every push rather than only the ones that changed — simpler and more reliable than diffing which service directories changed, at the cost of a slower pipeline. `common-service` (a plain Maven dependency of `cart-order-service`/`inventory-service`/`payment-service`/`notifications-service`, not a reactor module) is `mvn install`ed into the runner's local repo first, since a fresh CI runner has no local Maven cache.
+| Event | What happens |
+|---|---|
+| `pull_request` touching `easy_busy/**` | `kubectl diff` of the manifests — a safe preview. Nothing is built or deployed. |
+| `push` to `main` touching `easy_busy/**` | Builds and pushes all 10 images to Docker Hub → applies `01`…`07` → `kubectl rollout restart` → waits for rollouts. |
 
-This needs a one-time AWS + Docker Hub setup before the first run — GitHub Actions has no credentials of its own.
+GitHub Actions has **no AWS or Docker Hub credentials of its own**, so do the one-time setup below **before the first run**. It uses OIDC: GitHub gets a short-lived token and exchanges it for an IAM role — no AWS access keys are stored anywhere.
 
-### 0. Docker Hub access token
-GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**:
-- `DOCKERHUB_USERNAME` — your Docker Hub username (`batchlcwd`)
-- `DOCKERHUB_TOKEN` — an **access token**, not your password: Docker Hub → Account Settings → Security → New Access Token
+> **Values used below** (change them if yours differ):
+> AWS account `524954473877` · region `ap-south-1` · cluster `substring-prod` · GitHub repo `batchlcwd/micro_devops_cloud` · role name `github-actions-eks-deploy`
+> The repo name must match your GitHub URL **exactly** (`github.com/<owner>/<repo>`, case-sensitive). Check with `git remote -v`.
 
-### 1. Create the GitHub OIDC provider for AWS (skip if your account already has one)
+Run the `aws` commands in a terminal where `aws sts get-caller-identity` shows the **AWS account that owns the cluster**, using an admin-level user.
+
+### Step 1 — Docker Hub token → GitHub secrets
+1. Docker Hub → **Account Settings → Security → New Access Token** (Read & Write). Copy it — it is shown once.
+2. GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**, add:
+   - `DOCKERHUB_USERNAME` = `batchlcwd`
+   - `DOCKERHUB_TOKEN` = the access token (**not** your password)
+
+### Step 2 — Create the GitHub OIDC provider in AWS (once per account)
+Check first: IAM console → **Identity providers**. If `token.actions.githubusercontent.com` is already listed, skip this step.
 ```bash
 aws iam create-open-id-connect-provider \
   --url https://token.actions.githubusercontent.com \
-  --client-id-list sts.amazonaws.com \
-  --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
+  --client-id-list sts.amazonaws.com
 ```
+(Console alternative: Add provider → OpenID Connect → URL `https://token.actions.githubusercontent.com`, Audience `sts.amazonaws.com`.)
 
-### 2. Create the IAM role GitHub Actions will assume
-Trust policy (`trust-policy.json`) — replace `<account_id>`, `<github-org>`, `<repo-name>`:
+### Step 3 — Create the IAM role (trust policy = *who may assume it*)
+Save as `trust-policy.json`:
 ```json
 {
   "Version": "2012-10-17",
@@ -222,15 +231,15 @@ Trust policy (`trust-policy.json`) — replace `<account_id>`, `<github-org>`, `
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::<account_id>:oidc-provider/token.actions.githubusercontent.com"
+        "Federated": "arn:aws:iam::524954473877:oidc-provider/token.actions.githubusercontent.com"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
           "token.actions.githubusercontent.com:sub": [
-            "repo:<github-org>/<repo-name>:ref:refs/heads/main",
-            "repo:<github-org>/<repo-name>:pull_request"
+            "repo:batchlcwd/micro_devops_cloud:ref:refs/heads/main",
+            "repo:batchlcwd/micro_devops_cloud:pull_request"
           ]
         }
       }
@@ -238,33 +247,122 @@ Trust policy (`trust-policy.json`) — replace `<account_id>`, `<github-org>`, `
   ]
 }
 ```
+Both `sub` lines are needed: the first is the **deploy** job (push to `main`), the second is the **plan** job (pull requests). With only the first, PR runs fail with `Not authorized to perform sts:AssumeRoleWithWebIdentity`.
+
 ```bash
-aws iam create-role --role-name github-actions-eks-deploy --assume-role-policy-document file://trust-policy.json
-
-# eks:DescribeCluster is all the IAM side needs - actual k8s permissions come from the access entry in step 3
-aws iam put-role-policy --role-name github-actions-eks-deploy --policy-name eks-describe --policy-document '{
-  "Version": "2012-10-17",
-  "Statement": [{"Effect": "Allow", "Action": "eks:DescribeCluster", "Resource": "arn:aws:eks:ap-south-1:<account_id>:cluster/substring-prod"}]
-}'
+aws iam create-role \
+  --role-name github-actions-eks-deploy \
+  --assume-role-policy-document file://trust-policy.json
 ```
+*(Console alternative: IAM → Roles → Create role → Custom trust policy → paste the JSON above.)*
 
-### 3. Grant that role access to the cluster, scoped to the `easybuy` namespace
-Deliberately namespace-scoped (`AmazonEKSEditPolicy`, not cluster-admin) — CI only ever needs to touch `easybuy`:
+### Step 4 — Give the role AWS permissions (permissions policy = *what it may do*)
+Save as `permissions-policy.json` — this is also the JSON to paste into the console's **Policy editor (JSON tab)** if you do it by hand:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "EksDescribeCluster",
+      "Effect": "Allow",
+      "Action": "eks:DescribeCluster",
+      "Resource": "arn:aws:eks:ap-south-1:524954473877:cluster/substring-prod"
+    },
+    {
+      "Sid": "EksListClusters",
+      "Effect": "Allow",
+      "Action": "eks:ListClusters",
+      "Resource": "*"
+    }
+  ]
+}
+```
+```bash
+aws iam put-role-policy \
+  --role-name github-actions-eks-deploy \
+  --policy-name eks-describe \
+  --policy-document file://permissions-policy.json
+```
+This is all AWS needs to allow for `aws eks update-kubeconfig`. It gives **no Kubernetes permissions** — that is Step 5. (Images go to Docker Hub, so no ECR permissions are needed.)
+
+### Step 5 — Let the role into the cluster (Kubernetes side)
+IAM permissions alone are not enough: without an EKS **access entry**, `kubectl` fails with `Unauthorized` / `forbidden`.
 ```bash
 aws eks create-access-entry \
-  --cluster-name substring-prod \
-  --principal-arn arn:aws:iam::<account_id>:role/github-actions-eks-deploy
+  --cluster-name substring-prod --region ap-south-1 \
+  --principal-arn arn:aws:iam::524954473877:role/github-actions-eks-deploy
 
 aws eks associate-access-policy \
-  --cluster-name substring-prod \
-  --principal-arn arn:aws:iam::<account_id>:role/github-actions-eks-deploy \
-  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSEditPolicy \
-  --access-scope type=namespace,namespaces=easybuy
+  --cluster-name substring-prod --region ap-south-1 \
+  --principal-arn arn:aws:iam::524954473877:role/github-actions-eks-deploy \
+  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy \
+  --access-scope type=cluster
+```
+> **Why cluster scope and not just the `easybuy` namespace?** The pipeline applies `01-namespace.yml` (a `Namespace`) and `07-ingress.yml` (contains an `IngressClass`). Both are **cluster-scoped** objects, which a namespace-scoped policy such as `AmazonEKSEditPolicy` is forbidden to create. For a tighter role, use `AmazonEKSEditPolicy` with `--access-scope type=namespace,namespaces=easybuy`, create the namespace and IngressClass yourself once, and remove `01-namespace.yml` from `MANIFESTS` in the workflow (the `IngressClass` in `07` would also need moving out).
+
+If the cluster still uses the old `aws-auth` ConfigMap instead of access entries, check with `aws eks describe-cluster --name substring-prod --query cluster.accessConfig` and, if needed, enable them:
+`aws eks update-cluster-config --name substring-prod --region ap-south-1 --access-config authenticationMode=API_AND_CONFIG_MAP`
+
+### Step 6 — Get the role ARN and save it as a GitHub secret
+```bash
+aws iam get-role --role-name github-actions-eks-deploy --query Role.Arn --output text
+```
+It prints `arn:aws:iam::524954473877:role/github-actions-eks-deploy`. (Console: IAM → Roles → the role → copy the **ARN** at the top.)
+
+GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**:
+- `AWS_ROLE_ARN` = that ARN
+
+### Step 7 — Check the secrets, then trigger a run
+Three repo secrets must exist: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `AWS_ROLE_ARN`.
+
+Push any change under `easy_busy/` to `main` (or open a PR to see the diff-only run). Watch it under the repo's **Actions** tab. Afterwards:
+```bash
+kubectl get pods -n easybuy
 ```
 
-### 4. Add the remaining repo secret
-GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**:
-- Name: `AWS_ROLE_ARN`
-- Value: `arn:aws:iam::<account_id>:role/github-actions-eks-deploy`
+### Alternative: do Steps 1–6 in the web consoles (no CLI)
 
-With all three secrets in place (`DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `AWS_ROLE_ARN`), the next push touching anything under `easy_busy/` will trigger the full build-push-deploy workflow.
+Same result as the commands above, using the AWS and GitHub websites. Sign in to AWS account `524954473877` and set the region to **Asia Pacific (Mumbai) ap-south-1**.
+
+**A. Docker Hub + GitHub secrets (Step 1)**
+1. hub.docker.com → profile icon → **Account settings** → **Personal access tokens** (or **Security**) → **Generate new token** (Read & Write). Copy it.
+2. GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**:
+   - `DOCKERHUB_USERNAME` = `batchlcwd`
+   - `DOCKERHUB_TOKEN` = the token
+
+**B. OIDC provider (Step 2)**
+1. **IAM → Identity providers**. If `token.actions.githubusercontent.com` is listed, skip to C.
+2. **Add provider** → type **OpenID Connect** → Provider URL `https://token.actions.githubusercontent.com` → Audience `sts.amazonaws.com` → **Add provider**.
+
+**C. Create the role (Step 3)**
+1. **IAM → Roles → Create role** → trusted entity **Web identity**.
+2. Identity provider `token.actions.githubusercontent.com`, Audience `sts.amazonaws.com`.
+3. GitHub organization `batchlcwd`, repository `micro_devops_cloud`, branch `main` → **Next**.
+4. Attach no permissions → **Next** → role name `github-actions-eks-deploy` → **Create role**.
+5. The wizard only creates the `main` branch condition, so add the pull-request one: open the role → **Trust relationships → Edit trust policy** → replace the JSON with the trust policy from Step 3 above → **Update policy**.
+
+**D. Permissions policy (Step 4)**
+1. In the role: **Permissions → Add permissions → Create inline policy** → **JSON** tab.
+2. Paste the permissions policy from Step 4 above → **Next** → name it `eks-describe` → **Create policy**.
+
+**E. Cluster access (Step 5)**
+1. **EKS → Clusters → `substring-prod` → Access** tab → **IAM access entries → Create access entry**.
+2. IAM principal: `github-actions-eks-deploy`. Type: **Standard** → **Next**.
+3. Policy name **AmazonEKSClusterAdminPolicy**, access scope **Cluster** → **Add policy** → **Next** → **Create**.
+4. If the Access tab shows authentication mode `ConfigMap` only, click **Manage access**, switch to **EKS API and ConfigMap**, then redo 1–3.
+
+**F. Role ARN → GitHub secret (Step 6)**
+1. **IAM → Roles → `github-actions-eks-deploy`** → copy the **ARN** at the top.
+2. GitHub repo → **Settings → Secrets and variables → Actions → New repository secret** → name `AWS_ROLE_ARN`, value = the ARN.
+
+Then continue with Step 7.
+
+### Troubleshooting
+| Error | Cause / fix |
+|---|---|
+| `Not authorized to perform sts:AssumeRoleWithWebIdentity` | Trust policy `sub` does not match: wrong repo name (case-sensitive), wrong branch, missing `:pull_request` entry, or `aud` is not `sts.amazonaws.com`. |
+| `Could not assume role` / no OIDC provider | Step 2 not done in this AWS account, or the `Principal` ARN has the wrong account ID. |
+| `AccessDeniedException ... eks:DescribeCluster` | Step 4 policy missing, or its cluster ARN does not match `substring-prod` / `ap-south-1`. |
+| `You must be logged in to the server (Unauthorized)` | Step 5 access entry is missing for the role. |
+| `namespaces is forbidden` / `ingressclasses ... forbidden` | The role has a namespace-scoped policy; see the note in Step 5. |
+| `Credentials could not be loaded` in the workflow | Workflow lacks `permissions: id-token: write` (already set in `easy-busy-cicd.yml`), or the `AWS_ROLE_ARN` secret is empty. |
