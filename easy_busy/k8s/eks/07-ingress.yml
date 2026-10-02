@@ -1,30 +1,80 @@
-# Requires the AWS Load Balancer Controller to be installed in the cluster
-# (registers the "alb" IngressClass) - see EKS-DEPLOYMENT.md Step 2.
-# This provisions an internet-facing ALB that forwards everything to api-gateway;
-# api-gateway's own Service is ClusterIP (see 06-easy-buy-microservices.yml).
+# ---------------------------------------------------------
+# EKS AUTO MODE - ALB INGRESS CLASS
+# ---------------------------------------------------------
+
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: alb
+spec:
+  controller: eks.amazonaws.com/alb
+
+---
+# ---------------------------------------------------------
+# EASYBUY API GATEWAY INGRESS
 #
-# TODO: replace the certificate-arn placeholder below with your real ACM
-# certificate ARN before applying (see EKS-DEPLOYMENT.md "Enable HTTPS").
+# Internet
+#    |
+#   ALB
+#    |
+# Target Group (Pod IPs)
+#    |
+# api-gateway Service
+#    |
+# api-gateway Pods
+#
+# EKS Auto Mode manages the ALB.
+# No separate AWS Load Balancer Controller installation needed.
+# ---------------------------------------------------------
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: api-gateway
   namespace: easybuy
+
   annotations:
+
+    # Public ALB
     alb.ingress.kubernetes.io/scheme: internet-facing
+
+    # ALB directly sends traffic to Pod IPs
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+
+    # HTTP + HTTPS listeners
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+
+    # Redirect HTTP -> HTTPS
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/certificate-arn: "alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:524954473877:certificate/4ccf00c5-f49b-4845-9276-432e1d5707d4"
-    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-2021-06
+
+    # ACM SSL certificate
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:524954473877:certificate/4ccf00c5-f49b-4845-9276-432e1d5707d4
+
+    # ALB health check
     alb.ingress.kubernetes.io/healthcheck-path: /actuator/health/readiness
+
+    # Health check protocol
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+
+    # Health check port = application traffic port
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+
+    # Successful health-check codes
+    alb.ingress.kubernetes.io/success-codes: "200"
+
 spec:
+
   ingressClassName: alb
+
   rules:
+
     - http:
         paths:
+
           - path: /
             pathType: Prefix
+
             backend:
               service:
                 name: api-gateway

@@ -1,0 +1,22 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+
+metadata:
+  #  name: gp3
+  name: gp3-auto
+
+#provisioner: ebs.csi.aws.com
+provisioner: ebs.csi.eks.amazonaws.com
+
+parameters:
+  type: gp3
+  encrypted: "true"
+
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: eks.amazonaws.com/compute-type
+        values:
+          - auto
+          -
+reclaimPolicy: Retain

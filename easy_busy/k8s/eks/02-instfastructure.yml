@@ -1,21 +1,4 @@
 #storage class driver
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-
-metadata:
-  name: gp3
-
-provisioner: ebs.csi.aws.com
-
-parameters:
-  type: gp3
-  encrypted: "true"
-
-volumeBindingMode: WaitForFirstConsumer
-
-reclaimPolicy: Retain
-
----
 #mysql stateful set
 apiVersion: apps/v1
 kind: StatefulSet
@@ -61,7 +44,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: gp3
+        storageClassName: gp3-auto
         resources:
           requests:
             storage: 5Gi
@@ -160,7 +143,7 @@ spec:
         name: kafka-data
       spec:
         accessModes: [ ReadWriteOnce ]
-        storageClassName: gp3
+        storageClassName: gp3-auto
         resources:
           requests:
             storage: 10Gi
@@ -252,7 +235,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:15
+          image: postgres:18
           env:
             - name: POSTGRES_DB
               value: "productdb"
@@ -278,14 +261,14 @@ spec:
               memory: 1Gi
           volumeMounts:
             - name: postgres-persistent-storage
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/postgresql
   volumeClaimTemplates:
     - metadata:
         name: postgres-persistent-storage
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: gp3
+        storageClassName: gp3-auto
         resources:
           requests:
             storage: 5Gi

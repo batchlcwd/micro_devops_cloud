@@ -2,3 +2,5 @@
 /.work/
 /easy_busy/logs/
 .vscode/
+easy_busy/k8s/eks/04-secret.yml
+
