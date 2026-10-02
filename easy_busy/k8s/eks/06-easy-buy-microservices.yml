@@ -562,7 +562,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: easybuy-secrets
-                  value: RESEND_API_KEY
+                  key: RESEND_API_KEY
           resources:
             requests:
               cpu: 250m
