@@ -1,15 +1,14 @@
 package com.substring.easybuy.common.events;
 
-
 import java.math.BigDecimal;
 
 public class OrderEvent {
     private Long orderId;
     private String userId;
+    private String email;
     private String status;
     private String message;
     private BigDecimal totalAmount;
-
 
     public Long getOrderId() {
         return orderId;
@@ -25,6 +24,14 @@ public class OrderEvent {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getStatus() {
@@ -56,10 +63,11 @@ public class OrderEvent {
         return "OrderEvent{" +
                 "orderId=" + orderId +
                 ", userId='" + userId + '\'' +
+                ", email='" + email + '\'' +
                 ", status='" + status + '\'' +
                 ", message='" + message + '\'' +
                 ", totalAmount=" + totalAmount +
-
                 '}';
     }
 }
+

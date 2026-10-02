@@ -9,7 +9,8 @@ public record CheckoutRequest(
 		@NotBlank String shippingAddress,
 		PaymentMethod paymentMethod,
 		String extraInformation,
-		String paymentDetails
+		String paymentDetails,
+		String email
 		) {
 }
 

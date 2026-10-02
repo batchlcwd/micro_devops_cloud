@@ -22,8 +22,13 @@ public class NotificationEventConsumer {
         log.info("Received OrderEvent in Notification Service: {}", orderEvent);
         if (orderEvent.getOrderId() == null) return;
         
-        if ("CONFIRMED".equalsIgnoreCase(orderEvent.getStatus())) {
-            String recipientEmail = orderEvent.getUserId();
+        String recipientEmail = orderEvent.getEmail();
+        if (recipientEmail == null || recipientEmail.isBlank()) {
+            recipientEmail = orderEvent.getUserId();
+        }
+
+        if (orderEvent.getStatus() == null || "CONFIRMED".equalsIgnoreCase(orderEvent.getStatus())) {
+            log.info("Sending order confirmation email to: {} for order ID: {}", recipientEmail, orderEvent.getOrderId());
             notificationService.sendOrderConfirmation(
                 recipientEmail, 
                 orderEvent.getOrderId(), 

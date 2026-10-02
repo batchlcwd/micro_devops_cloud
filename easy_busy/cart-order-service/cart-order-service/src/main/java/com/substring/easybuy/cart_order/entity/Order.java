@@ -33,6 +33,9 @@ public class Order {
     @Column(nullable = false, length = 120)
     private String userId;
 
+    @Column(length = 120)
+    private String email;
+
     //new
     @Column(nullable = false, length = 120)
     private String billingName;
@@ -217,5 +220,13 @@ public class Order {
 
     public void setExtraInformation(String extraInformation) {
         this.extraInformation = extraInformation;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

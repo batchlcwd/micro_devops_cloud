@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.substring.easybuy.cart_order.client.ProductClient;
+import com.substring.easybuy.cart_order.client.UserClient;
 
 import com.substring.easybuy.cart_order.dto.*;
 import com.substring.easybuy.cart_order.producer.OrderEventPublisher;
@@ -45,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
     private final InventoryClient inventoryClient;
+    private final UserClient userClient;
 
     private final RestClient restClient;
 
@@ -180,6 +182,7 @@ public class OrderServiceImpl implements OrderService {
             orderEvent.setMessage("Order is created successfully...");
             orderEvent.setTotalAmount(saved.getTotalAmount());
             orderEvent.setUserId(saved.getUserId());
+            orderEvent.setEmail(saved.getEmail());
             orderEvent.setStatus(saved.getStatus().toString());
             orderEventPublisher.publishOrderCreatedEvent(orderEvent);
 
@@ -284,11 +287,30 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
         order.setUserId(cart.getUserId());
-        order.setBillingName(request.billingName() != null ? request.billingName().trim() : "");
-        order.setBillingPhone(request.billingPhone() != null ? request.billingPhone().trim() : "");
-        order.setExtraInformation(request.extraInformation() != null ? request.extraInformation().trim() : "");
-        order.setShippingAddress(request.shippingAddress() != null ? request.shippingAddress().trim() : "");
-        order.setPaymentMethod(request.paymentMethod());
+
+        String email = null;
+        if (request != null && request.email() != null && !request.email().isBlank()) {
+            email = request.email().trim();
+        } else if (cart.getUserId() != null && cart.getUserId().contains("@")) {
+            email = cart.getUserId().trim();
+        } else if (cart.getUserId() != null) {
+            try {
+                UUID userUuid = UUID.fromString(cart.getUserId());
+                UserDto userDto = userClient.getUserById(userUuid);
+                if (userDto != null && userDto.email() != null) {
+                    email = userDto.email();
+                }
+            } catch (Exception e) {
+                log.warn("Failed to fetch user email via UserClient for userId: {}", cart.getUserId());
+            }
+        }
+        order.setEmail(email);
+
+        order.setBillingName(request != null && request.billingName() != null ? request.billingName().trim() : "");
+        order.setBillingPhone(request != null && request.billingPhone() != null ? request.billingPhone().trim() : "");
+        order.setExtraInformation(request != null && request.extraInformation() != null ? request.extraInformation().trim() : "");
+        order.setShippingAddress(request != null && request.shippingAddress() != null ? request.shippingAddress().trim() : "");
+        order.setPaymentMethod(request != null ? request.paymentMethod() : null);
         order.setPaymentStatus(PaymentStatus.PENDING);
         order.setStatus(OrderStatus.CONFIRMED);
         order.setItems(new ArrayList<>());
