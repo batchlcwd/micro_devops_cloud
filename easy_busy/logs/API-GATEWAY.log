@@ -18194,3 +18194,792 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 2026-10-01 20:08:06 INFO  [reactor-http-nio-13] traceId=985634c866c863b1140d8e611c8cf134 spanId=1fa0b8be6496abb9 c.s.e.a.filter.AuthenticationFilter : method  GET
 2026-10-01 20:08:06 INFO  [reactor-http-nio-14] traceId=0785f039a932730c238c8d36b817d79c spanId=7321e221b2af1c89 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
 2026-10-01 20:08:06 INFO  [reactor-http-nio-14] traceId=0785f039a932730c238c8d36b817d79c spanId=7321e221b2af1c89 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 20:09:09 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application API-GATEWAY with eureka with status DOWN
+2026-10-01 20:09:09 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790865549669, current=DOWN, previous=UP]
+2026-10-01 20:09:09 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080: registering service...
+2026-10-01 20:09:09 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - registration status: 204
+2026-10-01 20:09:10 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.b.reactor.netty.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-01 20:09:10 INFO  [netty-shutdown] traceId= spanId= o.s.b.reactor.netty.GracefulShutdown : Graceful shutdown complete
+2026-10-01 20:09:12 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-10-01 20:09:15 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-10-01 20:09:15 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/} exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.cancel(RestClientEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.reactive.context.ReactiveWebServerApplicationContext.doClose(ReactiveWebServerApplicationContext.java:158)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 39 more
+
+2026-10-01 20:09:15 WARN  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-10-01 20:09:15 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.cancel(RestClientEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.reactive.context.ReactiveWebServerApplicationContext.doClose(ReactiveWebServerApplicationContext.java:158)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 40 more
+
+2026-10-01 20:09:15 WARN  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-10-01 20:09:15 ERROR [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - de-registration failedCannot execute request on any known server
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.reactive.context.ReactiveWebServerApplicationContext.doClose(ReactiveWebServerApplicationContext.java:158)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-10-01 20:09:15 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient
+2026-10-01 21:15:31 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : Starting ApiGatewayApplication using Java 25.0.1 with PID 39384 (D:\Live Batches\micro_devops\easy_busy\api-gateway\api-gateway\target\classes started by DurgeshLap in D:\Live Batches\micro_devops\easy_busy)
+2026-10-01 21:15:31 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : No active profile set, falling back to 1 default profile: "default"
+2026-10-01 21:15:31 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Fetching config from server at : http://localhost:8079
+2026-10-01 21:15:31 INFO  [main] traceId= spanId= o.s.c.c.c.ConfigServerConfigDataLoader : Located environment: name=API-GATEWAY, profiles=[default], label=null, version=e9c8ddaaa507e29c792703f18f53aff3af15532f, state=
+2026-10-01 21:15:32 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-01 21:15:32 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-01 21:15:33 INFO  [main] traceId= spanId= o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
+2026-10-01 21:15:33 INFO  [main] traceId= spanId= o.s.cloud.context.scope.GenericScope : BeanFactory id=a2518be6-93e2-35c6-a67b-b88c336e4970
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [After]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Before]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Between]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Cookie]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Header]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Host]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Method]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Path]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Query]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [ReadBody]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [RemoteAddr]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Version]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [Weight]
+2026-10-01 21:15:35 INFO  [main] traceId= spanId= o.s.c.g.r.RouteDefinitionRouteLocator : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= o.s.b.a.e.web.EndpointLinksResolver : Exposing 32 endpoints beneath base path '/actuator'
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-10-01 21:15:36 WARN  [main] traceId= spanId= o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= o.s.c.n.eureka.InstanceInfoFactory : Setting initial instance status as: STARTING
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Initializing Eureka in region us-east-1
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Disable delta property : false
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Single vip registry refresh property : null
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Force full registry fetch : false
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application is null : false
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Registered Applications size is zero : true
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Application version is -1: true
+2026-10-01 21:15:36 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Getting all instance registry info from the eureka server
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : The response status is 200
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Starting heartbeat executor: renew interval is: 30
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= c.n.discovery.InstanceInfoReplicator : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Discovery Client initialized at timestamp 1790869537512 with initial instances count: 1
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Registering application API-GATEWAY with eureka with status UP
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790869537516, current=UP, previous=STARTING]
+2026-10-01 21:15:37 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080: registering service...
+2026-10-01 21:15:37 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - registration status: 204
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= o.s.b.reactor.netty.NettyWebServer : Netty started on port 8080 (http)
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= o.s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2026-10-01 21:15:37 INFO  [main] traceId= spanId= c.s.e.a.ApiGatewayApplication : Started ApiGatewayApplication in 12.221 seconds (process running for 22.241)
+2026-10-01 21:20:36 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:25:36 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:30:36 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:35:36 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:40:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:45:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:50:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 21:55:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:00:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:05:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:10:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:15:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:20:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:25:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:30:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:35:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:40:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:45:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:50:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 22:55:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:00:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:05:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:10:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:15:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:20:27 INFO  [reactor-http-nio-4] traceId=48c2136dba4c0165c53109c1477a95cd spanId=019b03616eb2c017 c.s.e.a.filter.AuthenticationFilter : path  /products/api/categories
+2026-10-01 23:20:27 INFO  [reactor-http-nio-3] traceId=2e3b777c2cd2e55f4c58549c004fed36 spanId=9df8a4a96cc23739 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:20:27 INFO  [reactor-http-nio-4] traceId=48c2136dba4c0165c53109c1477a95cd spanId=019b03616eb2c017 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:20:27 INFO  [reactor-http-nio-3] traceId=2e3b777c2cd2e55f4c58549c004fed36 spanId=9df8a4a96cc23739 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:20:30 INFO  [reactor-http-nio-12] traceId=7fdaacc4068fba4c2eeee918025f888a spanId=154b0a86dd2d96f6 c.s.e.a.filter.AuthenticationFilter : path  /products/api/categories
+2026-10-01 23:20:30 INFO  [reactor-http-nio-12] traceId=7fdaacc4068fba4c2eeee918025f888a spanId=154b0a86dd2d96f6 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:20:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:20:58 INFO  [reactor-http-nio-13] traceId=f318eb622a9d50cc0aace2b8a2e30c46 spanId=e4d2e223739c71de c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:20:58 INFO  [reactor-http-nio-13] traceId=f318eb622a9d50cc0aace2b8a2e30c46 spanId=e4d2e223739c71de c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:19 INFO  [reactor-http-nio-14] traceId=5282e6ce0c7bd362421a7f947f10f738 spanId=2c8f8f3476d79b50 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:21:19 INFO  [reactor-http-nio-14] traceId=5282e6ce0c7bd362421a7f947f10f738 spanId=2c8f8f3476d79b50 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:21 INFO  [reactor-http-nio-15] traceId=cf1de713fabfa7535a5dc6691cc05bbf spanId=72d104f4ee42a51f c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:21:21 INFO  [reactor-http-nio-15] traceId=cf1de713fabfa7535a5dc6691cc05bbf spanId=72d104f4ee42a51f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:29 INFO  [reactor-http-nio-16] traceId=545c122b45c3da5fe051c924f24cc045 spanId=e705194d182a6871 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:21:29 INFO  [reactor-http-nio-16] traceId=545c122b45c3da5fe051c924f24cc045 spanId=e705194d182a6871 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:42 INFO  [reactor-http-nio-17] traceId=e196fe6cfb80d7db1da342efe9431401 spanId=76e8333a408f95fd c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440002
+2026-10-01 23:21:42 INFO  [reactor-http-nio-17] traceId=e196fe6cfb80d7db1da342efe9431401 spanId=76e8333a408f95fd c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:42 INFO  [reactor-http-nio-18] traceId=024ff28575dbdfb79380d2f7455b0772 spanId=c897b3494a41aac3 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440002
+2026-10-01 23:21:42 INFO  [reactor-http-nio-18] traceId=024ff28575dbdfb79380d2f7455b0772 spanId=c897b3494a41aac3 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:51 INFO  [reactor-http-nio-19] traceId=43b81c3fd85596bf4fc3d84751692dcc spanId=f2d6f3b0add45a41 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440001
+2026-10-01 23:21:51 INFO  [reactor-http-nio-19] traceId=43b81c3fd85596bf4fc3d84751692dcc spanId=f2d6f3b0add45a41 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:51 INFO  [reactor-http-nio-20] traceId=9f7dc19810eff64d1292239f3614fe44 spanId=55ad76a45d7e97d2 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440001
+2026-10-01 23:21:51 INFO  [reactor-http-nio-20] traceId=9f7dc19810eff64d1292239f3614fe44 spanId=55ad76a45d7e97d2 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:21:51 INFO  [reactor-http-nio-1] traceId=e844c2a87726512d2c7e15b1ca86cea5 spanId=72b977774436dc31 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:21:51 INFO  [reactor-http-nio-1] traceId=e844c2a87726512d2c7e15b1ca86cea5 spanId=72b977774436dc31 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:22:23 INFO  [reactor-http-nio-5] traceId=a8798a21e0fe124bae031df9389c865d spanId=d444424bf13fb78c c.s.e.a.filter.AuthenticationFilter : path  /users/api/users/login
+2026-10-01 23:22:23 INFO  [reactor-http-nio-5] traceId=a8798a21e0fe124bae031df9389c865d spanId=d444424bf13fb78c c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-10-01 23:22:26 INFO  [reactor-http-nio-4] traceId=d6ecc7c497d5785dfd1680cdc48ed047 spanId=4467b4393110af92 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:22:26 INFO  [reactor-http-nio-4] traceId=d6ecc7c497d5785dfd1680cdc48ed047 spanId=4467b4393110af92 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:22:30 INFO  [reactor-http-nio-7] traceId=7817c52d6750e1fa6475800ddeb4bb4e spanId=6cea2ef5051d6997 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:22:30 INFO  [reactor-http-nio-7] traceId=7817c52d6750e1fa6475800ddeb4bb4e spanId=6cea2ef5051d6997 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:22:30 INFO  [reactor-http-nio-8] traceId=a75263c567d2b6671345740f1f4c4043 spanId=488c56ba73cf3060 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82/items
+2026-10-01 23:22:30 INFO  [reactor-http-nio-8] traceId=a75263c567d2b6671345740f1f4c4043 spanId=488c56ba73cf3060 c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-10-01 23:22:30 INFO  [reactor-http-nio-11] traceId=37ee2710aeac11cf6ce28f8048388653 spanId=a1904dd413efc968 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:22:30 INFO  [reactor-http-nio-11] traceId=37ee2710aeac11cf6ce28f8048388653 spanId=a1904dd413efc968 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:22:36 INFO  [reactor-http-nio-12] traceId=b6d30ca8bc3723579dedc6a9310d7059 spanId=dcefc0fecb290808 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:22:36 INFO  [reactor-http-nio-12] traceId=b6d30ca8bc3723579dedc6a9310d7059 spanId=dcefc0fecb290808 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:22:37 INFO  [reactor-http-nio-13] traceId=35fd6a3be4d331e5fcb4dc549f3c6a66 spanId=2ee7550ec37cba8e c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:22:37 INFO  [reactor-http-nio-13] traceId=35fd6a3be4d331e5fcb4dc549f3c6a66 spanId=2ee7550ec37cba8e c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:22:55 INFO  [reactor-http-nio-14] traceId=989a36d720b505704828ce050e68739f spanId=930a0ef36346fa25 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/5e776363-fc0f-40a9-8ea9-dc921f443f82/checkout
+2026-10-01 23:22:55 INFO  [reactor-http-nio-14] traceId=989a36d720b505704828ce050e68739f spanId=930a0ef36346fa25 c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-10-01 23:23:09 INFO  [reactor-http-nio-15] traceId=841d56f8cb571b4f95a375b56c35f671 spanId=4d8408c5affd53ba c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/5e776363-fc0f-40a9-8ea9-dc921f443f82/checkout
+2026-10-01 23:23:09 INFO  [reactor-http-nio-15] traceId=841d56f8cb571b4f95a375b56c35f671 spanId=4d8408c5affd53ba c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-10-01 23:23:21 INFO  [reactor-http-nio-16] traceId=27bdfd3fbf806417fb24d3bb33498a21 spanId=c61aff535e0db6cc c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82/items/550e8400-e29b-41d4-a716-446655440001
+2026-10-01 23:23:21 INFO  [reactor-http-nio-16] traceId=27bdfd3fbf806417fb24d3bb33498a21 spanId=c61aff535e0db6cc c.s.e.a.filter.AuthenticationFilter : method  PUT
+2026-10-01 23:23:22 INFO  [reactor-http-nio-17] traceId=496e777a2138b9e5f7417ed178e84e27 spanId=a8cc2ff09f1794c7 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:22 INFO  [reactor-http-nio-17] traceId=496e777a2138b9e5f7417ed178e84e27 spanId=a8cc2ff09f1794c7 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:23 INFO  [reactor-http-nio-18] traceId=35cefd452172d9cc583b6ffaf321d73d spanId=a2917120d72fbb6f c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/carts/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:23 INFO  [reactor-http-nio-18] traceId=35cefd452172d9cc583b6ffaf321d73d spanId=a2917120d72fbb6f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:26 INFO  [reactor-http-nio-19] traceId=11a7e2fee42c7f2625667382e7a90adb spanId=815fdf5419b374ce c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:26 INFO  [reactor-http-nio-19] traceId=11a7e2fee42c7f2625667382e7a90adb spanId=815fdf5419b374ce c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:26 INFO  [reactor-http-nio-20] traceId=10b8dc9e11ce45eeaccfd8d0988b97d3 spanId=655ba6dd581885d6 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:26 INFO  [reactor-http-nio-20] traceId=10b8dc9e11ce45eeaccfd8d0988b97d3 spanId=655ba6dd581885d6 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:31 INFO  [reactor-http-nio-1] traceId=ced1353bb76d24d1934e6720b18895dd spanId=c2defe95e3ca5302 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:31 INFO  [reactor-http-nio-1] traceId=ced1353bb76d24d1934e6720b18895dd spanId=c2defe95e3ca5302 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:31 INFO  [reactor-http-nio-5] traceId=08b8840f94562760b4a510c64930fdfa spanId=87ff30b6f3a75429 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:31 INFO  [reactor-http-nio-5] traceId=08b8840f94562760b4a510c64930fdfa spanId=87ff30b6f3a75429 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:31 INFO  [reactor-http-nio-2] traceId=170c22baf84bf4511687c853c40bbcf6 spanId=39b86300f630ab0c c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/13
+2026-10-01 23:23:31 INFO  [reactor-http-nio-2] traceId=170c22baf84bf4511687c853c40bbcf6 spanId=39b86300f630ab0c c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:33 INFO  [reactor-http-nio-6] traceId=e73bef63b45adf5151b02d0bafe28663 spanId=61fa972121376b93 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/13
+2026-10-01 23:23:33 INFO  [reactor-http-nio-6] traceId=e73bef63b45adf5151b02d0bafe28663 spanId=61fa972121376b93 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:43 INFO  [reactor-http-nio-9] traceId=90ee4301bc146ef92bd4d6e4748edcdd spanId=a98aecb3e05b79b2 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:43 INFO  [reactor-http-nio-9] traceId=90ee4301bc146ef92bd4d6e4748edcdd spanId=a98aecb3e05b79b2 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:43 INFO  [reactor-http-nio-10] traceId=9a24c28fcc018c6e70476bb7fb419416 spanId=6114e8f6f7222e46 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:43 INFO  [reactor-http-nio-10] traceId=9a24c28fcc018c6e70476bb7fb419416 spanId=6114e8f6f7222e46 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:44 INFO  [reactor-http-nio-11] traceId=e2e649e8db65919d6b2a1b64cbae75a3 spanId=57a0b916cc177476 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:44 INFO  [reactor-http-nio-11] traceId=e2e649e8db65919d6b2a1b64cbae75a3 spanId=57a0b916cc177476 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:44 INFO  [reactor-http-nio-12] traceId=cdd309f0305babf95c28c9d5139c8016 spanId=bf56dee94c6c8555 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:44 INFO  [reactor-http-nio-12] traceId=cdd309f0305babf95c28c9d5139c8016 spanId=bf56dee94c6c8555 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:44 INFO  [reactor-http-nio-13] traceId=293415ac35076c884fcfb1d99bd3a47a spanId=ab45bbb84dffa08f c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/12
+2026-10-01 23:23:44 INFO  [reactor-http-nio-13] traceId=293415ac35076c884fcfb1d99bd3a47a spanId=ab45bbb84dffa08f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:44 INFO  [reactor-http-nio-14] traceId=9b3799f17fba02e41665738d24d0a7d1 spanId=d574a078ed9b12d9 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/12
+2026-10-01 23:23:44 INFO  [reactor-http-nio-14] traceId=9b3799f17fba02e41665738d24d0a7d1 spanId=d574a078ed9b12d9 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:45 INFO  [reactor-http-nio-15] traceId=7fdd08b58f065ad4b6e19a09a2662238 spanId=e3ef060fbe7718db c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:45 INFO  [reactor-http-nio-15] traceId=7fdd08b58f065ad4b6e19a09a2662238 spanId=e3ef060fbe7718db c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:45 INFO  [reactor-http-nio-16] traceId=e377f48a573bc0ab8027f641fdc68f2b spanId=81d5713403e734ce c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:45 INFO  [reactor-http-nio-16] traceId=e377f48a573bc0ab8027f641fdc68f2b spanId=81d5713403e734ce c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:46 INFO  [reactor-http-nio-17] traceId=c2556b870279ef9d97e2790b83459863 spanId=8458fad75c868c1b c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:46 INFO  [reactor-http-nio-17] traceId=c2556b870279ef9d97e2790b83459863 spanId=8458fad75c868c1b c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:46 INFO  [reactor-http-nio-18] traceId=548e8254c58b221e91d551776a8f8b1a spanId=2836c7701b178e1e c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:46 INFO  [reactor-http-nio-18] traceId=548e8254c58b221e91d551776a8f8b1a spanId=2836c7701b178e1e c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:46 INFO  [reactor-http-nio-19] traceId=136b6b40348ef3bd56ccb21a444ab6e9 spanId=dd8bc6ea8b1ad0bb c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/12
+2026-10-01 23:23:46 INFO  [reactor-http-nio-19] traceId=136b6b40348ef3bd56ccb21a444ab6e9 spanId=dd8bc6ea8b1ad0bb c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:46 INFO  [reactor-http-nio-20] traceId=9108ea16bd569a7a444d335bfb4edf5a spanId=52b9f1c39324ab1a c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/12
+2026-10-01 23:23:46 INFO  [reactor-http-nio-20] traceId=9108ea16bd569a7a444d335bfb4edf5a spanId=52b9f1c39324ab1a c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:47 INFO  [reactor-http-nio-1] traceId=d6b25e1091e48e2ab625d61164aa1160 spanId=85a5d7d0494a4c0b c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:47 INFO  [reactor-http-nio-1] traceId=d6b25e1091e48e2ab625d61164aa1160 spanId=85a5d7d0494a4c0b c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:47 INFO  [reactor-http-nio-5] traceId=1956e9c7604dd58c4f78c44c5ad7be87 spanId=f3782eb78321fb38 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:47 INFO  [reactor-http-nio-5] traceId=1956e9c7604dd58c4f78c44c5ad7be87 spanId=f3782eb78321fb38 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:48 INFO  [reactor-http-nio-2] traceId=278122a32c2260e908438b40deac78d6 spanId=0364df21ef579740 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:48 INFO  [reactor-http-nio-2] traceId=278122a32c2260e908438b40deac78d6 spanId=0364df21ef579740 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:48 INFO  [reactor-http-nio-3] traceId=a0b36a5ae87fdeeb3a2026ba0ee8aa90 spanId=104ebe3a50c1e7fa c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/user/5e776363-fc0f-40a9-8ea9-dc921f443f82
+2026-10-01 23:23:48 INFO  [reactor-http-nio-3] traceId=a0b36a5ae87fdeeb3a2026ba0ee8aa90 spanId=104ebe3a50c1e7fa c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:48 INFO  [reactor-http-nio-4] traceId=11779da4ac803c874d84bad9fb82c403 spanId=308b34a73bc7a559 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/11
+2026-10-01 23:23:48 INFO  [reactor-http-nio-4] traceId=11779da4ac803c874d84bad9fb82c403 spanId=308b34a73bc7a559 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:23:48 INFO  [reactor-http-nio-6] traceId=d96bbf7504f51e13654fd6ca34bce94d spanId=4b7d4ed329162537 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/11
+2026-10-01 23:23:48 INFO  [reactor-http-nio-6] traceId=d96bbf7504f51e13654fd6ca34bce94d spanId=4b7d4ed329162537 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:07 INFO  [reactor-http-nio-7] traceId=bda96d576922a1152a6c63a374f2e558 spanId=1870ab81595e9c95 c.s.e.a.filter.AuthenticationFilter : path  /users/api/users/login
+2026-10-01 23:24:07 INFO  [reactor-http-nio-7] traceId=bda96d576922a1152a6c63a374f2e558 spanId=1870ab81595e9c95 c.s.e.a.filter.AuthenticationFilter : method  POST
+2026-10-01 23:24:07 INFO  [reactor-http-nio-9] traceId=8e65751b6a930949fb07e63bbdca4e1c spanId=c07fa70ecfd81644 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/11
+2026-10-01 23:24:07 INFO  [reactor-http-nio-9] traceId=8e65751b6a930949fb07e63bbdca4e1c spanId=c07fa70ecfd81644 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:07 INFO  [reactor-http-nio-10] traceId=c09584b6104db306f0ae5cca07e0b170 spanId=6bac88e9bc312dcd c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/11
+2026-10-01 23:24:07 INFO  [reactor-http-nio-10] traceId=c09584b6104db306f0ae5cca07e0b170 spanId=6bac88e9bc312dcd c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:07 INFO  [reactor-http-nio-11] traceId=c7040c5bb7a18dd906081fd699fef119 spanId=99bbb9e4438e9e9c c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/11
+2026-10-01 23:24:07 INFO  [reactor-http-nio-11] traceId=c7040c5bb7a18dd906081fd699fef119 spanId=99bbb9e4438e9e9c c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:07 INFO  [reactor-http-nio-12] traceId=c8d5ad394fb4f71f5435e584dec85c6d spanId=88e4f8f34a1f183f c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/11
+2026-10-01 23:24:07 INFO  [reactor-http-nio-12] traceId=c8d5ad394fb4f71f5435e584dec85c6d spanId=88e4f8f34a1f183f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:14 INFO  [reactor-http-nio-13] traceId=0eb66d93e7cfbe3535f936f15e927752 spanId=4de39702a5b9c439 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:24:14 INFO  [reactor-http-nio-13] traceId=0eb66d93e7cfbe3535f936f15e927752 spanId=4de39702a5b9c439 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:18 INFO  [reactor-http-nio-18] traceId=9b7825b3789c6f5095ca3645287c3109 spanId=8f620b069833d226 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:18 INFO  [reactor-http-nio-18] traceId=9b7825b3789c6f5095ca3645287c3109 spanId=8f620b069833d226 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:18 INFO  [reactor-http-nio-17] traceId=50f0c21085e4e58df01c1d63145149b2 spanId=43789023e6921f6a c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:24:18 INFO  [reactor-http-nio-17] traceId=50f0c21085e4e58df01c1d63145149b2 spanId=43789023e6921f6a c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:18 INFO  [reactor-http-nio-16] traceId=b7edc4060da100b5c768c7d4724f9495 spanId=954906c765009dfc c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:24:18 INFO  [reactor-http-nio-16] traceId=b7edc4060da100b5c768c7d4724f9495 spanId=954906c765009dfc c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:18 INFO  [reactor-http-nio-1] traceId=55818051d9b88aae6860e28b20974c46 spanId=843e24a7582713f8 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:18 INFO  [reactor-http-nio-1] traceId=55818051d9b88aae6860e28b20974c46 spanId=843e24a7582713f8 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:18 INFO  [reactor-http-nio-5] traceId=604be7577cf5cc0ff1a2e0e71e1b71c3 spanId=c98ded9c4aa6c6f1 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:24:18 INFO  [reactor-http-nio-5] traceId=604be7577cf5cc0ff1a2e0e71e1b71c3 spanId=c98ded9c4aa6c6f1 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:18 INFO  [reactor-http-nio-2] traceId=cfca44163207efaeeb4e8b796fb53a81 spanId=866e68c328946869 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:24:18 INFO  [reactor-http-nio-2] traceId=cfca44163207efaeeb4e8b796fb53a81 spanId=866e68c328946869 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:25 INFO  [reactor-http-nio-3] traceId=10aeef2bf5e523aa6c4a67dc9b4c60b2 spanId=a689d2e53ca2ed8b c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:25 INFO  [reactor-http-nio-3] traceId=10aeef2bf5e523aa6c4a67dc9b4c60b2 spanId=a689d2e53ca2ed8b c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:25 INFO  [reactor-http-nio-4] traceId=dee8c8026e0588aa14cb2ff1602024cc spanId=810e480b9423690a c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:25 INFO  [reactor-http-nio-4] traceId=dee8c8026e0588aa14cb2ff1602024cc spanId=810e480b9423690a c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:26 INFO  [reactor-http-nio-8] traceId=b882743a2c6fded3e858557101deb217 spanId=dea7bf1307778805 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:26 INFO  [reactor-http-nio-7] traceId=54f0f11bcedd10a81c983d47669cc5f0 spanId=fdbb6ee1b4aaec5e c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:24:26 INFO  [reactor-http-nio-8] traceId=b882743a2c6fded3e858557101deb217 spanId=dea7bf1307778805 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:26 INFO  [reactor-http-nio-6] traceId=1eeb0c4437f5cb66d0fdd34e8c7a0d10 spanId=f07ebf32bbed5bab c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:24:26 INFO  [reactor-http-nio-7] traceId=54f0f11bcedd10a81c983d47669cc5f0 spanId=fdbb6ee1b4aaec5e c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:26 INFO  [reactor-http-nio-6] traceId=1eeb0c4437f5cb66d0fdd34e8c7a0d10 spanId=f07ebf32bbed5bab c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:26 INFO  [reactor-http-nio-9] traceId=878b556c7086d541199b8de948e40898 spanId=fc808e89b55deec3 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:24:26 INFO  [reactor-http-nio-9] traceId=878b556c7086d541199b8de948e40898 spanId=fc808e89b55deec3 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:26 INFO  [reactor-http-nio-10] traceId=89e2acb0f4ed9a9b7c83389ff65cc476 spanId=43bb64b14b597b07 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:24:26 INFO  [reactor-http-nio-10] traceId=89e2acb0f4ed9a9b7c83389ff65cc476 spanId=43bb64b14b597b07 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:26 INFO  [reactor-http-nio-11] traceId=3ff8c50b2f272d98d682c0789a09c732 spanId=a47947d860450939 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:26 INFO  [reactor-http-nio-11] traceId=3ff8c50b2f272d98d682c0789a09c732 spanId=a47947d860450939 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:29 INFO  [reactor-http-nio-12] traceId=86ced72a228d3ee18378f0a3577afcf0 spanId=d2ac99eb8906ab1d c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/13
+2026-10-01 23:24:29 INFO  [reactor-http-nio-12] traceId=86ced72a228d3ee18378f0a3577afcf0 spanId=d2ac99eb8906ab1d c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:29 INFO  [reactor-http-nio-13] traceId=ec946762c59ee158fd266fcfbf215765 spanId=6afeac373dc35257 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/13
+2026-10-01 23:24:29 INFO  [reactor-http-nio-13] traceId=ec946762c59ee158fd266fcfbf215765 spanId=6afeac373dc35257 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:29 INFO  [reactor-http-nio-14] traceId=1d93924c86513bee3b09a4b2c695456c spanId=d59751b04dc497d1 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/13
+2026-10-01 23:24:29 INFO  [reactor-http-nio-14] traceId=1d93924c86513bee3b09a4b2c695456c spanId=d59751b04dc497d1 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:29 INFO  [reactor-http-nio-15] traceId=550e2484989bc542995766cada4abb43 spanId=5f007813170451c7 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/13
+2026-10-01 23:24:29 INFO  [reactor-http-nio-15] traceId=550e2484989bc542995766cada4abb43 spanId=5f007813170451c7 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:33 INFO  [reactor-http-nio-16] traceId=3c67e6f64ce5f4453da2a369379a967e spanId=5346e16e344b1896 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/13/status
+2026-10-01 23:24:33 INFO  [reactor-http-nio-16] traceId=3c67e6f64ce5f4453da2a369379a967e spanId=5346e16e344b1896 c.s.e.a.filter.AuthenticationFilter : method  PATCH
+2026-10-01 23:24:37 INFO  [reactor-http-nio-17] traceId=71a8ba28b65a385ff44e7cc4e5a5ecd3 spanId=7f85d0fccc794c3e c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/13/status
+2026-10-01 23:24:37 INFO  [reactor-http-nio-17] traceId=71a8ba28b65a385ff44e7cc4e5a5ecd3 spanId=7f85d0fccc794c3e c.s.e.a.filter.AuthenticationFilter : method  PATCH
+2026-10-01 23:24:39 INFO  [reactor-http-nio-18] traceId=f73c8e982c99c25bddf19ee60598469c spanId=c03ef5d63bfc96fb c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/13/status
+2026-10-01 23:24:39 INFO  [reactor-http-nio-18] traceId=f73c8e982c99c25bddf19ee60598469c spanId=c03ef5d63bfc96fb c.s.e.a.filter.AuthenticationFilter : method  PATCH
+2026-10-01 23:24:42 INFO  [reactor-http-nio-19] traceId=860f37b603fb1adf0c74de48a11a0581 spanId=49e981f50a1bbbf5 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:42 INFO  [reactor-http-nio-19] traceId=860f37b603fb1adf0c74de48a11a0581 spanId=49e981f50a1bbbf5 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:42 INFO  [reactor-http-nio-20] traceId=01f8bba5d00471bdfdf0c18384e7381f spanId=bb667281598203b0 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:24:42 INFO  [reactor-http-nio-20] traceId=01f8bba5d00471bdfdf0c18384e7381f spanId=bb667281598203b0 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:59 INFO  [reactor-http-nio-1] traceId=491c27cfee3e2a1e78f647efd2216da4 spanId=d55550c850523cfe c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:24:59 INFO  [reactor-http-nio-1] traceId=491c27cfee3e2a1e78f647efd2216da4 spanId=d55550c850523cfe c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:24:59 INFO  [reactor-http-nio-5] traceId=612ace96964e1de9cb411d0065ed9f6d spanId=f65290c050619435 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:24:59 INFO  [reactor-http-nio-5] traceId=612ace96964e1de9cb411d0065ed9f6d spanId=f65290c050619435 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:25:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:25:52 INFO  [reactor-http-nio-2] traceId=21659b6b28f36941f2fa947476df19f9 spanId=5a56bbb90358ab42 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:25:52 INFO  [reactor-http-nio-2] traceId=21659b6b28f36941f2fa947476df19f9 spanId=5a56bbb90358ab42 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:25:52 INFO  [reactor-http-nio-4] traceId=a74d346d3ccd02a2a7c0a11d448a235e spanId=801b7aebc65f4006 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:25:52 INFO  [reactor-http-nio-4] traceId=a74d346d3ccd02a2a7c0a11d448a235e spanId=801b7aebc65f4006 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:25:57 INFO  [reactor-http-nio-6] traceId=da1c26b8be015cddeca73b0f0958edfa spanId=b567118522bea1c6 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/13
+2026-10-01 23:25:57 INFO  [reactor-http-nio-6] traceId=da1c26b8be015cddeca73b0f0958edfa spanId=b567118522bea1c6 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:25:57 INFO  [reactor-http-nio-7] traceId=23db9046b26af3606ac740f5a9781abf spanId=db8a900338c9ef9b c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders/13
+2026-10-01 23:25:57 INFO  [reactor-http-nio-7] traceId=23db9046b26af3606ac740f5a9781abf spanId=db8a900338c9ef9b c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:25:57 INFO  [reactor-http-nio-8] traceId=149cd77fe35ab99ea6acb88ef381a21e spanId=2aa79ee6cd17e013 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/13
+2026-10-01 23:25:57 INFO  [reactor-http-nio-8] traceId=149cd77fe35ab99ea6acb88ef381a21e spanId=2aa79ee6cd17e013 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:25:57 INFO  [reactor-http-nio-10] traceId=8ce4c5e57e3c9f97b06d2761cfe4b000 spanId=f0617d7ed7d4f145 c.s.e.a.filter.AuthenticationFilter : path  /payments/api/payments/order/13
+2026-10-01 23:25:57 INFO  [reactor-http-nio-10] traceId=8ce4c5e57e3c9f97b06d2761cfe4b000 spanId=f0617d7ed7d4f145 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:25:59 INFO  [reactor-http-nio-11] traceId=7dbd7d6ed264106071765d154ae234eb spanId=a9141b59fd39cf0f c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:25:59 INFO  [reactor-http-nio-11] traceId=7dbd7d6ed264106071765d154ae234eb spanId=a9141b59fd39cf0f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:26:02 INFO  [reactor-http-nio-14] traceId=8202ebb292bbd72825871b41e855a079 spanId=20a4b63209da5239 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:26:02 INFO  [reactor-http-nio-15] traceId=e06406a25cfc522419e15697f96f2a3d spanId=25fccedaeebcab7d c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:26:02 INFO  [reactor-http-nio-14] traceId=8202ebb292bbd72825871b41e855a079 spanId=20a4b63209da5239 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:26:02 INFO  [reactor-http-nio-15] traceId=e06406a25cfc522419e15697f96f2a3d spanId=25fccedaeebcab7d c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:26:02 INFO  [reactor-http-nio-16] traceId=507956d9576c9bcd184000e10bd22b84 spanId=1e2af9a804c33495 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:26:02 INFO  [reactor-http-nio-16] traceId=507956d9576c9bcd184000e10bd22b84 spanId=1e2af9a804c33495 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:26:02 INFO  [reactor-http-nio-19] traceId=fc14f462cfe7d62a09b75db4eef337de spanId=3f905dcb7e90649a c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:26:02 INFO  [reactor-http-nio-19] traceId=fc14f462cfe7d62a09b75db4eef337de spanId=3f905dcb7e90649a c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:26:02 INFO  [reactor-http-nio-20] traceId=8db94d7d0e9fb0aec419fe6934db41c1 spanId=d1fd25527b8d215f c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:26:02 INFO  [reactor-http-nio-20] traceId=8db94d7d0e9fb0aec419fe6934db41c1 spanId=d1fd25527b8d215f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:26:02 INFO  [reactor-http-nio-1] traceId=d0c0b85da9739c11d16d901bc82ec760 spanId=2557d67fcdba983e c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:26:02 INFO  [reactor-http-nio-1] traceId=d0c0b85da9739c11d16d901bc82ec760 spanId=2557d67fcdba983e c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:00 INFO  [reactor-http-nio-5] traceId=c26e35fee3a9063274e9e2c8b11593ad spanId=2c99bc14c9084f14 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:27:00 INFO  [reactor-http-nio-5] traceId=c26e35fee3a9063274e9e2c8b11593ad spanId=2c99bc14c9084f14 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:00 INFO  [reactor-http-nio-2] traceId=2843026bd88f720248f43966cc406ced spanId=ded78ff84e61f5bd c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:27:00 INFO  [reactor-http-nio-2] traceId=2843026bd88f720248f43966cc406ced spanId=ded78ff84e61f5bd c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:00 INFO  [reactor-http-nio-3] traceId=e12208ebdb7935c7939b42808257931a spanId=1be299d110030e2d c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:27:00 INFO  [reactor-http-nio-3] traceId=e12208ebdb7935c7939b42808257931a spanId=1be299d110030e2d c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:00 INFO  [reactor-http-nio-4] traceId=c10c602608ea3f35312d7ed8e71334c9 spanId=9a86014c59dd496f c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:27:00 INFO  [reactor-http-nio-4] traceId=c10c602608ea3f35312d7ed8e71334c9 spanId=9a86014c59dd496f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:01 INFO  [reactor-http-nio-7] traceId=88b763ffd776053c0fc91ef6ed372509 spanId=2e380dc263c7af2d c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:27:01 INFO  [reactor-http-nio-7] traceId=88b763ffd776053c0fc91ef6ed372509 spanId=2e380dc263c7af2d c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:01 INFO  [reactor-http-nio-8] traceId=501107eda35ec211bc673f30748d071f spanId=9d4ddf3fc86fc10d c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:27:01 INFO  [reactor-http-nio-6] traceId=fc39b131ae693fa8165dc1bb5a9fa760 spanId=152b57f540be9e9a c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:27:01 INFO  [reactor-http-nio-8] traceId=501107eda35ec211bc673f30748d071f spanId=9d4ddf3fc86fc10d c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:01 INFO  [reactor-http-nio-6] traceId=fc39b131ae693fa8165dc1bb5a9fa760 spanId=152b57f540be9e9a c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:01 INFO  [reactor-http-nio-9] traceId=4ac747081b1ea0c135c215b9cf28afe6 spanId=7ad1489674d7f7d8 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories
+2026-10-01 23:27:01 INFO  [reactor-http-nio-9] traceId=4ac747081b1ea0c135c215b9cf28afe6 spanId=7ad1489674d7f7d8 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:01 INFO  [reactor-http-nio-10] traceId=ef496ae1a40f4781b7738706c5a620ba spanId=b5e05a7fc4cb3906 c.s.e.a.filter.AuthenticationFilter : path  /cart-orders/api/orders
+2026-10-01 23:27:01 INFO  [reactor-http-nio-10] traceId=ef496ae1a40f4781b7738706c5a620ba spanId=b5e05a7fc4cb3906 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:01 INFO  [reactor-http-nio-11] traceId=bb580939600f1bc888cade301d7a2678 spanId=cdbfe0c85d1b3bc6 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products
+2026-10-01 23:27:01 INFO  [reactor-http-nio-11] traceId=bb580939600f1bc888cade301d7a2678 spanId=cdbfe0c85d1b3bc6 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:09 INFO  [reactor-http-nio-12] traceId=eb8580151b12575f1f1160ed48f81b8b spanId=eaf13e7ae3a4aa85 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:27:09 INFO  [reactor-http-nio-12] traceId=eb8580151b12575f1f1160ed48f81b8b spanId=eaf13e7ae3a4aa85 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:13 INFO  [reactor-http-nio-13] traceId=7b994f25f2e7635395ccda231eb3bbb1 spanId=2d28b1ccca8b739f c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories/product/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:27:13 INFO  [reactor-http-nio-13] traceId=7b994f25f2e7635395ccda231eb3bbb1 spanId=2d28b1ccca8b739f c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:13 INFO  [reactor-http-nio-14] traceId=ab8cd0eaf2c192b2ef6a8de438d90b17 spanId=4a1348c85ec7ba71 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:27:13 INFO  [reactor-http-nio-14] traceId=ab8cd0eaf2c192b2ef6a8de438d90b17 spanId=4a1348c85ec7ba71 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:13 INFO  [reactor-http-nio-15] traceId=cd13c178be0721f42f901397237eea7c spanId=47f316a95182e2b7 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:27:13 INFO  [reactor-http-nio-15] traceId=cd13c178be0721f42f901397237eea7c spanId=47f316a95182e2b7 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:13 INFO  [reactor-http-nio-16] traceId=801767d17923fa8e2c4e22663e55c89b spanId=b2d24ead21e51141 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:27:13 INFO  [reactor-http-nio-16] traceId=801767d17923fa8e2c4e22663e55c89b spanId=b2d24ead21e51141 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:27:14 INFO  [reactor-http-nio-17] traceId=0cc6f9d89f0bc09c17c69cf1f403c7db spanId=8d9d16add6a33f79 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories/product/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:27:14 INFO  [reactor-http-nio-17] traceId=0cc6f9d89f0bc09c17c69cf1f403c7db spanId=8d9d16add6a33f79 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:28:07 INFO  [reactor-http-nio-19] traceId=a5494458c212199ce2477e66eeccaaef spanId=b91e5e7fc9290072 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories/product/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:28:07 INFO  [reactor-http-nio-18] traceId=07d8745930770631b4f7ea930bff5128 spanId=4378991fc40d00dc c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:28:07 INFO  [reactor-http-nio-19] traceId=a5494458c212199ce2477e66eeccaaef spanId=b91e5e7fc9290072 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:28:07 INFO  [reactor-http-nio-18] traceId=07d8745930770631b4f7ea930bff5128 spanId=4378991fc40d00dc c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:28:07 INFO  [reactor-http-nio-20] traceId=7cbb148b7f70d925ee7c7770a9b28b33 spanId=1161f65689390382 c.s.e.a.filter.AuthenticationFilter : path  /inventories/api/inventories/product/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:28:07 INFO  [reactor-http-nio-20] traceId=7cbb148b7f70d925ee7c7770a9b28b33 spanId=1161f65689390382 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:28:07 INFO  [reactor-http-nio-1] traceId=ad014a959c57cf51dc35e3db8d6f8e27 spanId=7eb06f34cd870232 c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/550e8400-e29b-41d4-a716-446655440000
+2026-10-01 23:28:07 INFO  [reactor-http-nio-1] traceId=ad014a959c57cf51dc35e3db8d6f8e27 spanId=7eb06f34cd870232 c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:28:08 INFO  [reactor-http-nio-5] traceId=5f042bfd14505335b6b49cd080418965 spanId=2344dbbaabd78e9c c.s.e.a.filter.AuthenticationFilter : path  /products/api/products/filter
+2026-10-01 23:28:08 INFO  [reactor-http-nio-5] traceId=5f042bfd14505335b6b49cd080418965 spanId=2344dbbaabd78e9c c.s.e.a.filter.AuthenticationFilter : method  GET
+2026-10-01 23:30:37 INFO  [AsyncResolver-bootstrap-executor-%d] traceId= spanId= c.n.d.s.r.aws.ConfigClusterResolver : Resolving eureka endpoints via configuration
+2026-10-01 23:30:47 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.c.n.e.s.EurekaServiceRegistry : Unregistering application API-GATEWAY with eureka with status DOWN
+2026-10-01 23:30:47 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Saw local status change event StatusChangeEvent [timestamp=1790877647056, current=DOWN, previous=UP]
+2026-10-01 23:30:47 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080: registering service...
+2026-10-01 23:30:47 INFO  [SpringApplicationShutdownHook] traceId= spanId= o.s.b.reactor.netty.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-01 23:30:47 INFO  [netty-shutdown] traceId= spanId= o.s.b.reactor.netty.GracefulShutdown : Graceful shutdown complete
+2026-10-01 23:30:47 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/} exception=I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.register(RestClientEurekaHttpClient.java:64)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 23 more
+
+2026-10-01 23:30:47 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-10-01 23:30:47 INFO  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.register(RestClientEurekaHttpClient.java:64)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 24 more
+
+2026-10-01 23:30:47 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-10-01 23:30:47 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - registration failed Cannot execute request on any known server
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-10-01 23:30:47 WARN  [DiscoveryClient-InstanceInfoReplicator-%d] traceId= spanId= c.n.discovery.InstanceInfoReplicator : There was a problem with the instance info replicator
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-10-01 23:30:49 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Shutting down DiscoveryClient ...
+2026-10-01 23:30:52 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Unregistering ...
+2026-10-01 23:30:52 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RedirectingEurekaHttpClient : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:747)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:924)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toBodilessEntity(DefaultRestClient.java:888)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.cancel(RestClientEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.reactive.context.ReactiveWebServerApplicationContext.doClose(ReactiveWebServerApplicationContext.java:158)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:226)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:168)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequestAndBody(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
+	... 40 more
+
+2026-10-01 23:30:52 WARN  [SpringApplicationShutdownHook] traceId= spanId= c.n.d.s.t.d.RetryableEurekaHttpClient : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-10-01 23:30:52 ERROR [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : DiscoveryClient_API-GATEWAY/LAPTOP-UJ0KBI4K.mshome.net:API-GATEWAY:8080 - de-registration failedCannot execute request on any known server
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:411)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:237)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:200)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:193)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:387)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:134)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:209)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:795)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:745)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1500)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:704)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1493)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1246)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1207)
+	at org.springframework.boot.web.server.reactive.context.ReactiveWebServerApplicationContext.doClose(ReactiveWebServerApplicationContext.java:158)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1153)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-10-01 23:30:52 INFO  [SpringApplicationShutdownHook] traceId= spanId= c.netflix.discovery.DiscoveryClient : Completed shut down of DiscoveryClient

@@ -5,23 +5,30 @@ kind: ClusterConfig
 metadata:
   name: substring-prod
   region: ap-south-1
-  version: "1.36"
+#  version: "1.36"
+
+
+
+autoModeConfig:
+  enabled: true
+
+
 
 iam:
   withOIDC: true
 
 
-managedNodeGroups:
-  - name: substring-prod
-    instanceType: t3.large
-    minSize: 1
-    maxSize: 4
-    desiredCapacity: 2
-    volumeSize: 30
-    volumeType: gp3
-    privateNetworking: false
-    iam:
-      withAddonPolicies:
-        ebs: true
-        albIngress: true
-        cloudWatch: true
+#managedNodeGroups:
+#  - name: substring-prod
+#    instanceType: t3.large
+#    minSize: 1
+#    maxSize: 4
+#    desiredCapacity: 2
+#    volumeSize: 30
+#    volumeType: gp3
+#    privateNetworking: false
+#    iam:
+#      withAddonPolicies:
+#        ebs: true
+#        albIngress: true
+#        cloudWatch: true

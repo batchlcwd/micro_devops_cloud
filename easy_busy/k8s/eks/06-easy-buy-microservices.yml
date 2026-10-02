@@ -128,8 +128,6 @@ spec:
                 configMapKeyRef:
                   name: easybuy-config
                   key: SPRING_PROFILES_ACTIVE
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:mysql://mysql:3306/easybuy_users?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true"
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:

@@ -169,7 +169,7 @@ public class PaymentServiceImpl implements PaymentService {
                 options.put("razorpay_order_id", request.razorpayOrderId());
                 options.put("razorpay_payment_id", request.razorpayPaymentId());
                 options.put("razorpay_signature", request.razorpaySignature());
-                
+                //verification of the payment
                 isValid = Utils.verifyPaymentSignature(options, razorpayKeySecret);
             } catch (Exception e) {
                 log.error("Signature verification failed with exception", e);

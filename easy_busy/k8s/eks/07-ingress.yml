@@ -15,7 +15,7 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:<your_account_id>:certificate/<your_certificate_id>"
+    alb.ingress.kubernetes.io/certificate-arn: "alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:524954473877:certificate/4ccf00c5-f49b-4845-9276-432e1d5707d4"
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-2021-06
     alb.ingress.kubernetes.io/healthcheck-path: /actuator/health/readiness
 spec:

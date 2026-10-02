@@ -75,11 +75,13 @@
 			<artifactId>common-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>com.razorpay</groupId>
-			<artifactId>razorpay-java</artifactId>
-			<version>1.4.3</version>
-		</dependency>
+
+
+			<dependency>
+				<groupId>com.razorpay</groupId>
+				<artifactId>razorpay-java</artifactId>
+				<version>1.4.3</version>
+			</dependency>
 
 		<dependency>
 			<groupId>com.mysql</groupId>

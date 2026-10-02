@@ -11,9 +11,11 @@ data:
   SPRING_PROFILES_ACTIVE: "prod"
   EUREKA_DEFAULT_ZONE: "http://service-discovery:8761/eureka"
   CONFIG_SERVER_URL: "http://config-server:8079"
+#  for example if you are using any of these
   SPRING_MAIL_HOST: "mailhog"
   SPRING_MAIL_PORT: "1025"
   SPRING_DATA_REDIS_HOST: "redis"
+
   # api-gateway CORS allow-list, comma-separated. TODO: replace with your real
   # deployed frontend origin(s) - this placeholder only allows local dev.
-  FRONTEND_ORIGINS: "http://localhost:3000"
+  FRONTEND_ORIGINS: "http://localhost:5173,https://substringcomm.com,https://www.substringcomm.com"
