@@ -10,6 +10,7 @@ public class AiServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AiServiceApplication.class, args);
+		System.out.println("Testing ci and ci");
 	}
 
 }

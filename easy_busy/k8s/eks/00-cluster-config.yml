@@ -5,7 +5,7 @@ kind: ClusterConfig
 metadata:
   name: substring-prod
   region: ap-south-1
-#  version: "1.36"
+  version: "1.36"
 
 
 

@@ -1,4 +1,3 @@
-#storage class driver
 #mysql stateful set
 apiVersion: apps/v1
 kind: StatefulSet

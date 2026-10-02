@@ -5,7 +5,7 @@ metadata:
   #  name: gp3
   name: gp3-auto
 
-#provisioner: ebs.csi.aws.com
+#provisioner: ebs.csi.aws.com-- for regular modes--> we using your own configurations
 provisioner: ebs.csi.eks.amazonaws.com
 
 parameters:
