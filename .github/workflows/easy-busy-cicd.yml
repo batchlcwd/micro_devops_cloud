@@ -27,8 +27,7 @@ env:
   EKS_CLUSTER_NAME: substring-prod
   NAMESPACE: easybuy
   DOCKERHUB_NAMESPACE: batchlcwd
-  MANIFESTS: >-
-    01-namespace.yml
+  MANIFESTS: >-   
     02-instfastructure.yml
     03-config-map.yml
     05-spring-cloud-infra.yml
